@@ -1,0 +1,125 @@
+Employee #,SSN,First Name,Middle Initial,Last Name,Address 1,Address 2,City,State,Zip,Gender,Date of Birth,Pay Type,Hire Date,Pay Schedule,Dept Code,Reg Rate,Federal Filing Status,Federal Exemptions,Unemployment State,Withholding State,State Filing Status,State Exemptions
+1,XXX-XX-7463,Candra,,Abney,16903 Ballinger St,,North Hills,CA,91343,,8/2/1986,H,11/14/2016,Bi-weekly,WSIDE MGR,$15.00 ,Single,1,CA,CA,Single,1
+2,XXX-XX-2333,Nefouz,,Abuhamdae,242 Palsades Dr,,Daly City,CA,94015,,11/3/1994,H,8/2/2016,Bi-weekly,SMONTE BTD,$12.00 ,Single,0,CA,CA,Single,0
+3,XXX-XX-2032,Deepa,,Acharya,28159 Arborglenn Dr.,,Moreno Valley,CA,92555,,12/14/1984,H,10/5/2009,Bi-weekly,RANCHO BTC,$11.00 ,Married,1,CA,CA,Married,1
+4,XXX-XX-4369,Valeria,,Alvidrez,4385 Casa Grande Cir,Apt # 354,Cypress,CA,90630,,5/6/1997,H,4/27/2017,Bi-weekly,ARTESIA BTD,$10.50 ,Single,1,CA,CA,Single,1
+5,XXX-XX-9786,Brenda,,Amaya,1846 W. 46th St.,,Los Angeles,CA,90062,,9/28/1988,H,1/25/2016,Bi-weekly,SANITA BTC,$11.00 ,Single,1,CA,CA,Single,1
+,XXX-XX-8575,Maninder K,,Anand,18028 Grayland Ave.,,Artesia,CA,90701,,1/4/1971,S,4/1/2012,Bi-weekly,ACCOUNTING,"$2,916.67 ",Married,3,CA,CA,Married,3
+,XXX-XX-9163,Satbir S.,,Anand,18028 Grayland Ave,,Artesia,CA,90701,,1/11/1969,S,1/1/2008,Bi-weekly,OPERATION,"$3,437.50 ",Married,6,CA,CA,Married,6
+,XXX-XX-8147,Parvinder,,Anand,15127 Carry View St,,Sylmar,CA,91342,,4/22/1966,H,4/25/2017,Bi-weekly,GDALE BTC,$11.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-0095,Amarjot,,Babu,180 Oxford Lane,,San Bruno,CA,94066,,5/5/1980,H,11/2/2011,Bi-weekly,SMONTE BTC,$11.00 ,Married,0,CA,CA,Married,0
+,XXX-XX-2690,Sarita,,Bagga,7161 Monroe Ave.,,Buena Park,CA,90620,,11/16/1962,H,10/21/2003,Bi-weekly,SANA BTC,$10.50 ,Married,3,CA,CA,Married,3
+,XXX-XX-7944,Divya,,Banepali,7794 Adams Way,,Buena Park,CA,90620,,8/21/1978,H,6/5/2005,Bi-weekly,SANA BTC,$11.00 ,Married,0,CA,CA,Married,0
+,XXX-XX-8404,Jenel Leslie,,Bartee,11518 Harvard Dr.,,Norwalk,CA,90650,,10/3/1977,H,12/3/2012,Bi-weekly,HR MGR,$16.00 ,Single,2,CA,CA,Single,2
+,XXX-XX-3908,Jagdeep,,Batra,17775 Appaloosa Court,,Yorba Linda,CA,92886,,7/27/1963,S,3/1/2000,Bi-weekly,OWNER,"$4,083.33 ",Married,3,CA,CA,Married,3
+,XXX-XX-4956,Sumita,,Batra,17775 Appaloosa Court,,Yorba Linda,CA,92886,,1/17/1969,S,1/8/2003,Bi-weekly,OWNER,"$4,083.33 ",Married,0,CA,CA,Married,0
+,XXX-XX-0466,Reetu,,Bhardwaj,23032 Hartland St,,West Hills,CA,91307,,10/24/1964,H,10/31/2007,Bi-weekly,TOPANGA BTC,$10.50 ,Single,4,CA,CA,Single,4
+,XXX-XX-9021,Sujata,,Bhattarai,17820 Alburtis Ave,Apt # 9,Artesia,CA,90701,,11/21/1973,H,8/29/2014,Bi-weekly,STWOOD BTC,$10.50 ,Married,2,CA,CA,Married,2
+,XXX-XX-5080,Dhana,,Bhattarai,547 Tulsa Street,,San Lorenzo,CA,94580,,11/2/1980,H,11/2/2012,Bi-weekly,SMONTE BTC,$12.00 ,Married,3,CA,CA,Married,3
+,XXX-XX-7144,Rafia,,Bhola,8801 Independence Ave,Apt # 3,Conoga Park,CA,91304,,12/8/1995,H,3/29/2017,Bi-weekly,TOPANGA BTC,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-6077,Pushpa Karshan,,Bhutani,9920 Independence Ave.,,Chatsworth,CA,91311,,3/27/1974,H,8/24/2009,Bi-weekly,TOPANGA BTC,$12.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-2913,Ailin,,Boghouspour,268 W Dryden St,# 103,Glendale,CA,91202,,9/13/1977,H,5/21/2014,Bi-weekly,GDALE BTC,$10.50 ,Single,5,CA,CA,Single,5
+,XXX-XX-2157,Greona,,Boisseau,3953 Bon Homme Rd,,Calabasas,CA,91302,,1/21/1992,H,4/27/2017,Bi-weekly,TOPANGA BTC,$12.00 ,Single,0,CA,CA,Single,0
+,XXX-XX-3087,Roubina,,Bolbolian,1245 Viola Ave,Apt # E,Glendale,CA,91202,,4/12/1970,H,4/25/2017,Bi-weekly,GDALE BTC,$11.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-2504,Dariush,,Bonyadi,3401 S. Sentous Ave,# 243,West Covina,CA,91792,,6/7/1991,H,8/17/2010,Bi-weekly,SANITA BTC,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-9775,Ankita Rajesh,,Borad,13276 Paul St.,,Corona,CA,92880,,6/1/1983,H,12/9/2007,Bi-weekly,WCOVINA BTC,$10.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-2321,Debbie Diane L,,Caballero,362 Paris St.,,San Francisco,CA,94112,,4/23/1990,H,8/13/2015,Bi-weekly,SMONTE BTD,$14.00 ,Single,2,CA,CA,Single,2
+,XXX-XX-5879,Nilofer S,,Chariwala,17632 Barbe Ave.,,Artesia,CA,90701,,11/8/1971,H,1/1/1998,Bi-weekly,ARTESIA BTC,$11.00 ,Married,5,CA,CA,Married,5
+,XXX-XX-9758,Priti Bhavin,,Chhelavda,18002 Seine Ave.,,Artesia,CA,90701,,7/21/1973,H,7/29/2008,Bi-weekly,GDALE BTC,$10.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-1910,Lauren,,Daily,2680 San Vicente Ave,,Long Beach,CA,90815,,7/7/1996,H,11/21/2016,Bi-weekly,CERRITOS BTD,$10.50 ,Single,0,CA,CA,Single,0
+,XXX-XX-0708,Rashmi,,Dhanani,7032 Calina Ln.,,Corona,CA,92880,,11/10/1985,H,2/8/2012,Bi-weekly,STWOOD BTC,$10.50 ,Married,3,CA,CA,Married,3
+,XXX-XX-5841,Kalpana,,Dholakia,18620 Devlin Ave.,,Artesia,CA,90701,,7/14/1969,H,2/23/2004,Bi-weekly,CERRITOS BTC,$11.00 ,Married,1,CA,CA,Married,1
+,XXX-XX-0470,Gita,,Donga,8875 E. Fallbrook Way,,Anaheim,CA,92808,,2/2/1965,H,8/25/2005,Bi-weekly,SANA BTC,$11.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-3704,Catelyn M,,Duran,6646 Brampton Ave.,,Rialto,CA,92376,,2/8/1995,H,2/9/2015,Bi-weekly,RANCHO BTD,$11.00 ,Single,1,CA,CA,Single,1
+,XXX-XX-9958,Ernestina S,,Gallardo,225 N. Avennue 25,Apt # 314,Los Angeles,CA,90031,,10/21/1984,H,9/28/2015,Bi-weekly,SANITA BTD,$11.00 ,Single,1,CA,CA,Single,1
+,XXX-XX-2564,Savannah,,Galvez,1815 W Devers St,,West Covina,CA,91790,,10/27/1996,H,5/10/2017,Bi-weekly,WCOVINA BTD,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-8935,Kumarasinghe,,Ganegoda,1965 Rodney Dr,Apt # 211,Los Angeles,CA,90027,,1/26/1956,S,12/1/2014,Bi-weekly,ACCOUNTING,"$2,000.00 ",Single,0,CA,CA,Single,0
+,XXX-XX-4251,Laura,,Garcia,15326 1/2 Colorado Ave,,Paramount,CA,90723,,1/29/1994,H,3/31/2017,Bi-weekly,LWOOD BTD,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-3519,Priscilla,,Garcia Saravia,808 St. Luis Ave.,,Long Beach,CA,90804,,7/14/1989,H,10/1/2009,Bi-weekly,SANA MGR,$14.00 ,Single,2,CA,CA,Single,2
+,XXX-XX-5201,Sangita,,Ghimire,160 Thiers Street,,Daly City,CA,94014,,3/12/1976,H,2/4/2016,Bi-weekly,SMONTE BTC,$12.00 ,Married,0,CA,CA,Married,0
+,XXX-XX-5930,Saraswati,,Ghimirey,17820 Alburtis Ave.,Apt # 6,Artesia,CA,90701,,11/7/1974,H,5/30/2007,Bi-weekly,SANA BTC,$11.00 ,Married,1,CA,CA,Married,1
+,XXX-XX-5691,Tiana,,Goings,4556 Ocana Ave,,Lakewood,CA,90713,,8/25/1998,H,8/29/2016,Bi-weekly,LWOOD BTD,$10.50 ,Single,0,CA,CA,Single,0
+,XXX-XX-1538,Amber,,Gomez,16126 Harvard Blvd,Apt # A,Gardena,CA,90247,,3/31/1995,H,10/12/2016,Bi-weekly,SBAY BTD,$10.50 ,Single,0,CA,CA,Single,0
+,XXX-XX-5999,Nadia,,Gomez,5127 N Huntington Dr,# 207,Los Angeles,CA,90032,,2/1/1991,H,10/18/2013,Bi-weekly,RANCHO BTC,$11.00 ,Single,0,CA,CA,Single,0
+,XXX-XX-6324,Christina Y,,Gonzalez,16125 S Harvard Blvd,Apt # A,Gardena,CA,90247,,6/14/1994,H,8/11/2015,Bi-weekly,SBAY BTD,$12.00 ,Single,0,CA,CA,Single,0
+,XXX-XX-3192,Dhan,,Gurung,328 N 1st Street,Apt # A,Alhambra,CA,91801,,8/20/1991,H,4/26/2016,Bi-weekly,SANITA BTC,$11.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-8932,Clarissa W,,Hamberry,239 Buena Vista Ave,,Daly City,CA,94015,,8/20/1991,H,9/22/2015,Bi-weekly,SMONTE BTD,$14.00 ,Single,0,CA,CA,Single,0
+,XXX-XX-2276,Jerome,,Johnson,1220 Highland Ave,,Los Angeles,CA,90038,,5/27/1990,H,10/18/2016,Bi-weekly,WSIDE BTD,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-6973,Priya,,Karki K C,17730 Alburtis Ave,Apt # 18,Artesia,CA,90701,,12/29/1986,H,9/28/2016,Bi-weekly,CERRITOS BTC,$11.00 ,Married,1,CA,CA,Married,1
+,XXX-XX-8915,Surinder,,Kaur,17922 Devlin Ave,,Artesia,CA,90701,,8/8/1958,H,12/1/1999,Bi-weekly,ARTESIA BTC,$11.00 ,Married,1,CA,CA,Married,1
+,XXX-XX-1879,Navpreet,,Kaur,6320 Peach Blossom S,,Corona,CA,92880,,3/8/1981,H,1/17/2005,Bi-weekly,RANCHO BTC,$11.00 ,Married,0,CA,CA,Married,0
+,XXX-XX-2899,Shavinder,,Kaur,4242 Fountain Bleau,,Cypress,CA,90630,,9/3/1963,H,6/5/2005,Bi-weekly,CERRITOS BTC,$10.50 ,Married,1,CA,CA,Married,1
+,XXX-XX-0700,Gurvinder,,Kaur,612 S Balcom Ave.,,Fullerton,CA,92832,,10/3/1988,H,3/4/2014,Bi-weekly,ACCOUNTING,$12.00 ,Married,3,CA,CA,Married,3
+,XXX-XX-4739,Sabita,,Khadka Thapa,7317 Wilson Circle,,Buena Park,CA,90620,,7/1/1971,H,8/29/2014,Bi-weekly,LWOOD BTC,$10.50 ,Married,2,CA,CA,Married,2
+,XXX-XX-2297,Rozina,,Khan,12425 Dunrobin Ave,,Downey,CA,90242,,3/5/1968,H,10/21/2003,Bi-weekly,SBAY BTC,$11.00 ,Married,0,CA,CA,Married,0
+,XXX-XX-1909,Mehrnoush,,Khonsari,1100 Shirlyjean St,,Glendale,CA,91208,,5/23/1977,H,12/1/2016,Bi-weekly,GDALE BTD,$10.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-5016,Kristen,,Lair,12739 Wilmac Ave,,Grand Terrace,CA,92313,,3/13/1982,H,3/15/2013,Bi-weekly,RANCHO MGR,$20.00 ,Married,0,CA,CA,Married,0
+,XXX-XX-8647,Tenny S,,Li,11603 Samoline Ave.,,Downey,CA,90241,,4/26/1955,H,9/20/2006,Bi-weekly,STWOOD BTC,$12.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-5769,Ping,,Li,11396 McGirk Ave.,,El Monte,CA,91732,,4/6/1957,H,3/1/2003,Bi-weekly,MBELLO BTC,$12.00 ,Married,1,CA,CA,Married,1
+,XXX-XX-1657,Monika,,Loomba,"7161 East Ave,",Apt # 65,Rancho Cucamonga,CA,91739,,8/3/1976,H,10/6/2008,Bi-weekly,RANCHO BTC,$10.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-8968,Iliwen,,Luna,19200 Archwood St,,Reseda,CA,91335,,12/7/1997,H,3/16/2017,Bi-weekly,TOPANGA BTD,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-8072,Armando,,Luna,11245 Barnwall St,Apt # 18,Norwalk,CA,90650,,11/7/1995,H,4/27/2017,Bi-weekly,MBELLO BTD,$11.00 ,Single,1,CA,CA,Single,1
+,XXX-XX-2051,Pratiksha,,Mahat,707 Park Shadow Ct,,Baldwin Park,CA,91706,,12/30/1989,H,1/19/2017,Bi-weekly,MBELLO BTC,$11.00 ,Married,1,CA,CA,Married,1
+,XXX-XX-3551,Cristina,,Maldonado,7627 Washington Ave,,Whittier,CA,90602,,3/15/1992,H,11/4/2016,Bi-weekly,MBELLO BTD,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-6357,Firozabibi G,,Malek,17800 Elaine Ave.,,Artesia,CA,90701,,4/11/1973,H,5/15/2005,Bi-weekly,SBAY BTC,$10.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-1112,Edgar,,Martinez,11557 Lindale St.,,Norwalk,CA,90650,,9/25/1976,H,2/1/2007,Bi-weekly,Field HQ,$11.50 ,Married,2,CA,CA,Married,2
+,XXX-XX-6240,Courtney,,MClaughlin,7552 Citronell Ave,,Pico Rivera,CA,90660,,4/22/1979,H,1/30/2017,Bi-weekly,SANA BTD,$11.00 ,Single,3,CA,CA,Single,3
+,XXX-XX-9848,Mira Ghimire,,Mishra,18408 1/2 Arline Ave,,Artesia,CA,90701,,11/19/1981,H,5/4/2017,Bi-weekly,STWOOD BTC,$10.50 ,Married,2,CA,CA,Married,2
+,XXX-XX-6020,Dinankben A,,Modi,13988 Marbella St.,,Fontana,CA,92336,,10/6/1977,H,5/21/2015,Bi-weekly,RANCHO BTC,$11.00 ,Married,6,CA,CA,Married,6
+,XXX-XX-5878,Francis,,Monroy,4141 Andy St,Apt # 2,Lakewood,CA,90712,,11/19/1985,H,3/20/2017,Bi-weekly,STWOOD MGR,$12.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-3212,Alejandra,,Montoya,1330 W. Bohnert Ave.,,Rialto,CA,92377,,3/7/1993,H,2/8/2015,Bi-weekly,RANCHO BTD,$11.00 ,Single,1,CA,CA,Single,1
+,XXX-XX-9019,Brianna,,Moreno,5226 Birdsong Pl,,Rancho Cucamonga,CA,91737,,10/4/1996,H,4/20/2016,Bi-weekly,RANCHO BTD,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-7270,Neetu,,Nanda,7230 De Soto Ave,Apt # 110,Los Angeles,CA,91303,,11/1/1985,H,12/13/2016,Bi-weekly,WSIDE BTC,$10.50 ,Married,1,CA,CA,Married,1
+,XXX-XX-7958,Javier,,Naranjo,18645 Alburtis Ave,,Artesia,CA,90701,,11/13/1992,H,9/1/2016,Bi-weekly,CERRITOS BTD,$11.00 ,Single,1,CA,CA,Single,1
+,XXX-XX-7657,Oscar,,Naranjo,18645 Alburtis Ave.,,Artesia,CA,90701,,8/24/1963,H,3/24/2003,Bi-weekly,CERRITOS MGR,$15.00 ,Single,0,CA,CA,Single,0
+,XXX-XX-2435,Pushpa Lata,,Nepal,40 Navajo Avenue,,San Francisco,CA,94112,,3/7/1982,H,7/17/2012,Bi-weekly,SMONTE BTC,$12.00 ,Married,1,CA,CA,Married,1
+,XXX-XX-5574,Yasmine,,Nolasco,1044 Gothic WaY,,Pomona,CA,91768,,3/30/1992,H,2/8/2016,Bi-weekly,WCOVINA BTD,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-5991,Jaclyn,,Nusbaum,7345 Citrus Avenue,,Fontana,CA,92336,,11/5/1987,H,4/19/2010,Bi-weekly,GDALE BTC,$12.00 ,Single,3,CA,CA,Single,3
+,XXX-XX-2793,Brittany-Ann M,,Oatey,967 East Broadway,#10,Long Beach,CA,90802,,12/1/1981,H,12/2/2013,Bi-weekly,WSIDE BTC,$11.00 ,Single,4,CA,CA,Single,4
+,XXX-XX-3963,Anasheh,,Ohanian,560 E Providencia Ave,Apt # 5,Burbank,CA,91501,,2/1/1984,H,2/22/2010,Bi-weekly,WSIDE BTC,$11.00 ,Single,0,CA,CA,Single,0
+,XXX-XX-8218,Vanessa,,Oropeza,3000 Verdugo Rd,Apt # 214,Los Angeles,CA,90065,,8/25/1994,H,6/10/2016,Bi-weekly,GDALE BTD,$10.50 ,Single,3,CA,CA,Single,3
+,XXX-XX-2344,Brittany,,Ortiz,12145 Gurley Ave,,Downey,CA,90242,,7/8/1990,S,12/5/2016,Bi-weekly,Field HQ,"$1,833.33 ",Single,2,CA,CA,Single,2
+,XXX-XX-8979,Edson,,Palacios,1415 E. 15th St.,Apt # B,Long Beach,CA,90813,,8/14/1986,H,7/13/2011,Bi-weekly,SBAY MGR,$18.00 ,Single,1,CA,CA,Single,1
+,XXX-XX-6810,Pooja Bhavesh,,Patel,13319 Bashkir Street,,Corona,CA,92880,,11/5/1980,H,1/17/2007,Bi-weekly,SANA BTC,$10.50 ,Married,2,CA,CA,Married,2
+,XXX-XX-0866,Devangini,,Patel,7344 El Domino Way,Apt#4,Buena Park,CA,90620,,11/11/1978,H,3/8/2004,Bi-weekly,SBAY BTC,$11.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-7751,Bhavanaben,,Patel,2154 Newport Blvd,,Costa Mesa,CA,92627,,2/6/1974,H,10/19/2010,Bi-weekly,SBAY BTC,$10.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-3385,Bhoomikabahen,,Patel,13072 Kiso Ct.,,Eastvale,CA,92880,,5/3/1983,H,8/14/2013,Bi-weekly,RANCHO BTC,$10.50 ,Married,2,CA,CA,Married,2
+,XXX-XX-9829,Prabhutiben,,Patel,18427 Arline Ave,,Artesia,CA,90701,,9/2/1982,H,1/17/2007,Bi-weekly,CERRITOS BTC,$11.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-1750,Suman,,Patel,18022 Grayland Ave,,Artesia,CA,90701,,7/23/1967,S,3/14/2004,Bi-weekly,OWNER,"$4,083.33 ",Married,5,CA,CA,Married,5
+,XXX-XX-5087,Mita H,,Patel,1346 Sandpiper Ln,,Corona,CA,92881,,9/17/1975,H,9/12/2006,Bi-weekly,WCOVINA BTC,$10.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-4483,Birju,,Patel,245 W Loraine St.,# 328,Glendale,CA,91202,,10/13/1988,H,8/29/2016,Bi-weekly,WCOVINA BTC,$10.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-5323,Vanechay,,Phafong,20615 Vanowen St,Apt # 107,Canoga Park,CA,91306,,9/23/1983,H,2/15/2017,Bi-weekly,TOPANGA MGR,$15.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-7593,Anupa,,Pokharel,1059 Wisteria Circle,,Santa Fe Springs,CA,90670,,12/6/1995,H,11/21/2016,Bi-weekly,MBELLO BTC,$10.50 ,Single,0,CA,CA,Single,0
+,XXX-XX-7788,Sangita,,Poudel,7317 Wilson Circle,,Buena Park,CA,90620,,7/3/1965,S,11/1/2005,Bi-weekly,ACCOUNTING,"$2,166.67 ",Married,1,CA,CA,Married,1
+,XXX-XX-2865,Glenda,,Price,629 87th Street,,Los Angeles,CA,90002,,9/5/1994,H,5/21/2016,Bi-weekly,WSIDE BTD,$10.50 ,Single,2,CA,CA,Single,2
+,XXX-XX-6012,Soon A,,Quah,12710 Beverly Blvd,,Whittier,CA,90601,,10/23/1974,S,2/1/2001,Bi-weekly,OPERATION,"$3,625.00 ",Single,0,CA,CA,Single,0
+,XXX-XX-9027,Rama,,Rai,301 Heather Way,,South San Francisco,CA,94080,,1/18/1960,H,11/3/2011,Bi-weekly,SMONTE BTC,$12.00 ,Married,0,CA,CA,Married,0
+,XXX-XX-1745,Celina N,,Ramirez,16523 Richvale Drive,,Whittier,CA,90604,,1/20/1993,H,11/2/2015,Bi-weekly,SANA BTC,$11.50 ,Single,2,CA,CA,Single,2
+,XXX-XX-2741,Shree Devi,,Rana,1522 W 62nd St,,Los Angeles,CA,90047,,8/26/1990,H,7/1/2014,Bi-weekly,WSIDE BTC,$11.00 ,Married,0,CA,CA,Married,0
+,XXX-XX-4637,Preeti,,Rijal,16031 Pioneer Blvd,Apt # G 11,Norwalk,CA,90650,,1/29/1993,H,1/11/2016,Bi-weekly,SANITA BTC,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-5850,Daniela,,Rivas,795 Walnut Cove,,Colton,CA,92324,,2/5/1994,H,6/15/2016,Bi-weekly,WCOVINA BTC,$11.00 ,Single,2,CA,CA,Single,2
+,XXX-XX-6831,Ashlie N,,Ruiz,387 S. Gless St.,Apt # 322,Los Angeles,CA,90033,,10/15/1990,H,8/11/2015,Bi-weekly,MBELLO BTC,$11.00 ,Single,2,CA,CA,Single,2
+,XXX-XX-8534,Sanjay,,Sabarwal,11959 Ashworth St,,Artesia,CA,90701,,1/22/1972,S,1/8/2003,Bi-weekly,OWNER,"$4,083.33 ",Married,2,CA,CA,Married,2
+,XXX-XX-2624,Indumati,,Savalia,7598 Sullivan Pl,,Buena Park,CA,90621,,1/2/1975,H,4/5/2004,Bi-weekly,SBAY BTC,$11.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-4039,Sunita,,Savalia,7344 Contry Fair Dr.,,Corona,CA,92880,,6/1/1974,H,9/20/2006,Bi-weekly,RANCHO BTC,$10.50 ,Married,4,CA,CA,Married,4
+,XXX-XX-4320,Bhanuben Bharat,,Savaliya,6970 Faculty Circle,Apt# A,Buena Park,CA,90621,,6/1/1971,H,8/31/2015,Bi-weekly,LWOOD BTC,$10.50 ,Married,0,CA,CA,Married,0
+,XXX-XX-2422,Mona,,Shah,13044 Brazil Street,,Cerritos,CA,90703,,10/22/1965,H,3/27/2001,Bi-weekly,ARTESIA BTC,$11.00 ,Married,5,CA,CA,Married,5
+,XXX-XX-4778,Tejal,,Shah,13626 Carneby St.,,Cerritos,CA,90703,,3/25/1970,H,3/9/2010,Bi-weekly,LWOOD BTC,$10.50 ,Married,8,CA,CA,Married,8
+,XXX-XX-8820,Afsaneh,,Shahrad,20316 Angelina Pl,,Woodland Hills,CA,91364,,10/28/1966,H,3/15/2016,Bi-weekly,WSIDE BTC,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-8500,Heena,,Sheladia,17110 Ely Avenue,,Cerritos,CA,90703,,12/31/1974,H,2/16/2014,Bi-weekly,STWOOD BTC,$10.50 ,Married,5,CA,CA,Married,5
+,XXX-XX-8736,Sasa,,Shrestha,5991 Lemon Ave,,Cypress,CA,90630,,5/6/1973,H,4/26/2006,Bi-weekly,STWOOD BTC,$10.50 ,Married,2,CA,CA,Married,2
+,XXX-XX-2073,Tika L,,Shrestha,18506 Devlin Ave.,,Artesia,CA,90701,,1/4/1975,H,9/20/2006,Bi-weekly,LWOOD BTC,$11.00 ,Married,1,CA,CA,Married,1
+,XXX-XX-6056,Jyoti M,,Shrestha,7233 Loma Verda Ave.,#106,Canoga Park,CA,91303,,7/1/1969,H,6/13/2007,Bi-weekly,TOPANGA BTC,$10.50 ,Married,1,CA,CA,Married,1
+,XXX-XX-2539,Matina Maharjan,,Singh,10730 Church St,Apt # 90,Rancho Cucamonga,CA,91730,,12/20/1981,H,5/9/2006,Bi-weekly,RANCHO BTC,$10.50 ,Married,2,CA,CA,Married,2
+,XXX-XX-0343,Dipa,,Subedi,3603 Colegrove St,,San Mateo,CA,94403,,3/15/1993,H,11/7/2016,Bi-weekly,SMONTE BTC,$12.00 ,Married,2,CA,CA,Married,2
+,XXX-XX-9736,Tooba,,Tariq,10428 Canoga Ave,# 101,Chatsworth,CA,91311,,6/22/1982,H,5/21/2015,Bi-weekly,TOPANGA BTC,$11.00 ,Married,7,CA,CA,Married,7
+,XXX-XX-1515,Sadiya,,Tayyaba,1708 E. Glenoaks Blv,# 7,Glendale,CA,91206,,1/28/1979,H,8/7/2013,Bi-weekly,GDALE BTC,$10.50 ,Single,2,CA,CA,Single,2
+,XXX-XX-0118,Ranjanbala J,,Thanki,17622 Summel Ave,,Artesia,CA,90701,,3/6/1980,H,9/29/2015,Bi-weekly,CERRITOS BTC,$10.50 ,Married,3,CA,CA,Married,3
+,XXX-XX-1911,Jeniffer,,Valdez Perez,12736 Kalnor Ave,# 19,Norwalk,CA,90650,,9/14/1994,H,3/31/2017,Bi-weekly,ARTESIA BTD,$11.00 ,Single,1,CA,CA,Single,1
+,XXX-XX-5355,Alyssa,,Vega,11205 Ferina St,# 14,Norwalk,CA,90650,,3/25/1996,H,3/31/2017,Bi-weekly,STWOOD BTD,$10.50 ,Single,1,CA,CA,Single,1
+,XXX-XX-4620,Geetu,,Verma,18427 Studebaker Road,Apt. 171,Cerritos,CA,90703,,9/5/1989,H,4/1/2011,Bi-weekly,ARTESIA MGR,$14.00 ,Married,1,CA,CA,Married,1
+,XXX-XX-3418,Victor,,Villa,2971 N Main Street,Apt # 207,Walnut Creek,CA,94597,,6/17/1988,H,11/5/2011,Bi-weekly,SMONTE MGR,$23.50 ,Single,4,CA,CA,Single,4
+,XXX-XX-7785,Ammie,,Villareal,139 Carr Dr,Apt # 2,Glendale,CA,91205,,6/6/1993,H,4/1/2016,Bi-weekly,GDALE BTD,$10.50 ,Single,0,CA,CA,Single,0
+,XXX-XX-4504,Kawal,,Vyas,17101 Coolfield Dr,,Covina,CA,91722,,8/22/1985,H,11/21/2016,Bi-weekly,SANITA BTC,$10.50 ,Married,2,CA,CA,Married,2
+,XXX-XX-4139,Kiara I,,Zapata,1007 E Lomita Ave,Apt. 215,Glendale,CA,91205,,7/23/1994,H,3/25/2015,Bi-weekly,GDALE MGR,$13.00 ,Single,0,CA,CA,Single,0
+,XXX-XX-2127,Lesley,,Zunigo,615 S Eastmont Ave,,Los Angeles,CA,90022,,4/30/1998,H,3/2/2017,Bi-weekly,STWOOD BTD,$10.50 ,Single,0,CA,CA,Single,0

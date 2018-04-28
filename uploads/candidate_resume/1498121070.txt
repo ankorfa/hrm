@@ -1,0 +1,21 @@
+https://www.bluehost.com/
+
+User Name : hrcsoftc
+
+Password : Nadia7277!
+
+Host : http://hrcsoft.com/
+
+DB Name : hrcsoftc_us_hrm
+
+DB User Name : hrcsoftc_us_hrm
+
+DB Password :ushrm123
+
+=============** DEMO **================
+
+DB Name : hrcsoftc_demo_hrm_db
+
+DB user : hrcsoftc_demo_hr
+
+DB Password : demo#hr
