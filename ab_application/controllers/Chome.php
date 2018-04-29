@@ -32,6 +32,7 @@ class Chome extends CI_Controller {
         //echo $this->Hr_login->logout();
         
         //echo CI_VERSION;
+        //echo CI_VERSION;
 
         //if ($this->user_id) {
             //if ($this->hr_login->is_logged_in()) {
