@@ -20,7 +20,7 @@
                                     Opening Position Information
                                 </div>
                                 <div class="panel-body">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive"> 
 
                                         <table id="PersonalInformation" class="table table-responsive table-striped table-bordered table-hover">
                                             <tbody>
