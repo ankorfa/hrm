@@ -195,10 +195,12 @@
         placeholder: "Select Employment Status",
         allowClear: true,
     });
+    
     $("#priority").select2({
         placeholder: "Select Priority",
         allowClear: true,
     });
+    
     $("#approver_id").select2({
         placeholder: "Select Approver",
         allowClear: true,
