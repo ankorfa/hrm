@@ -369,7 +369,7 @@ class Sendmail_model extends CI_Model {
     }
     
     
-    public function candidate_mail($name,$to_email) { 
+    public function candidate_mail($name,$to_email) {  
         
         $config['useragent']    = 'CodeIgniter';
         $config['protocol']     = 'smtp';

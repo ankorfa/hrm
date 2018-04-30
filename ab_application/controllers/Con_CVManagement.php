@@ -191,8 +191,8 @@ class Con_CVManagement extends CI_Controller {
         $this->load->view('admin/home', $param); 
     }
     
-    public function update_CVManagement() 
-    {
+    public function update_CVManagement(){
+        
         $this->form_validation->set_rules('requisition_id', 'Requisition ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('candidate_first_name', 'Candidate First Name','required',array('required'=> "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('candidate_last_name', 'Candidate Last Name','required',array('required'=> "Please the enter required field, for more Info : %s."));
