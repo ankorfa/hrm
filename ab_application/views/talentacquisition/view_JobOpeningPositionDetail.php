@@ -9,9 +9,7 @@
         </div>
 
         <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;">
-
             <div class="col-md-11 col-md-offset-0" style="margin-top: 10px">
-
                 <div id="employee_review_div">   
                     <div class="row">
                         <div class="col-lg-12">
@@ -145,9 +143,7 @@
                     <a class="btn btn-danger" href="<?php echo base_url() . "Con_OpeningsPositions" ?>">Close</a>
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
 
@@ -189,10 +185,12 @@
         placeholder: "Select Position",
         allowClear: true,
     });
+    
     $("#reporting_manager_id").select2({
         placeholder: "Select Reporting Manager",
         allowClear: true,
     });
+    
     $("#employment_status_id").select2({
         placeholder: "Select Employment Status",
         allowClear: true,
