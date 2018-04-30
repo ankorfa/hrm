@@ -31,6 +31,8 @@ class Con_CVManagement extends CI_Controller {
         $this->module_data = $this->session->userdata('active_module_id');
         $this->module_id =$this->module_data['module_id'];
         
+        $this->load->model('Sendmail_model');
+        
     }
 
     public function index() {
@@ -155,6 +157,9 @@ class Con_CVManagement extends CI_Controller {
             );
             
             $res=$this->Common_model->insert_data('main_cv_management',$data);
+            
+            $res = $this->Sendmail_model->candidate_mail($this->input->post('candidate_first_name'),$this->input->post('candidate_email'));
+            $res = $this->Sendmail_model->candidate_mail($this->input->post('candidate_first_name'),$this->input->post('candidate_email'));
             
             if ($res) {
                 echo $this->Common_model->show_massege(0,1);
