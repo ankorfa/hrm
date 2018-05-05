@@ -180,16 +180,26 @@ class Con_MenuList extends CI_Controller {
     public function set_root_dropdown() {
         $id = $this->uri->segment(3);
 
-        if ($this->user_type == 2) {
-            $query = $this->Common_model->get_selected_row('main_menu', array('root_menu' => 0, 'module_id' => $id, 'company_id' => $this->company_id));
-        } else {
-            $query = $this->Common_model->get_selected_row('main_menu', array('root_menu' => 0, 'module_id' => $id));
-        }
+        //if ($this->user_type == 2) {
+            //$query = $this->db->get_where('main_menu', array('root_menu' => 0, 'module_id' => $id, 'company_id' => $this->company_id));
+        //} else {
+            $query = $this->db->get_where('main_menu', array('root_menu' => 0, 'module_id' => $id));
+        //}
+        //echo $this->db->last_query();
 
-        echo "<option></option>";
-        foreach ($query->result() as $key):
-            echo print"<option value='" . $key->id . "'>" . $key->menu_name . "</option>";
-        endforeach;
+//        print"<option></option>";
+//        foreach ($query->result() as $key):
+//           print"<option value='" . $key->id . "'>" . $key->menu_name . "</option>";
+//        endforeach;
+        
+        print"<option></option>";
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                print"<option value=" . $row->id . ">" . $row->menu_name . "</option>";
+            }
+        } else {
+            echo"<option> No Menu Added </option>";
+        }
     }
     
     public function set_sub_root_dropdown() {

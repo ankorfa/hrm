@@ -78,7 +78,7 @@ function load_drop_down(id, url, div, placeholder) {
         $('#' + div).html(data);
 
     });
-    event.preventDefault();
+    //event.preventDefault();
 
 }
 

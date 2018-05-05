@@ -1,7 +1,7 @@
 <script>
     var base_url='<?php echo base_url(); ?>';
-    var murl=base_url + './con_MenuList/set_root_dropdown/';
-    var url=base_url + './con_MenuList/set_sub_root_dropdown/';
+    var murl=base_url + './Con_MenuList/set_root_dropdown/';
+    var url=base_url + './Con_MenuList/set_sub_root_dropdown/';
 </script>
 <div class="col-md-10 main-content-div">
     <div class="main-content">
@@ -17,7 +17,7 @@
             <?php
             if ($type == 1) {//entry
                 ?>
-            <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>con_MenuList/save_menulist" enctype="multipart/form-data" role="form" >
+            <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_MenuList/save_menulist" enctype="multipart/form-data" role="form" >
                     <input type="hidden" value="" name="id"/>
                     <div class="row">
                         <div class="col-md-3 col-sm-6 find_mar">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-3 col-sm-6 find_mar">
                             <label class="control-label pull-left">Module</label>
-                            <select name="module_id" id="module_id" class="col-sm-12 col-xs-12 myselect2 input-sm" onchange="load_drop_down(this.value,murl,'root_menu','Root Menu');">
+                            <select name="module_id" id="module_id" class="col-sm-12 col-xs-12 myselect2 input-sm" onchange="load_root_menu(this.value);">
                                 <option></option>
                                 <?php
                                 foreach ($main_module_query->result() as $key):
@@ -84,7 +84,7 @@
                 <?php
             } else if ($type == 2) {//edit
                 ?>
-            <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>con_MenuList/edit_MenuList" enctype="multipart/form-data" role="form" >
+            <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_MenuList/edit_MenuList" enctype="multipart/form-data" role="form" >
                     <?php foreach ($query->result() as $row): ?> 
                         <input type="hidden" value="<?php echo $row->id ?>" name="id"/>
                         <div class="row">
@@ -209,6 +209,25 @@
             event.preventDefault();
         });
     }); 
+    
+    function load_root_menu(id) {
+
+        $.ajax({
+            url: "<?php echo site_url('Con_MenuList/set_root_dropdown/') ?>/" + id,
+            async: false,
+            type: "POST",
+            success: function (data) {
+                
+                $('#root_menu').html("");
+                $('#root_menu').html(data);
+                
+                $("#root_menu").select2({
+                    placeholder: "Select root menu",
+                    allowClear: true,
+                });
+            }
+        });
+    }
     
 </script>
 <!--=== End Script ===-->

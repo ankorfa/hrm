@@ -22,7 +22,7 @@ if ($user_type == 1) {//1 for Self user
     $this->load->view($left_menu, $param);
     $this->load->view($content, $param);
     $this->load->view('uni_template/footer_min.php');
-} else if ($user_type == 3) {//3 for System Admin
+} else if ($user_type == 3 ) {//3 for System Admin
     //echo "===".$module_id;
     if ($module_id == 0) {
         $param['title'] = 'HRM';
@@ -37,6 +37,14 @@ if ($user_type == 1) {//1 for Self user
         $this->load->view($content, $param);
         $this->load->view('uni_template/footer_min.php');
     }
+} 
+else if ($user_type == 4) {//4 for System Admin
+  
+        $param['title'] = 'HRM';
+        $this->load->view('uni_template/sadmin_header.php', $param);
+        $this->load->view($left_menu, $param);
+        $this->load->view($content, $param);
+        $this->load->view('uni_template/footer_min.php');
 } else {
     $param['title'] = 'HRM';
     $this->load->view('uni_template/login_header.php', $param);

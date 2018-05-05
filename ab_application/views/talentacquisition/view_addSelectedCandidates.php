@@ -10,7 +10,7 @@
 
         <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;">
             
-<!--            <div class="row text-center">
+<!--        <div class="row text-center">
                 <div class="col-md-1 col-md-offset-5" id='lodingbox' style=" position: absolute; z-index: 9999 !important; box-shadow: 5px 5px 5px rgba(0,0,0,.15);"> </div>
             </div>-->
             
@@ -101,7 +101,8 @@
                                     echo $interviewer;
                                     //echo $rowi->interviewer 
                                             
-                                            ?></td>
+                                    ?>
+                                    </td>
                                     <th>Time : </th>
                                     <td><?php echo $rowi->interview_time ?></td>
                                 </tr>

@@ -17,21 +17,25 @@
                         <input type="hidden" value="" name="id"/>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Requisition Id </label>
-                            <div class="col-sm-4">                            
+                            <div class="col-sm-10">                            
                                 <input type="text" name="requisition_code" id="requisition_code" class="form-control input-sm" placeholder="Requisition Id" readonly />
                             </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">Requisitions Date<span class="req"/> </label>
-                            <div class="col-sm-4">                            
+                            <div class="col-sm-10">                            
                                 <input type="text" name="requisitions_date" id="requisitions_date" class="form-control dt_pick input-sm" placeholder="Requisitions Date " autocomplete="off" />
                             </div>
                         </div>
-                        <div class="form-group no-margin">
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">Due Date<span class="req"/> </label>
-                            <div class="col-sm-4">                            
+                            <div class="col-sm-10">                            
                                 <input type="text" name="due_date" id="due_date" class="form-control dt_pick_m input-sm" placeholder="Due Date" autocomplete="off" />
                             </div>
+                        </div>
+                        <div class="form-group no-margin">
                             <label class="col-sm-2 control-label">Location</label>
-                            <div class="col-sm-4">                            
+                            <div class="col-sm-10">                            
                                 <select name="location_id" id="location_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                     <option></option>
                                     <?php
@@ -46,7 +50,7 @@
                         </div>
                         <div class="form-group no-margin">
                             <label class="col-sm-2 control-label">Department<span class="req"/></label>
-                            <div class="col-sm-4">                            
+                            <div class="col-sm-10">                            
                                 <select name="department_id" id="department_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                     <option></option>
                                     <?php
@@ -58,8 +62,10 @@
                                     ?>
                                 </select> 
                             </div>
+                        </div>
+                        <div class="form-group no-margin">
                             <label class="col-sm-2 control-label">Position<span class="req"/></label>
-                            <div class="col-sm-4">                            
+                            <div class="col-sm-10">                            
                                 <select name="position_id" id="position_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                     <option></option>
                                     <?php
@@ -74,7 +80,7 @@
                         </div>
                         <div class="form-group no-margin">
                             <label class="col-sm-2 control-label">Reporting Manager</label>
-                            <div class="col-sm-4">                           
+                            <div class="col-sm-10">                           
                                 <select name="reporting_manager_id" id="reporting_manager_id" class="col-sm-12 col-xs-12 myselect2 input-sm">
                                     <option></option>
                                     <?php
@@ -86,8 +92,10 @@
                                     ?>
                                 </select> 
                             </div>
+                        </div>
+                        <div class="form-group no-margin">
                             <label class="col-sm-2 control-label">Employee Category<span class="req"/></label>
-                            <div class="col-sm-4">                           
+                            <div class="col-sm-10">                           
                                 <select name="employee_category" id="employee_category" class="col-sm-12 col-xs-12 myselect2 input-sm">
                                     <option></option>
                                     <?php
@@ -101,9 +109,9 @@
                                 </select> 
                             </div>                            
                         </div> 
-                        <div class="form-group ">                         
-                            <label class="col-sm-2 control-label">Wages </label>
-                            <div class="col-sm-4">                           
+                        <div class="form-group no-margin">                         
+                            <label class="col-sm-2 control-label"> Wages </label>
+                            <div class="col-sm-10">                           
                                 <select name="wages" id="wages" onchange="show_hourly_rate(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                     <?php
                                     $wages_array = array(1 => 'Salary', 2 => 'Hourly');
@@ -112,21 +120,23 @@
                                         <option value="<?php echo $wkeyyy ?>"><?php echo $wvalll ?></option>
                                     <?php endforeach; ?>
                                 </select>
-                            </div>      
-                            <label class="col-sm-2 control-label">Salary Range</label>
-                            <div class="col-sm-4">                           
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-2 control-label"> Salary Range</label>
+                            <div class="col-sm-10">                           
                                 <input type="text" name="salary_range" id="salary_range" class="form-control input-sm" placeholder=" Salary Range ( $ ) " />
                             </div> 
                         </div>
                         <div class="form-group hidden" id="hourly_rate_div">                         
-                            <label class="col-sm-2 control-label">Hourly Rate </label>
-                            <div class="col-sm-4">                           
+                            <label class="col-sm-2 control-label"> Hourly Rate </label>
+                            <div class="col-sm-10">                           
                                 <input type="text" name="hourly_rate" id="hourly_rate" class="form-control input-sm" placeholder="Hourly Rate ( $ ) " />
                             </div> 
                         </div>
-                        <div class="form-group "> 
-                            <label class="col-sm-2 control-label">Posting</label>
-                            <div class="col-sm-4">                           
+                        <div class="form-group no-margin"> 
+                            <label class="col-sm-2 control-label"> Posting </label>
+                            <div class="col-sm-10">                           
                                 <select name="posting" id="posting" class="col-sm-12 col-xs-12 myselect2 input-sm">
                                     <option></option>
                                     <?php
@@ -138,15 +148,17 @@
                                     endforeach;
                                     ?>
                                 </select> 
-                            </div>       
-                            <label class="col-sm-2 control-label">No. of Positions </label>
-                            <div class="col-sm-4">                           
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-2 control-label"> No. of Positions </label>
+                            <div class="col-sm-10">                           
                                 <input type="text" name="no_of_positions" id="no_of_positions" class="form-control input-sm" placeholder="Required no. of Positions" />
                             </div> 
                         </div>
-                        <div class="form-group "> 
-                            <label class="col-sm-2 control-label">Hire Reason</label>
-                            <div class="col-sm-4">                           
+                        <div class="form-group no-margin"> 
+                            <label class="col-sm-2 control-label"> Hire Reason</label>
+                            <div class="col-sm-10">                           
                                 <select name="hire_reason" id="hire_reason" onchange="select_rep_emp(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm"> 
                                     <option></option>
                                     <?php
@@ -158,9 +170,11 @@
                                     endforeach;
                                     ?>
                                 </select> 
-                            </div>       
-                            <label class="col-sm-2 control-label">Employee Name </label>
-                            <div class="col-sm-4"> 
+                            </div>
+                        </div>
+                        <div class="form-group no-margin">
+                            <label class="col-sm-2 control-label"> Employee Name </label>
+                            <div class="col-sm-10"> 
                                 <select name="replacing_emp" id="replacing_emp" class="col-sm-12 col-xs-12 myselect2 input-sm" disabled="disabled">
                                     <option></option>
                                     <?php
@@ -174,8 +188,8 @@
                             </div> 
                         </div>
                         <div class="form-group no-margin">                        
-                            <label class="col-sm-2 control-label">Employment Status</label>
-                            <div class="col-sm-4">                           
+                            <label class="col-sm-2 control-label"> Employment Status</label>
+                            <div class="col-sm-10">                           
                                 <select name="employment_status_id" id="employment_status_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                     <option></option>
                                     <?php
@@ -187,8 +201,10 @@
                                     ?>
                                 </select> 
                             </div>
-                            <label class="col-sm-2 control-label">Priority</label>
-                            <div class="col-sm-4">                            
+                        </div>
+                        <div class="form-group no-margin">   
+                            <label class="col-sm-2 control-label"> Priority</label>
+                            <div class="col-sm-10">                            
                                 <select name="priority" id="priority" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                     <option></option>
                                     <?php
@@ -202,34 +218,38 @@
                             </div>
                         </div>
                         <div class="form-group ">                         
-                            <label class="col-sm-2 control-label">Qualification</label>
-                            <div class="col-sm-4">                            
+                            <label class="col-sm-2 control-label"> Qualification</label>
+                            <div class="col-sm-10">                            
                                 <input type="text" name="required_qualification" id="required_qualification" class="form-control input-sm" placeholder="Required Qualification" />
-                            </div> 
-                            <label class="col-sm-2 control-label">Experience Range</label>
-                            <div class="col-sm-4">                            
+                            </div>
+                        </div>
+                        <div class="form-group "> 
+                            <label class="col-sm-2 control-label"> Experience Range</label>
+                            <div class="col-sm-10">                            
                                 <input type="text" name="experience_range" id="experience_range" class="form-control input-sm" placeholder="Required Experience Range" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Job Description</label>
-                            <div class="col-sm-4">                            
+                            <label class="col-sm-2 control-label"> Job Description</label>
+                            <div class="col-sm-10">                            
                                 <textarea class="form-control" rows="1" id="job_description" name="job_description"></textarea>
                             </div> 
-                            <label class="col-sm-2 control-label">Required Skills</label>
-                            <div class="col-sm-4">                            
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"> Required Skills</label>
+                            <div class="col-sm-10">                            
                                 <textarea class="form-control" rows="1" id="required_skills" name="required_skills"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Position Description</label>
-                            <div class="col-sm-4">                           
+                            <label class="col-sm-2 control-label"> Position Description</label>
+                            <div class="col-sm-10">                           
                                 <textarea class="form-control" rows="1" id="position_description" name="position_description"></textarea>
                             </div>                        
                         </div>
                         
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Posting Text</label>
+                            <label class="col-sm-2 control-label"> Posting Text</label>
                             <div class="col-sm-10">
                                 <textarea name="posting_text" id="posting_text" class="ckeditor"></textarea>
                                 <textarea name="job_posting_text" id="job_posting_text" style="display:none;"></textarea>
@@ -249,23 +269,28 @@
                     <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Job_Requisition/update_job_Requisition" enctype="multipart/form-data" role="form" >
                         <?php foreach ($OpeningsPositions_query->result() as $row): ?> 
                             <input type="hidden" value="<?php echo $row->id ?>" name="id"/>
+                            
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Requisition Id </label>
-                                <div class="col-sm-4">                            
+                                <div class="col-sm-10">                            
                                     <input type="text" name="requisition_code" id="requisition_code" value="<?php echo $row->requisition_code ?>" class="form-control input-sm" placeholder="Requisition Id" readonly />
                                 </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Requisitions Date<span class="req"/> </label>
-                                <div class="col-sm-4">                            
+                                <div class="col-sm-10">                            
                                     <input type="text" name="requisitions_date" id="requisitions_date" value="<?php echo $this->Common_model->show_date_formate($row->requisitions_date) ?>" class="form-control dt_pick input-sm" placeholder="Requisitions Date " autocomplete="off" />
                                 </div>
                             </div>
-                            <div class="form-group no-margin">
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Due Date<span class="req"/> </label>
-                                <div class="col-sm-4">                           
+                                <div class="col-sm-10">                           
                                     <input type="text" name="due_date" id="due_date" value="<?php echo $this->Common_model->show_date_formate($row->due_date) ?>" class="form-control dt_pick_m input-sm" placeholder="Due Date" autocomplete="off" />
                                 </div>
+                            </div>
+                            <div class="form-group no-margin">
                                 <label class="col-sm-2 control-label">Location</label>
-                                <div class="col-sm-4">                            
+                                <div class="col-sm-10">                            
                                     <select name="location_id" id="location_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                         <option></option>
                                         <?php
@@ -280,7 +305,7 @@
                             </div>
                             <div class="form-group no-margin">
                                 <label class="col-sm-2 control-label">Department<span class="req"/></label>
-                                <div class="col-sm-4">                            
+                                <div class="col-sm-10">                            
                                     <select name="department_id" id="department_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                         <option></option>
                                         <?php
@@ -292,8 +317,10 @@
                                         ?>
                                     </select> 
                                 </div>
+                            </div>
+                            <div class="form-group no-margin">
                                 <label class="col-sm-2 control-label">Position<span class="req"/></label>
-                                <div class="col-sm-4">                           
+                                <div class="col-sm-10">                           
                                     <select name="position_id" id="position_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                         <option></option>
                                         <?php
@@ -308,7 +335,7 @@
                             </div>
                             <div class="form-group no-margin">
                                 <label class="col-sm-2 control-label">Reporting Manager</label>
-                                <div class="col-sm-4">                           
+                                <div class="col-sm-10">                           
                                     <select name="reporting_manager_id" id="reporting_manager_id" class="col-sm-12 col-xs-12 myselect2 input-sm">
                                         <option></option>
                                         <?php
@@ -320,8 +347,10 @@
                                         ?>
                                     </select> 
                                 </div>
+                            </div>
+                            <div class="form-group no-margin">
                                 <label class="col-sm-2 control-label">Employee Category<span class="req"/></label>
-                                <div class="col-sm-4">                           
+                                <div class="col-sm-10">                           
                                     <select name="employee_category" id="employee_category" class="col-sm-12 col-xs-12 myselect2 input-sm">
                                         <option></option>
                                         <?php
@@ -335,9 +364,9 @@
                                     </select> 
                                 </div>          
                             </div> 
-                            <div class="form-group ">                         
+                            <div class="form-group no-margin">                         
                                 <label class="col-sm-2 control-label">Wages </label>
-                                <div class="col-sm-4">                           
+                                <div class="col-sm-10">                           
                                     <select name="wages" id="wages" onchange="show_hourly_rate(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                         <?php
                                         $wages_array = array(1 => 'Salary', 2 => 'Hourly');
@@ -351,21 +380,23 @@
                                             show_hourly_rate(<?php echo $row->wages; ?>);
                                         });
                                     </script>
-                                </div>      
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Salary Range</label>
-                                <div class="col-sm-4">                           
+                                <div class="col-sm-10">                           
                                     <input type="text" name="salary_range" id="salary_range" value="<?php echo ucwords($row->salary_range) ?>" class="form-control input-sm" placeholder=" Salary Range ( $ ) " />
                                 </div> 
                             </div>
                             <div class="form-group hidden" id="hourly_rate_div">                         
                                 <label class="col-sm-2 control-label">Hourly Rate </label>
-                                <div class="col-sm-4">                           
+                                <div class="col-sm-10">                           
                                     <input type="text" name="hourly_rate" id="hourly_rate" value="<?php echo ucwords($row->hourly_rate) ?>" class="form-control input-sm" placeholder="Hourly Rate ( $ ) " />
                                 </div> 
                             </div>
-                            <div class="form-group "> 
-                                <label class="col-sm-2 control-label">Posting</label>
-                                <div class="col-sm-4">                           
+                            <div class="form-group no-margin"> 
+                                <label class="col-sm-2 control-label">Posting </label>
+                                <div class="col-sm-10">                           
                                     <select name="posting" id="posting" class="col-sm-12 col-xs-12 myselect2 input-sm">
                                         <option></option>
                                         <?php
@@ -377,15 +408,17 @@
                                         endforeach;
                                         ?>
                                     </select> 
-                                </div>       
-                                <label class="col-sm-2 control-label">No. of Positions </label>
-                                <div class="col-sm-4">                           
+                                </div>
+                            </div>
+                            <div class="form-group"> 
+                                <label class="col-sm-2 control-label"> No. of Positions </label>
+                                <div class="col-sm-10">                           
                                     <input type="text" name="no_of_positions" id="no_of_positions" value="<?php echo ucwords($row->no_of_positions) ?>" class="form-control input-sm" placeholder="Required no. of Positions" />
                                 </div> 
                             </div>
-                            <div class="form-group "> 
-                                <label class="col-sm-2 control-label">Hire Reason</label>
-                                <div class="col-sm-4">                           
+                            <div class="form-group no-margin"> 
+                                <label class="col-sm-2 control-label"> Hire Reason</label>
+                                <div class="col-sm-10">                           
                                     <select name="hire_reason" id="hire_reason" onchange="select_rep_emp(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm"> 
                                         <option></option>
                                         <?php
@@ -397,9 +430,11 @@
                                         endforeach;
                                         ?>
                                     </select> 
-                                </div>       
-                                <label class="col-sm-2 control-label">Employee Name </label>
-                                <div class="col-sm-4"> 
+                                </div>
+                            </div>
+                            <div class="form-group no-margin">
+                                <label class="col-sm-2 control-label"> Employee Name </label>
+                                <div class="col-sm-10"> 
                                     <select name="replacing_emp" id="replacing_emp" class="col-sm-12 col-xs-12 myselect2 input-sm">
                                         <option></option>
                                         <?php
@@ -413,8 +448,8 @@
                                 </div> 
                             </div>
                             <div class="form-group no-margin">                        
-                                <label class="col-sm-2 control-label">Employment Status</label>
-                                <div class="col-sm-4">                            
+                                <label class="col-sm-2 control-label"> Employment Status</label>
+                                <div class="col-sm-10">                            
                                     <select name="employment_status_id" id="employment_status_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                         <option></option>
                                         <?php
@@ -426,8 +461,10 @@
                                         ?>
                                     </select> 
                                 </div>
-                                <label class="col-sm-2 control-label">Priority</label>
-                                <div class="col-sm-4">                            
+                            </div>
+                            <div class="form-group no-margin">
+                                <label class="col-sm-2 control-label"> Priority</label>
+                                <div class="col-sm-10">                            
                                     <select name="priority" id="priority" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                         <option></option>
                                         <?php
@@ -440,33 +477,36 @@
                                     </select> 
                                 </div>
                             </div>
-                            <div class="form-group ">                         
+                            <div class="form-group">                         
                                 <label class="col-sm-2 control-label">Qualification</label>
-                                <div class="col-sm-4">                            
+                                <div class="col-sm-10">                            
                                     <input type="text" name="required_qualification" id="required_qualification" value="<?php echo ucwords($row->required_qualification) ?>" class="form-control input-sm" placeholder="Required Qualification" />
-                                </div> 
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Experience Range</label>
-                                <div class="col-sm-4">                            
+                                <div class="col-sm-10">                            
                                     <input type="text" name="experience_range" id="experience_range" value="<?php echo ucwords($row->experience_range) ?>" class="form-control input-sm" placeholder="Required Experience Range" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Job Description</label>
-                                <div class="col-sm-4">                            
+                                <div class="col-sm-10">                            
                                     <textarea class="form-control" rows="1" id="job_description" name="job_description"><?php echo ucwords($row->job_description) ?></textarea>
-                                </div> 
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Required Skills</label>
-                                <div class="col-sm-4">                            
+                                <div class="col-sm-10">                            
                                     <textarea class="form-control" rows="1" id="required_skills" name="required_skills"><?php echo ucwords($row->required_skills) ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Position Description</label>
-                                <div class="col-sm-4">                           
+                                <div class="col-sm-10">                           
                                     <textarea class="form-control" rows="1" id="position_description" name="position_description"><?php echo ucwords($row->position_description) ?></textarea>
                                 </div>                        
                             </div> 
-                            
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Posting Text</label>
                                 <div class="col-sm-10">
@@ -474,12 +514,10 @@
                                     <textarea name="job_posting_text" id="job_posting_text" style="display:none;"><?php echo $row->job_posting_text ?></textarea>
                                 </div>
                             </div>
-
                             <div class="modal-footer">                        
                                 <button type="submit" id="submit" class="btn btn-u">Save</button>
                                 <a class="btn btn-danger" href="<?php echo base_url() . "Con_Job_Requisition" ?>">Close</a>
                             </div>
-
                         <?php endforeach; ?>
                     </form>
                 </div>
