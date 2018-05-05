@@ -20,7 +20,7 @@
                             <th>Menu Link</th>
                             <th>Module</th>
                             <th>Root Menu</th>
-                            <!--<th>Sequence</th>-->
+                            <th>Sequence</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -36,9 +36,9 @@
                                 print"<td id='catE" . $pdt . "'>" . $row->menu_link . "</td>";
                                 print"<td id='catE" . $pdt . "'>" . $this->Common_model->get_name($this,$row->module_id,'main_module','module_name'). "</td>";
                                 print"<td id='catE" . $pdt . "'>" . $this->Common_model->get_name($this,$row->root_menu,'main_menu','menu_name') . "</td>";
-//                                print"<td id='catE" . $pdt . "'>" . $row->sequence . "</td>";
-                                print"<td id='catE" . $pdt . "'>" . $status_array[$row->isactive] . "</td>";
-                                print"<td><div class='action-buttons '><a href='" . base_url() . "con_MenuList/edit_entry/" . $row->id . "/" . $row->menu_name . "' ><i class='fa fa-pencil-square-o'>&nbsp;&nbsp;</i></a><a href='javascript:void(0)' onclick='delete_data(". $row->id .")'><i class='fa fa-trash-o'></i></a></div> </td>";
+                                print"<td style='text-align: right;' id='catE" . $pdt . "'>" . $row->sequence . "</td>";
+                                print"<td id='catE" . $pdt . "'>" . $status_array[$row->isactive] . " &nbsp;</td>";
+                                print"<td><div class='action-buttons '><a href='" . base_url() . "Con_MenuList/edit_entry/" . $row->id . "/" . $row->menu_name . "' ><i class='fa fa-pencil-square-o'>&nbsp;&nbsp;</i></a><a href='javascript:void(0)' onclick='delete_data(". $row->id .")'><i class='fa fa-trash-o'></i></a></div> </td>";
                                 print"</tr>";
                             }
                         }

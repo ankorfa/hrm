@@ -41,7 +41,7 @@
                         </div> 
                         <div class="col-md-3 col-sm-6 find_mar">
                             <label class="control-label pull-left">Root Menu</label>
-                            <select name="root_menu" id="root_menu" class="col-sm-12 col-xs-12 myselect2 input-sm" onchange="load_drop_down(this.value,url,'sub_root_menu','Sub Root Menu');" >
+                            <select name="root_menu" id="root_menu" class="col-sm-12 col-xs-12 myselect2 input-sm" onchange="load_sub_root_menu(this.value);" >
                                 <option></option>
                                 <?php
                                 //foreach ($main_menu_query->result() as $key):
@@ -198,11 +198,8 @@
                 data: $("#sky-form11").serialize(),
                 type: $(this).attr('method')
               }).done(function(data) {
-                   
-                //window.location.reload();
-//                $('#sky-form11')[0].reset();
 
-                var url='<?php echo base_url() ?>con_MenuList';
+                var url='<?php echo base_url() ?>Con_MenuList';
                 view_message(data,url,'','sky-form11');
                    
               });
@@ -222,6 +219,24 @@
                 $('#root_menu').html(data);
                 
                 $("#root_menu").select2({
+                    placeholder: "Select root menu",
+                    allowClear: true,
+                });
+            }
+        });
+    }
+    function load_sub_root_menu(id) {
+
+        $.ajax({
+            url: "<?php echo site_url('Con_MenuList/set_sub_root_dropdown/') ?>/" + id,
+            async: false,
+            type: "POST",
+            success: function (data) {
+                
+                $('#sub_root_menu').html("");
+                $('#sub_root_menu').html(data);
+                
+                $("#sub_root_menu").select2({
                     placeholder: "Select root menu",
                     allowClear: true,
                 });
