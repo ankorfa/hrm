@@ -19,7 +19,7 @@ class Con_Admin_Dashbord extends CI_Controller {
         parent::__construct();
                 
         if( !$this->session->userdata('hr_logged_in') ) {
-            redirect('chome/logout', 'refresh');
+            redirect('Chome/logout', 'refresh');
         }
         
         $this->user_data = $this->session->userdata('hr_logged_in');

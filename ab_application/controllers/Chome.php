@@ -37,7 +37,11 @@ class Chome extends CI_Controller {
         //if ($this->user_id) {
             //if ($this->hr_login->is_logged_in()) {
         if ($this->session->userdata('hr_logged_in')) {
-            redirect('Con_dashbord/', 'refresh');
+            if ($this->user_type== 3) {
+                redirect('Con_Admin_Dashbord/', 'refresh');
+            } else {
+                redirect('Con_dashbord/', 'refresh');
+            }
         } else {
             //echo $this->Common_model->decrypt('Z5qlk5qY');
             //echo $this->Common_model->encrypt('123456');
