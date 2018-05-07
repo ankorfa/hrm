@@ -37,10 +37,14 @@ class Con_Admin_Dashbord extends CI_Controller {
         $this->module_id = $this->module_data['module_id'];
     }
 
-    public function index() {
+    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('company_idd' => '')) {
         if (!$this->user_id) {
             redirect('Chome/logout', 'refresh');
         } else {
+            
+            $param['show_result'] = $show_result;
+            $param['search_ids'] = $search_ids;
+            $param['search_criteria'] = $search_criteria;
             
             if ($this->user_group == 12) {//Company User
                 $uquery = $this->db->get_where('main_users', array('parent_user' => $this->parent_user, 'user_group' => $this->user_group, 'company_id !=' => 0));
@@ -56,10 +60,10 @@ class Con_Admin_Dashbord extends CI_Controller {
             if(!empty($ids))
             {
                 $this->db->where_in('id', $ids);
-                $param['query']=$this->db->get_where('main_company', array());
+                $param['com_query']=$this->db->get_where('main_company', array());
             }
             else {
-                $param['query']=$this->db->get_where('main_company', array());
+                $param['com_query']=$this->db->get_where('main_company', array());
             }
             
             $param['corporation_type']=$this->Common_model->get_array('corporation_type');
@@ -82,6 +86,38 @@ class Con_Admin_Dashbord extends CI_Controller {
             $this->load->view('admin/home', $param);
             
         }
+    }
+    
+    public function search_company() {
+        
+        $ids = $search_criteria = array();
+
+        $search_criteria['company_idd'] = $company_idd = $this->input->post('company_idd');
+
+        if (($company_idd != '')) {
+     
+            $this->db->select('id as com_id');
+            $this->db->from('main_company');
+            
+            if ($this->user_group == 11 || $this->user_group == 12) {
+                $this->db->where('id', $this->company_id);
+            } else {
+                $this->db->where('user_id', $this->user_id);
+            }
+
+            /* ----Conditions---- */
+            if ($company_idd != '') {
+                $this->db->where('id', $company_idd);
+            }
+           
+            $ids = $this->db->get()->result_array();
+            
+        }
+
+        $ids = array_column($ids, 'com_id');
+
+        $this->index($this->uri->segment(3), TRUE, $ids, $search_criteria);
+        
     }
 
 

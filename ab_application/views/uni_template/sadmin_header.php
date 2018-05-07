@@ -256,8 +256,8 @@ $user_group = $log_data['user_group'];
                         <div class="container">
                             <div class="row">						
                                 <!-- Top Menu -->
-                                <ul class="nav navbar-nav">&nbsp;
-                                    <?php ?>
+                                <ul class="nav navbar-nav">
+                                    <li><a  href="" >Company List</a></li>
                                 </ul>
                                 <!-- End Top Menu -->
                             </div>
