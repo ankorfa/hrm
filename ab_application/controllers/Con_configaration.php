@@ -77,11 +77,10 @@ class Con_configaration extends CI_Controller {
 
     public function add_company_setting() {
         if (!$this->user_id) {
-            redirect('chome/logout', 'refresh');
+            redirect('Chome/logout', 'refresh');
         }
 
-        //$this->session->unset_userdata('company');
-        //$this->company_settings_id="";
+        if(!$this->module_id)$this->module_id=0;
 
         $param['state_query'] = $this->Common_model->listItem('main_state');
         $param['module_id'] = $this->module_id;

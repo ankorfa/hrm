@@ -182,5 +182,10 @@
         });
        
     });
+    
+    function edit_row(id)
+    {
+        window.location = base_url + "Con_configaration/edit_company_setting/" + id;
+    }
   
 </script>

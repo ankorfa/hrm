@@ -769,15 +769,17 @@ class Common_model extends CI_Model {
         return $output;
     }
     
-     public function get_header_module_name($the,$module_id) {
+     public function get_header_module_name($the, $module_id) {
 
         if ($module_id) {
-            $data = '<a href="'. base_url() . $the->Common_model->get_name($the, $module_id, "main_module", "module_link") . '">'. $the->Common_model->get_name($the, $module_id, "main_module", "module_name") .'</a>';
+            $data = '<a href="' . base_url() . $the->Common_model->get_name($the, $module_id, "main_module", "module_link") . '">' . $the->Common_model->get_name($the, $module_id, "main_module", "module_name") . '</a>';
             return $data;
+        } else {
+            return FALSE;
         }
         exit();
     }
-    
+
     public function employee_wage_compensation($the,$employee_id, $Position, $wages, $wage_houre, $PayType, $rate) {
 
         if ($employee_id != "") {

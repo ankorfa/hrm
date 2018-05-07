@@ -39,7 +39,7 @@ if ($this->company_settings_id == "" || $this->company_settings_id == null) {
 
 </script>
 
-<div class="col-md-10 main-content-div">
+<div class="col-md-<?php if($module_id==0) echo 12; else echo 10;?> main-content-div">
     <div class="main-content">
 
         <div class="container conbre">
