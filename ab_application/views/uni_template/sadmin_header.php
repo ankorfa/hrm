@@ -257,7 +257,7 @@ $user_group = $log_data['user_group'];
                             <div class="row">						
                                 <!-- Top Menu -->
                                 <ul class="nav navbar-nav">
-                                    <li><a  href="" >Company List</a></li>
+                                    <li><a  href="<?php echo base_url() . "Con_Admin_Dashbord/" ?>" >Company List</a></li>
                                 </ul>
                                 <!-- End Top Menu -->
                             </div>

@@ -121,15 +121,22 @@
                                     $logo = base_url() . "uploads/companylogo/" . $row->company_logo;
                                 }
                                 ?>
-                                <tr onclick="edit_row('<?php echo $row->id; ?>');" style="cursor: pointer;">
+                        <!--onclick="edit_row('<?php // echo $row->id; ?>');" style="cursor: pointer;"-->
+                                <tr>
                                     <td style="">
                                         <div class="testimonial-info">
+                                            <a href="<?php echo base_url() . 'Con_ChangeCompany/change_Companybyadmin/' . $row->id; ?>">
                                             <img class="rounded-x" src="<?php echo $logo; ?>" alt="No Image" height="55" width="55">
+                                            </a>
                                         </div>
                                     </td>
                                     <td style="">
                                         <div class="container" style="text-align: left; margin-left: 20px;">
-                                            <div class="row">Legal Name : <?php echo ucwords($row->company_full_name); ?> </div>
+                                            <div class="row">Legal Name :
+                                                <a href="<?php echo base_url() . 'Con_ChangeCompany/change_Companybyadmin/' . $row->id; ?>">
+                                                <?php echo ucwords($row->company_full_name); ?> 
+                                                </a>
+                                            </div>
                                             <div class="row">DBA Name : <?php echo ucwords($row->company_short_name) ?></div>
                                         </div>
                                     </td>
@@ -148,10 +155,11 @@
                                     <td style="">
                                         <div class="container" style="text-align: left; margin-left: 20px;">
                                             <div class="row">No of Employee : <?php echo $total_emp; ?></div>
-                                            <div class="row">Status : <?php echo $status_arr[$row->isactive] ?></div>
+                                            <div class="row" >Status : <span style="color: #0000ff; "><?php echo $status_arr[$row->isactive] ?></span></div>
                                         </div>
                                     </td>
                                     <td>
+                                        &nbsp;<a title="Edit Company" href="<?php echo base_url() . 'Con_configaration/edit_company_setting/' . $row->id; ?>"><i class="fa fa-pencil-square-o"></i></a>
                                         &nbsp;<a title="Download Report" href="<?php echo base_url() . 'Con_configaration/download_company_info/' . $row->id; ?>"><i class="fa fa-lg fa-download"></i></a>
                                     </td>
                                 </tr>

@@ -13,6 +13,11 @@
 
         <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;">
             <div class="col-md-12" style="margin-top: 10px">
+                <div class="panel panel-u margin-bottom-40">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-tasks"></i> Job Positing </h3>
+                                </div>
+                                <div class="panel-body">
                 <div class="" style="text-align: right">
                     <ul class="social-icons social-icons-color">
                         <li><a class="social_facebook" data-original-title="Facebook" href="#"></a></li>
@@ -134,13 +139,14 @@
                         ?> 
                     </tbody>
                 </table>
+                                </div>
+                </div>
                 <div class="modal-footer">                        
                     <a class="btn btn-danger" href="<?php echo base_url() . "Con_OpeningsPositions" ?>">Close</a>
                 </div>
+                
             </div>
-
         </div>
-
     </div>
 </div>
 

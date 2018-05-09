@@ -9,17 +9,13 @@
         </div>
 
         <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;">
-            <div class="col-md-11 col-md-offset-0" style="margin-top: 10px">
-                <div id="employee_review_div">   
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-u">
+            <div class="col-md-12" style="margin-top: 10px">
+                   
+                            <div class="panel panel-u margin-bottom-40">
                                 <div class="panel-heading">
-                                    Opening Position Information
+                                    <h3 class="panel-title"><i class="fa fa-tasks"></i> Opening Position Information </h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div class="table-responsive"> 
-
                                         <table id="PersonalInformation" class="table table-responsive table-striped table-bordered table-hover">
                                             <tbody>
                                                 <?php
@@ -132,13 +128,9 @@
                                                 ?>     
                                             </tbody>
                                         </table>
-                                    </div>
-
                                 </div>
                             </div>
-                        </div>        
-                    </div>
-                </div>                   
+                       
                 <div class="modal-footer">                        
                     <a class="btn btn-danger" href="<?php echo base_url() . "Con_OpeningsPositions" ?>">Close</a>
                 </div>

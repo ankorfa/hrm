@@ -17,12 +17,17 @@
             <?php
             if ($type == 1) {//entry
                 ?>
-            <div class="col-md-11 col-md-offset-0" style="margin-top: 10px">
+            <div class="col-md-12" style="margin-top: 10px">
                 <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_CVManagement/save_CVManagement" enctype="multipart/form-data" role="form" >
+                    <div class="panel panel-u margin-bottom-40">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-tasks"></i> Open Positions </h3>
+                            </div>
+                            <div class="panel-body">
                     <input type="hidden" value="" name="id"/>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Requisition ID<span class="req"/> </label>
-                        <div class="col-sm-4">                            
+                        <div class="col-sm-10">                            
                             <select name="requisition_id" id="requisition_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                 <option></option>
                                 <?php
@@ -44,8 +49,10 @@
                                 ?>
                             </select> 
                         </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">Status </label>
-                        <div class="col-sm-4">                            
+                        <div class="col-sm-10">                            
                             <select name="candidate_status" id="candidate_status" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                 <?php
                                 $candidate_status = $this->Common_model->get_array('candidate_status');
@@ -60,52 +67,66 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Candidate First Name<span class="req"/> </label>
-                        <div class="col-sm-4">                            
+                        <div class="col-sm-10">                            
                             <input type="text" name="candidate_first_name" id="candidate_first_name" class="form-control input-sm" placeholder="Candidate First Name" />
                         </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">Candidate Last Name<span class="req"/></label>
-                        <div class="col-sm-4">                            
+                        <div class="col-sm-10">                            
                             <input type="text" name="candidate_last_name" id="candidate_last_name" class="form-control input-sm" placeholder="Candidate Last Name" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="candidate_email" class="col-sm-2 control-label">Email<span class="req"/> </label>
-                        <div class="col-sm-4">                            
+                        <div class="col-sm-10">                            
                             <input type="email" name="candidate_email" id="candidate_email" class="form-control input-sm" placeholder="Email" />
                         </div>
+                    </div>
+                    <div class="form-group">
                         <label for="contact_number" class="col-sm-2 control-label">Contact Number<span class="req"/> </label>
-                        <div class="col-sm-4">                            
+                        <div class="col-sm-10">                            
                             <input type="text" name="contact_number" id="contact_number" class="form-control input-sm" placeholder="Contact Number" />
                         </div>
                     </div>
                     
-                    <div class="col-md-12 pull-right">
-                        <label class="col-sm-12 pull-right"><u><h4>Enter Candidate Details </h4></u></label>
+                            </div>
                     </div>
+                    
+                    <div class="panel panel-u margin-bottom-40">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-tasks"></i> Enter Candidate Details </h3>
+                            </div>
+                            <div class="panel-body">
+                     
                     
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Qualification<span class="req"/> </label>
-                        <div class="col-sm-4">                            
+                        <div class="col-sm-10">                            
                             <input type="text" name="qualification" id="qualification" class="form-control input-sm" placeholder="Qualification" />
                         </div>
+                    </div>
+                                <div class="form-group">
                         <label class="col-sm-2 control-label">Work Experience<span class="req"/> </label>
-                        <div class="col-sm-4">                            
+                        <div class="col-sm-10">                            
                             <input type="text" name="work_experience" id="work_experience" class="form-control input-sm" placeholder="Work Experience" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Skill Set<span class="req"/> </label>
-                        <div class="col-sm-4">  
+                        <div class="col-sm-10">  
                             <textarea class="form-control" rows="2" id="skill_set" name="skill_set" placeholder="Skill Set"></textarea>
                         </div>
+                    </div>
+                                <div class="form-group">
                         <label class="col-sm-2 control-label">Education Summary </label>
-                        <div class="col-sm-4"> 
+                        <div class="col-sm-10"> 
                             <textarea class="form-control" rows="2" id="education_summary" name="education_summary" placeholder="Education Summary"></textarea>
                         </div>
                     </div>
                     <div class="form-group">                        
                         <label class="col-sm-2 control-label">State </label>
-                        <div class="col-sm-4"> 
+                        <div class="col-sm-10"> 
                             <select name="state" id="state" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                 <option></option>
                                 <?php
@@ -116,13 +137,7 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-<!--                        <label class="col-sm-2 control-label">County </label>
-                        <div class="col-sm-4">
-                            <select name="county_id" id="county_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                <option></option>
-                                
-                            </select>
-                        </div>-->
+
                     </div>
                     
                     <div class="col-md-12 pull-right">
@@ -138,10 +153,12 @@
                             <input type="hidden" name="upload_resume_path" id="upload_resume_path" />
                         </div>
                     </div>
+                            </div>
+                    </div>
                     
                     <div class="modal-footer">                        
-                        <button type="submit" id="submit" class="btn btn-u">Save</button>
                         <a class="btn btn-danger" href="<?php echo base_url() . "Con_CVManagement" ?>">Close</a>
+                        <button type="submit" id="submit" class="btn btn-u">Save</button>
                     </div>
                 </form>
             </div>

@@ -3,7 +3,7 @@
 
         <div class="container conbre">
             <ol class="breadcrumb" >
-                <li><?php echo $this->Common_model->get_header_module_name($this,$module_id); ?></li>
+                <li><?php echo $this->Common_model->get_header_module_name($this, $module_id); ?></li>
                 <li class="active"><?php echo $page_header; ?></li>
             </ol>
         </div>
@@ -12,264 +12,290 @@
             <?php
             if ($type == 1) {//entry
                 ?>
-                <div class="col-md-11 col-md-offset-0" style="margin-top: 10px">
+                <div class="col-md-12" style="margin-top: 10px">
                     <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Job_Requisition/save_job_Requisition" enctype="multipart/form-data" role="form" >
-                        <input type="hidden" value="" name="id"/>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Requisition Id </label>
-                            <div class="col-sm-10">                            
-                                <input type="text" name="requisition_code" id="requisition_code" class="form-control input-sm" placeholder="Requisition Id" readonly />
+                        <div class="panel panel-u margin-bottom-40">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-tasks"></i> Job Requisition</h3>
+                            </div>
+                            <div class="panel-body">
+                                <input type="hidden" value="" name="id"/>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Requisition Id </label>
+                                    <div class="col-sm-10">                            
+                                        <input type="text" name="requisition_code" id="requisition_code" class="form-control input-sm" placeholder="Requisition Id" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Requisitions Date<span class="req"/> </label>
+                                    <div class="col-sm-10">                            
+                                        <input type="text" name="requisitions_date" id="requisitions_date" class="form-control dt_pick input-sm" placeholder="Requisitions Date " autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Due Date<span class="req"/> </label>
+                                    <div class="col-sm-10">                            
+                                        <input type="text" name="due_date" id="due_date" class="form-control dt_pick_m input-sm" placeholder="Due Date" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="form-group no-margin">
+                                    <label class="col-sm-2 control-label">Location</label>
+                                    <div class="col-sm-10">                            
+                                        <select name="location_id" id="location_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                            <option></option>
+                                            <?php
+                                            foreach ($location_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->id ?>"><?php echo $key->location_name ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group no-margin">
+                                    <label class="col-sm-2 control-label">Department<span class="req"/></label>
+                                    <div class="col-sm-10">                            
+                                        <select name="department_id" id="department_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                            <option></option>
+                                            <?php
+                                            foreach ($department_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->id ?>"><?php echo $key->department_name ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group no-margin">
+                                    <label class="col-sm-2 control-label">Position<span class="req"/></label>
+                                    <div class="col-sm-10">                            
+                                        <select name="position_id" id="position_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                            <option></option>
+                                            <?php
+                                            foreach ($positions_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->positionname ?>"><?php echo $this->Common_model->get_name($this, $key->positionname, 'main_jobtitles', 'job_title'); ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group no-margin">
+                                    <label class="col-sm-2 control-label">Reporting Manager</label>
+                                    <div class="col-sm-10">                           
+                                        <select name="reporting_manager_id" id="reporting_manager_id" class="col-sm-12 col-xs-12 myselect2 input-sm">
+                                            <option></option>
+                                            <?php
+                                            foreach ($reporting_manager_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->employee_id ?>"><?php echo $key->first_name ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group no-margin">
+                                    <label class="col-sm-2 control-label">Employee Category<span class="req"/></label>
+                                    <div class="col-sm-10">                           
+                                        <select name="employee_category" id="employee_category" class="col-sm-12 col-xs-12 myselect2 input-sm">
+                                            <option></option>
+                                            <?php
+                                            $employee_type_array = $this->Common_model->get_array('employee_type');
+                                            foreach ($employee_type_array as $keyyy => $valll):
+                                                ?>
+                                                <option value="<?php echo $keyyy ?>"><?php echo $valll ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>                            
+                                </div> 
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Requisitions Date<span class="req"/> </label>
-                            <div class="col-sm-10">                            
-                                <input type="text" name="requisitions_date" id="requisitions_date" class="form-control dt_pick input-sm" placeholder="Requisitions Date " autocomplete="off" />
+                        <div class="panel panel-u margin-bottom-40">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-tasks"></i> Requisition Details </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group no-margin">                         
+                                    <label class="col-sm-2 control-label"> Wages </label>
+                                    <div class="col-sm-10">                           
+                                        <select name="wages" id="wages" onchange="show_hourly_rate(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                            <?php
+                                            $wages_array = array(1 => 'Salary', 2 => 'Hourly');
+                                            foreach ($wages_array as $wkeyyy => $wvalll):
+                                                ?>
+                                                <option value="<?php echo $wkeyyy ?>"><?php echo $wvalll ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-sm-2 control-label"> Salary Range</label>
+                                    <div class="col-sm-10">                           
+                                        <input type="text" name="salary_range" id="salary_range" class="form-control input-sm" placeholder=" Salary Range ( $ ) " />
+                                    </div> 
+                                </div>
+                                <div class="form-group hidden" id="hourly_rate_div">                         
+                                    <label class="col-sm-2 control-label"> Hourly Rate </label>
+                                    <div class="col-sm-10">                           
+                                        <input type="text" name="hourly_rate" id="hourly_rate" class="form-control input-sm" placeholder="Hourly Rate ( $ ) " />
+                                    </div> 
+                                </div>
+                                <div class="form-group no-margin"> 
+                                    <label class="col-sm-2 control-label"> Posting </label>
+                                    <div class="col-sm-10">                           
+                                        <select name="posting" id="posting" class="col-sm-12 col-xs-12 myselect2 input-sm">
+                                            <option></option>
+                                            <?php
+                                            $posting_array = array(1 => 'Internal', 2 => 'Internal & External');
+                                            foreach ($posting_array as $pkeyyy => $pvalll):
+                                                ?>
+                                                <option value="<?php echo $pkeyyy ?>"><?php echo $pvalll ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-sm-2 control-label"> No. of Positions </label>
+                                    <div class="col-sm-10">                           
+                                        <input type="text" name="no_of_positions" id="no_of_positions" class="form-control input-sm" placeholder="Required no. of Positions" />
+                                    </div> 
+                                </div>
+                                <div class="form-group no-margin"> 
+                                    <label class="col-sm-2 control-label"> Hire Reason</label>
+                                    <div class="col-sm-10">                           
+                                        <select name="hire_reason" id="hire_reason" onchange="select_rep_emp(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm"> 
+                                            <option></option>
+                                            <?php
+                                            $hire_reason_array = array(1 => 'New', 2 => 'Replacing');
+                                            foreach ($hire_reason_array as $hkeyyy => $hvalll):
+                                                ?>
+                                                <option value="<?php echo $hkeyyy ?>"><?php echo $hvalll ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group no-margin">
+                                    <label class="col-sm-2 control-label"> Employee Name </label>
+                                    <div class="col-sm-10"> 
+                                        <select name="replacing_emp" id="replacing_emp" class="col-sm-12 col-xs-12 myselect2 input-sm" disabled="disabled">
+                                            <option></option>
+                                            <?php
+                                            foreach ($employees_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->employee_id ?>"><?php echo $key->first_name ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div> 
+                                </div>
+                                <div class="form-group no-margin">                        
+                                    <label class="col-sm-2 control-label"> Employment Status</label>
+                                    <div class="col-sm-10">                           
+                                        <select name="employment_status_id" id="employment_status_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                            <option></option>
+                                            <?php
+                                            foreach ($employmentstatus_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->id ?>"><?php echo $this->Common_model->get_name($this, $key->workcodename, 'tbl_employmentstatus', 'employemnt_status'); ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group no-margin">   
+                                    <label class="col-sm-2 control-label"> Priority</label>
+                                    <div class="col-sm-10">                            
+                                        <select name="priority" id="priority" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                            <option></option>
+                                            <?php
+                                            foreach ($priority_array as $key => $val):
+                                                ?>
+                                                <option value="<?php echo $key ?>"><?php echo $val ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Due Date<span class="req"/> </label>
-                            <div class="col-sm-10">                            
-                                <input type="text" name="due_date" id="due_date" class="form-control dt_pick_m input-sm" placeholder="Due Date" autocomplete="off" />
+                        <div class="panel panel-u margin-bottom-40">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-tasks"></i> Requisition Description </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group ">                         
+                                    <label class="col-sm-2 control-label"> Qualification</label>
+                                    <div class="col-sm-10">                            
+                                        <input type="text" name="required_qualification" id="required_qualification" class="form-control input-sm" placeholder="Required Qualification" />
+                                    </div>
+                                </div>
+                                <div class="form-group "> 
+                                    <label class="col-sm-2 control-label"> Experience Range</label>
+                                    <div class="col-sm-10">                            
+                                        <input type="text" name="experience_range" id="experience_range" class="form-control input-sm" placeholder="Required Experience Range" />
+                                    </div>
+                                </div>
+                                <!--                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label"> Job Description</label>
+                                                            <div class="col-sm-10">                            
+                                                                <textarea class="form-control" rows="1" id="job_description" name="job_description"></textarea>
+                                                            </div> 
+                                                        </div>-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Required Skills</label>
+                                    <div class="col-sm-10">                            
+                                        <textarea class="form-control" rows="1" id="required_skills" name="required_skills"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Position Description</label>
+                                    <div class="col-sm-10">                           
+                                        <textarea class="form-control" rows="1" id="position_description" name="position_description"></textarea>
+                                    </div>                        
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Job Description </label>
+                                    <div class="col-sm-10">
+                                        <textarea name="posting_text" id="posting_text" class="ckeditor"></textarea>
+                                        <textarea name="job_posting_text" id="job_posting_text" style="display:none;"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group no-margin">
-                            <label class="col-sm-2 control-label">Location</label>
-                            <div class="col-sm-10">                            
-                                <select name="location_id" id="location_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                    <option></option>
-                                    <?php
-                                    foreach ($location_query->result() as $key):
-                                        ?>
-                                        <option value="<?php echo $key->id ?>"><?php echo $key->location_name ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group no-margin">
-                            <label class="col-sm-2 control-label">Department<span class="req"/></label>
-                            <div class="col-sm-10">                            
-                                <select name="department_id" id="department_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                    <option></option>
-                                    <?php
-                                    foreach ($department_query->result() as $key):
-                                        ?>
-                                        <option value="<?php echo $key->id ?>"><?php echo $key->department_name ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group no-margin">
-                            <label class="col-sm-2 control-label">Position<span class="req"/></label>
-                            <div class="col-sm-10">                            
-                                <select name="position_id" id="position_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                    <option></option>
-                                    <?php
-                                    foreach ($positions_query->result() as $key):
-                                        ?>
-                                        <option value="<?php echo $key->positionname ?>"><?php echo $this->Common_model->get_name($this, $key->positionname, 'main_jobtitles', 'job_title'); ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group no-margin">
-                            <label class="col-sm-2 control-label">Reporting Manager</label>
-                            <div class="col-sm-10">                           
-                                <select name="reporting_manager_id" id="reporting_manager_id" class="col-sm-12 col-xs-12 myselect2 input-sm">
-                                    <option></option>
-                                    <?php
-                                    foreach ($reporting_manager_query->result() as $key):
-                                        ?>
-                                        <option value="<?php echo $key->employee_id ?>"><?php echo $key->first_name ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group no-margin">
-                            <label class="col-sm-2 control-label">Employee Category<span class="req"/></label>
-                            <div class="col-sm-10">                           
-                                <select name="employee_category" id="employee_category" class="col-sm-12 col-xs-12 myselect2 input-sm">
-                                    <option></option>
-                                    <?php
-                                    $employee_type_array = $this->Common_model->get_array('employee_type');
-                                    foreach ($employee_type_array as $keyyy => $valll):
-                                        ?>
-                                        <option value="<?php echo $keyyy ?>"><?php echo $valll ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div>                            
-                        </div> 
-                        <div class="form-group no-margin">                         
-                            <label class="col-sm-2 control-label"> Wages </label>
-                            <div class="col-sm-10">                           
-                                <select name="wages" id="wages" onchange="show_hourly_rate(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                    <?php
-                                    $wages_array = array(1 => 'Salary', 2 => 'Hourly');
-                                    foreach ($wages_array as $wkeyyy => $wvalll):
-                                        ?>
-                                        <option value="<?php echo $wkeyyy ?>"><?php echo $wvalll ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class="col-sm-2 control-label"> Salary Range</label>
-                            <div class="col-sm-10">                           
-                                <input type="text" name="salary_range" id="salary_range" class="form-control input-sm" placeholder=" Salary Range ( $ ) " />
-                            </div> 
-                        </div>
-                        <div class="form-group hidden" id="hourly_rate_div">                         
-                            <label class="col-sm-2 control-label"> Hourly Rate </label>
-                            <div class="col-sm-10">                           
-                                <input type="text" name="hourly_rate" id="hourly_rate" class="form-control input-sm" placeholder="Hourly Rate ( $ ) " />
-                            </div> 
-                        </div>
-                        <div class="form-group no-margin"> 
-                            <label class="col-sm-2 control-label"> Posting </label>
-                            <div class="col-sm-10">                           
-                                <select name="posting" id="posting" class="col-sm-12 col-xs-12 myselect2 input-sm">
-                                    <option></option>
-                                    <?php
-                                    $posting_array = array(1 => 'Internal', 2 => 'Internal & External');
-                                    foreach ($posting_array as $pkeyyy => $pvalll):
-                                        ?>
-                                        <option value="<?php echo $pkeyyy ?>"><?php echo $pvalll ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class="col-sm-2 control-label"> No. of Positions </label>
-                            <div class="col-sm-10">                           
-                                <input type="text" name="no_of_positions" id="no_of_positions" class="form-control input-sm" placeholder="Required no. of Positions" />
-                            </div> 
-                        </div>
-                        <div class="form-group no-margin"> 
-                            <label class="col-sm-2 control-label"> Hire Reason</label>
-                            <div class="col-sm-10">                           
-                                <select name="hire_reason" id="hire_reason" onchange="select_rep_emp(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm"> 
-                                    <option></option>
-                                    <?php
-                                    $hire_reason_array = array(1 => 'New', 2 => 'Replacing');
-                                    foreach ($hire_reason_array as $hkeyyy => $hvalll):
-                                        ?>
-                                        <option value="<?php echo $hkeyyy ?>"><?php echo $hvalll ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group no-margin">
-                            <label class="col-sm-2 control-label"> Employee Name </label>
-                            <div class="col-sm-10"> 
-                                <select name="replacing_emp" id="replacing_emp" class="col-sm-12 col-xs-12 myselect2 input-sm" disabled="disabled">
-                                    <option></option>
-                                    <?php
-                                    foreach ($employees_query->result() as $key):
-                                        ?>
-                                        <option value="<?php echo $key->employee_id ?>"><?php echo $key->first_name ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div> 
-                        </div>
-                        <div class="form-group no-margin">                        
-                            <label class="col-sm-2 control-label"> Employment Status</label>
-                            <div class="col-sm-10">                           
-                                <select name="employment_status_id" id="employment_status_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                    <option></option>
-                                    <?php
-                                    foreach ($employmentstatus_query->result() as $key):
-                                        ?>
-                                        <option value="<?php echo $key->id ?>"><?php echo $this->Common_model->get_name($this, $key->workcodename, 'tbl_employmentstatus', 'employemnt_status'); ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group no-margin">   
-                            <label class="col-sm-2 control-label"> Priority</label>
-                            <div class="col-sm-10">                            
-                                <select name="priority" id="priority" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                    <option></option>
-                                    <?php
-                                    foreach ($priority_array as $key => $val):
-                                        ?>
-                                        <option value="<?php echo $key ?>"><?php echo $val ?></option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group ">                         
-                            <label class="col-sm-2 control-label"> Qualification</label>
-                            <div class="col-sm-10">                            
-                                <input type="text" name="required_qualification" id="required_qualification" class="form-control input-sm" placeholder="Required Qualification" />
-                            </div>
-                        </div>
-                        <div class="form-group "> 
-                            <label class="col-sm-2 control-label"> Experience Range</label>
-                            <div class="col-sm-10">                            
-                                <input type="text" name="experience_range" id="experience_range" class="form-control input-sm" placeholder="Required Experience Range" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"> Job Description</label>
-                            <div class="col-sm-10">                            
-                                <textarea class="form-control" rows="1" id="job_description" name="job_description"></textarea>
-                            </div> 
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"> Required Skills</label>
-                            <div class="col-sm-10">                            
-                                <textarea class="form-control" rows="1" id="required_skills" name="required_skills"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"> Position Description</label>
-                            <div class="col-sm-10">                           
-                                <textarea class="form-control" rows="1" id="position_description" name="position_description"></textarea>
-                            </div>                        
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"> Posting Text</label>
-                            <div class="col-sm-10">
-                                <textarea name="posting_text" id="posting_text" class="ckeditor"></textarea>
-                                <textarea name="job_posting_text" id="job_posting_text" style="display:none;"></textarea>
-                            </div>
-                        </div>
-                        
+
                         <div class="modal-footer">                        
-                            <button type="submit" id="submit" class="btn btn-u">Save</button>
                             <a class="btn btn-danger" href="<?php echo base_url() . "Con_Job_Requisition" ?>">Close</a>
+                            <button type="submit" id="submit" class="btn btn-u">Save</button>
                         </div>
+
                     </form>
                 </div>
                 <?php
             } else if ($type == 2) {//edit
                 ?>
-                <div class="col-md-11 col-md-offset-0" style="margin-top: 10px">
+                <div class="col-md-12" style="margin-top: 10px">
                     <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Job_Requisition/update_job_Requisition" enctype="multipart/form-data" role="form" >
                         <?php foreach ($OpeningsPositions_query->result() as $row): ?> 
                             <input type="hidden" value="<?php echo $row->id ?>" name="id"/>
-                            
+<div class="panel panel-u margin-bottom-40">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-tasks"></i> Job Requisition</h3>
+                            </div>
+                            <div class="panel-body">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Requisition Id </label>
                                 <div class="col-sm-10">                            
@@ -364,6 +390,13 @@
                                     </select> 
                                 </div>          
                             </div> 
+                            </div>
+</div>
+                            <div class="panel panel-u margin-bottom-40">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-tasks"></i> Requisition Details </h3>
+                            </div>
+                            <div class="panel-body">
                             <div class="form-group no-margin">                         
                                 <label class="col-sm-2 control-label">Wages </label>
                                 <div class="col-sm-10">                           
@@ -477,6 +510,14 @@
                                     </select> 
                                 </div>
                             </div>
+                            </div>
+                            </div>
+                            
+                            <div class="panel panel-u margin-bottom-40">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-tasks"></i> Requisition Description </h3>
+                            </div>
+                            <div class="panel-body">
                             <div class="form-group">                         
                                 <label class="col-sm-2 control-label">Qualification</label>
                                 <div class="col-sm-10">                            
@@ -489,12 +530,12 @@
                                     <input type="text" name="experience_range" id="experience_range" value="<?php echo ucwords($row->experience_range) ?>" class="form-control input-sm" placeholder="Required Experience Range" />
                                 </div>
                             </div>
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Job Description</label>
                                 <div class="col-sm-10">                            
-                                    <textarea class="form-control" rows="1" id="job_description" name="job_description"><?php echo ucwords($row->job_description) ?></textarea>
+                                    <textarea class="form-control" rows="1" id="job_description" name="job_description"><?php // echo ucwords($row->job_description) ?></textarea>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Required Skills</label>
                                 <div class="col-sm-10">                            
@@ -508,15 +549,17 @@
                                 </div>                        
                             </div> 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Posting Text</label>
+                                <label class="col-sm-2 control-label">Job Description</label>
                                 <div class="col-sm-10">
                                     <textarea name="posting_text" id="posting_text" class="ckeditor"> <?php echo $row->job_posting_text ?> </textarea>
                                     <textarea name="job_posting_text" id="job_posting_text" style="display:none;"><?php echo $row->job_posting_text ?></textarea>
                                 </div>
                             </div>
+                            </div>
+                            </div>
                             <div class="modal-footer">                        
-                                <button type="submit" id="submit" class="btn btn-u">Save</button>
                                 <a class="btn btn-danger" href="<?php echo base_url() . "Con_Job_Requisition" ?>">Close</a>
+                                <button type="submit" id="submit" class="btn btn-u">Save</button>
                             </div>
                         <?php endforeach; ?>
                     </form>
@@ -569,10 +612,10 @@
 
 
         $("#sky-form11").submit(function (event) {
-            
+
             var ckdata = CKEDITOR.instances.posting_text.getData();
             $('#job_posting_text').val(ckdata);
-            
+
             $("#replacing_emp").attr('disabled', false);
             loading_box(base_url);
 
