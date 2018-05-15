@@ -120,6 +120,7 @@ class Con_Requisitions_Approval extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             echo $this->Common_model->show_validation_massege(validation_errors(), 2);
         } else {
+        
             $data = array('req_status' => $this->input->post('sing_req_status'),
                 'modifiedby' => $this->user_id,
                 'modifieddate' => $this->date_time,
@@ -135,5 +136,6 @@ class Con_Requisitions_Approval extends CI_Controller {
             }
         }
     }
+    
 
 }

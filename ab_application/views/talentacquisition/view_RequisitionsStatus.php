@@ -19,9 +19,12 @@
                                 <option></option>
                                 <?php
                                 foreach ($approver_status as $key => $val):
-                                    ?>
-                                    <option value="<?php echo $key ?>"><?php echo $val ?></option>
-                                    <?php
+                                    if($key==0 || $key==1 || $key==4)
+                                    {
+                                        ?>
+                                        <option value="<?php echo $key ?>"><?php echo $val ?></option>
+                                        <?php
+                                    }
                                 endforeach;
                                 ?>                        
                             </select> 

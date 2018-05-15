@@ -1,4 +1,4 @@
-<div class="col-md-12 main-content-div">
+<div class="col-md-10 main-content-div">
     <div class="main-content">
 
         <!--=== Content Part ===-->
@@ -40,7 +40,7 @@
                 
             <div class="table-responsive col-md-12 col-centered">
                     
-                    <form class="form-horizontal" action="<?php echo base_url(). 'Con_Admin_Dashbord/search_company/'; ?>" method="post">
+                    <form class="form-horizontal" action="<?php echo base_url(). 'Con_dashbord/search_company/'; ?>" method="post">
                         <div class="row">
                             <div class="col-sm-1">
                                 <div class="form-group">
@@ -180,9 +180,10 @@
 </div><!--/end row-->
 </div><!--/end container-->
 
-
+    
 <script type="text/javascript">
     
+   
     $(function () {
         $("#company_idd").select2({
             placeholder: "Select company",

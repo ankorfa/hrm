@@ -69,12 +69,12 @@ class Chome extends CI_Controller {
 
             if ($user_type == 1 || $user_type == 2 || $user_type == 3 || $user_type == 4) {
                 
-                if ($user_type == 3) {
-                    $module_link = "Con_Admin_Dashbord";
-                } else {
+                //if ($user_type == 3) {
+                   // $module_link = "Con_Admin_Dashbord";
+                //} else {
                     $user_module = explode(',', $user_module);
                     $module_link = $this->Common_model->get_selected_value($this, 'id', $user_module[0], 'main_module', 'module_link');
-                }
+                //}
 
                 echo "1" . "__" . $module_link;
 

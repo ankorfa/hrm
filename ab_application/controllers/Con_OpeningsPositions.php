@@ -36,7 +36,7 @@ class Con_OpeningsPositions extends CI_Controller {
         $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
 
         $param['menu_id'] = $this->menu_id;
-        $param['page_header'] = "Open Positions";
+        $param['page_header'] = "Job Positing";
         $param['module_id'] = $this->module_id;
 
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 4) {
@@ -117,7 +117,7 @@ class Con_OpeningsPositions extends CI_Controller {
         $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
 
 //      $param['type'] = "1";
-        $param['page_header'] = "Open Positions";
+        $param['page_header'] = "Job Positing";
         $param['module_id'] = $this->module_id;
 
         if ($this->user_group == 11 || $this->user_group == 12) {

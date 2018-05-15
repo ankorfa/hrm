@@ -63,7 +63,7 @@ class Con_SelectedCandidates extends CI_Controller {
         $this->load->view('admin/home', $param);
     }
     
-     function edit_SelectedCandidates() {
+    function edit_SelectedCandidates() {
         $this->Common_model->is_user_valid($this->user_id,$this->menu_id,$this->user_menu);
         $id = $this->uri->segment(3);
         $requisition_id = $this->uri->segment(4);
@@ -79,9 +79,6 @@ class Con_SelectedCandidates extends CI_Controller {
         $param['content'] = 'talentacquisition/view_addSelectedCandidates.php';
         $this->load->view('admin/home', $param); 
     }
-    
-    
-    
     
     public function update_SelectedCandidates(){
         

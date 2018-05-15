@@ -78,8 +78,35 @@ class Con_Rejected_Candidates extends CI_Controller {
         redirect('Con_Rejected_Candidates/');
         exit;
     }
-        
-        
+    
+    public function update_Rejected_Candidates() {
+
+        $this->form_validation->set_rules('rejected_id[]', 'Candidates', 'required', array('required' => "Please the enter required field, for more Info : %s."));
+
+        if ($this->form_validation->run() == FALSE) {
+            echo $this->Common_model->show_validation_massege(validation_errors(), 2);
+        } else {
+
+            $rejected_id = $this->input->post("rejected_id");
+            for ($i = 0; $i < count($rejected_id); $i++) {
+                $cdata[] = array('status' => 0,
+                    'id' => $rejected_id[$i],
+                    'is_recall' => 1,
+                    'modifiedby' => $this->user_id,
+                    'modifieddate' => $this->date_time,
+                    'isactive' => '1',
+                );
+            }
+
+            $res = $this->db->update_batch('main_cv_management', $cdata, 'id');
+
+            if ($res) {
+                echo $this->Common_model->show_massege(12, 1);
+            } else {
+                echo $this->Common_model->show_massege(13, 2);
+            }
+        }
+    }
 
 }
 

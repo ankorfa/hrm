@@ -12,29 +12,14 @@
             <!-- data table -->
             <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Requisitions_Approval/update_req_Status" enctype="multipart/form-data" role="form" >
                 <div class="col-md-12" style="margin-top: 10px">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label no-padding-right">Status <span class="req"/> </label>
-                        <div class="col-sm-3">
-                            <select name="req_status" id="req_status" class="col-sm-12 col-xs-12 myselect2 input-sm">
-                                <option></option>
-                                <?php
-                                foreach ($approver_status as $key => $val):
-                                    ?>
-                                    <option value="<?php echo $key ?>"><?php echo $val ?></option>
-                                    <?php
-                                endforeach;
-                                ?>                        
-                            </select> 
-                        </div>
-                        <div class="col-sm-2 no-padding-left">
-                            <button type="submit" id="submit" class="btn btn-u"> Process </button>                            
-                        </div>
+                    <div class="col-sm-4 no-padding-left">
+                        <button type="submit" id="RejectForm" name="RejectForm" onclick="reject_form_submit(4)" value="4" class="btn btn-u"> <i class="fa fa-ban" aria-hidden="true"></i> Reject </button>
+                        <button type="submit" id="ApproveForm" name="ApproveForm" onclick="approved_form_submit(1)" value="1" class="btn btn-u"> <i class="fa fa-check" aria-hidden="true"></i> Approve </button>
                     </div>
                 </div>
+                <input type="hidden" name="req_status" id="req_status">
                 
                 <div class="table-responsive col-md-12 col-centered">
-
-                    
                     <table id="dataTables-example" class="table table-striped table-bordered table-hover" >
                         <thead>
                             <tr>
@@ -92,29 +77,74 @@
 
 
 <script type="text/javascript">
-
     
-    $("#req_status").select2({
-        placeholder: "Select Status",
-        allowClear: true,
-    });
-    
-    $(function () {
-        $("#sky-form11").submit(function (event) {
-            loading_box(base_url);
-            var url = $(this).attr('action');
-            $.ajax({
-                url: url,
-                data: $("#sky-form11").serialize(),
-                type: $(this).attr('method')
-            }).done(function (data) {
+    function approved_form_submit(id)
+       {
+           $("#req_status").val('');
+           $("#req_status").val(id);
+           
+            $("#sky-form11").submit(function (event) {
+                loading_box(base_url);
+                var url = $(this).attr('action');
+                $.ajax({
+                    url: url,
+                    data: $("#sky-form11").serialize(),
+                    type: $(this).attr('method')
+                }).done(function (data) {
 
-                var url = '<?php echo base_url() ?>Con_Requisitions_Approval';
-                view_message(data, url,'','sky-form11');
+                    var url = '<?php echo base_url() ?>Con_Requisitions_Approval';
+                    view_message(data, url, '', 'sky-form11');
+
+                });
+                event.preventDefault();
             });
-            event.preventDefault();
-        });
-    });
+        
+        }
+       function reject_form_submit(id)
+       {
+           $("#req_status").val('');
+           $("#req_status").val(id);
+           
+            $("#sky-form11").submit(function (event) {
+                loading_box(base_url);
+                var url = $(this).attr('action');
+                $.ajax({
+                    url: url,
+                    data: $("#sky-form11").serialize(),
+                    type: $(this).attr('method')
+                }).done(function (data) {
+
+                    var url = '<?php echo base_url() ?>Con_Requisitions_Approval';
+                    view_message(data, url, '', 'sky-form11');
+
+                });
+                event.preventDefault();
+            });
+        
+        }
+
+    
+//    $("#req_status").select2({
+//        placeholder: "Select Status",
+//        allowClear: true,
+//    });
+//    
+//    $(function () {
+//        $("#sky-form11").submit(function (event) {
+//            loading_box(base_url);
+//            var url = $(this).attr('action');
+//            $.ajax({
+//                url: url,
+//                data: $("#sky-form11").serialize(),
+//                type: $(this).attr('method')
+//            }).done(function (data) {
+//
+//                var url = '<?php // echo base_url() ?>Con_Requisitions_Approval';
+//                view_message(data, url,'','sky-form11');
+//            });
+//            event.preventDefault();
+//        });
+//    });
 
 
 </script>

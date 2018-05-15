@@ -31,6 +31,8 @@ class Con_ScheduledInterviews extends CI_Controller {
         $this->module_data = $this->session->userdata('active_module_id');
         $this->module_id =$this->module_data['module_id'];
         
+        $this->load->model('Sendmail_model');
+        
     }
 
     public function index() {
@@ -99,6 +101,8 @@ class Con_ScheduledInterviews extends CI_Controller {
         else 
         {
             
+            $this->db->trans_begin();
+            
             $interviewer = '';
             foreach ($this->input->post('interviewer') as $intr) {
                 if ($interviewer == '') {
@@ -146,7 +150,23 @@ class Con_ScheduledInterviews extends CI_Controller {
             $sdata = array('status' => 1);
             $sres=$this->Common_model->update_data('main_cv_management',$sdata,array('id' => $this->input->post('candidate_name'),'requisition_id ' => $this->input->post('requisition_id')));
             
-            if ($res && $sres) {
+            foreach ($inter as $key => $val) {
+                $emp = $this->db->get_where('main_employees', array('employee_id' => $val))->row();
+                $interview_date=$this->Common_model->convert_to_mysql_date($this->input->post('interview_date'));
+                if ($emp->email != "") {
+                    $eres = $this->Sendmail_model->ScheduledInterview_mail($emp->first_name, $emp->email, $interview_date,$this->input->post('interview_time'),$this->input->post('requisition_id'));
+                }
+            }
+
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(0,1);
             } else {
                 echo $this->Common_model->show_massege(1,2);
@@ -181,7 +201,6 @@ class Con_ScheduledInterviews extends CI_Controller {
         $this->load->view('admin/home', $param);
     }
     
-    
     public function update_ScheduledInterviews() {
         
         $this->form_validation->set_rules('requisition_id', 'Requisition ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
@@ -196,7 +215,7 @@ class Con_ScheduledInterviews extends CI_Controller {
         } 
         else 
         {
-             $interviewer = '';
+            $interviewer = '';
             foreach ($this->input->post('interviewer') as $intr) {
                 if ($interviewer == '') {
                     $interviewer = $intr;
@@ -260,9 +279,6 @@ class Con_ScheduledInterviews extends CI_Controller {
         $param['content'] = 'talentacquisition/view_addScheduledInterviews.php';
         $this->load->view('admin/home', $param); 
     }
-    
-    
-   
     
     public function view_resume() {
         $resume_path = $this->uri->segment(3);

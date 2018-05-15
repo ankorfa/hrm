@@ -50,7 +50,11 @@
                                     print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this, $row->position_id, 'main_jobtitles', 'job_title') . "</td>";
                                     print"<td id='catD" . $pdt . "'>" . $row->no_of_positions . "</td>";
                                     print"<td id='catB" . $pdt . "'>" . $status . "</td>";
-                                    print"<td id='catB" . $pdt . "'><a title='Preview' href='" . base_url() . "Con_OpeningsPositions/view_opening_position/" . $row->id . "/' target='_blank' ><i class='fa fa-lg fa-eye'></i></a>&nbsp; &nbsp;<a title='Add Resume' href='" . base_url() . "Con_OpeningsPositions/add_CVManagement/" . $row->id . "/' target='_blank' ><i class='fa fa-plus-circle'></i></a>&nbsp; &nbsp; <a title='Job Positing' href='" . base_url() . "Con_OpeningsPositions/view_job_posting/" . $row->id . "/' target='_blank' > Job Positing </a></td>";
+                                    print"<td id='catB" . $pdt . "'>"
+//                                            . "<a title='Preview' href='" . base_url() . "Con_OpeningsPositions/view_opening_position/" . $row->id . "/' target='_blank' ><i class='fa fa-lg fa-eye'></i></a>&nbsp; &nbsp;"
+//                                            . "<a title='Add Resume' href='" . base_url() . "Con_OpeningsPositions/add_CVManagement/" . $row->id . "/' target='_blank' ><i class='fa fa-plus-circle'></i></a>&nbsp; &nbsp; "
+                                            . " &nbsp; <a title='Job Positing' href='" . base_url() . "Con_OpeningsPositions/view_job_posting/" . $row->id . "/' target='_blank' > Job Positing </a> &nbsp; "
+                                            . "</td>";
                                     print"</tr>";
                                 }
                             }

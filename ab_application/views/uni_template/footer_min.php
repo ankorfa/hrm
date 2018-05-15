@@ -132,7 +132,9 @@
     $(document).ready(function () {
         $('#dataTables-example').dataTable({
             "order": [ 0, "desc" ],
-            "pageLength": 10,       
+            "pageLength": 10,
+            "bLengthChange": false,
+            "bInfo" : false,
         });
     });
     //"scrollX": true,

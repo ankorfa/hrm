@@ -1,4 +1,3 @@
-
 <div class="col-md-10 main-content-div">
     <div class="main-content">
 
@@ -12,7 +11,45 @@
         <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;"> <!-- container well div -->
             <!-- data table -->
             <div class="table-responsive col-md-12 col-centered">
-                <a class="btn btn-u btn-md" href="<?php echo base_url() . "Con_CVManagement/add_CVManagement" ?>"><span class="glyphicon glyphicon-plus-sign"></span> Add New Resume </a></br></br>
+                
+                <form class="form-horizontal" action="<?php echo base_url(). 'Con_CVManagement/search_requisition/'; ?>" method="post">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <a class="btn btn-u btn-md" href="<?php echo base_url() . "Con_CVManagement/add_CVManagement" ?>"><span class="glyphicon glyphicon-plus-sign"></span> Add New Resume </a></br></br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">  &nbsp;  </label>
+                                    <div class="col-sm-8">
+                                        <select name="requisition_id" id="requisition_id" class="col-xs-12 myselect2 input-sm">
+                                            <option></option>
+                                            <?php
+                                            foreach ($opening_position_query->result() as $key) {
+                                                $position_id = $this->Common_model->get_name($this, $key->id, 'main_opening_position', 'position_id');
+                                                $position_name = $this->Common_model->get_name($this, $position_id, 'main_jobtitles', 'job_title');
+                                                
+                                                $slct = ($search_criteria['requisition_id'] == $key->id) ? 'selected' : '';
+                                                echo '<option value="' . $key->id . '" ' . $slct . '>' . $key->requisition_code . "  ( " . $position_name . " ) " . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <button type="submit" class="btn-u center-align"><i class="fa fa-search"></i> Search </button> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                
                 <div class="overflow-x">
                 <table id="dataTables-example" class="table table-striped table-bordered table-hover" >
                     <thead>
@@ -74,6 +111,11 @@
 
 <script type="text/javascript">
 
+    $("#requisition_id").select2({
+        placeholder: "Select requisition",
+        allowClear: true
+    });
+        
     function delete_data(id) {
         var r = confirm("Do you want to delete this?")
         if (r == true)

@@ -154,7 +154,7 @@
             } else if ($type == 2) {//edit
                 ?>
                 <div class="col-md-12" style="margin-top: 10px">
-                    <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_CVManagement/update_CVManagement" enctype="multipart/form-data" role="form" >
+                    <form id="sky-form12" name="sky-form12"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_CVManagement/update_CVManagement" enctype="multipart/form-data" role="form" >
                         <?php foreach ($query->result() as $row): ?> 
 
                             <div class="panel panel-u margin-bottom-40">
@@ -346,9 +346,29 @@
                 type: $(this).attr('method')
             }).done(function (data) {
 
+                var url = '<?php echo base_url() ?>Con_CVManagement/add_CVManagement';
+                view_message(data, url, '', 'sky-form11');
+
+                $("#candidate_status").attr('disabled', true);
+
+            });
+            event.preventDefault();
+        });
+    });
+    
+    $(function () {
+        $("#sky-form12").submit(function (event) {
+            $("#candidate_status").attr('disabled', false);
+            loading_box(base_url);
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                data: $("#sky-form12").serialize(),
+                type: $(this).attr('method')
+            }).done(function (data) {
 
                 var url = '<?php echo base_url() ?>Con_CVManagement';
-                view_message(data, url, '', 'sky-form11');
+                view_message(data, url, '', 'sky-form12');
 
                 $("#candidate_status").attr('disabled', true);
 

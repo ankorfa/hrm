@@ -323,7 +323,7 @@ class Sendmail_model extends CI_Model {
             return FALSE; 
     }
     
-     public function forgot_password_mail($username,$email,$password) { 
+    public function forgot_password_mail($username,$email,$password) { 
         
         $config['useragent']    = 'CodeIgniter';
         $config['protocol']     = 'smtp';
@@ -368,7 +368,6 @@ class Sendmail_model extends CI_Model {
            return FALSE; 
     }
     
-    
     public function candidate_mail($name,$to_email) {  
         
         $config['useragent']    = 'CodeIgniter';
@@ -399,6 +398,90 @@ class Sendmail_model extends CI_Model {
          
          $info['logo']= "http://103.78.53.73:750/hrm/assets/img/hrc_logo.png";
          $info['msg'] = " <br> <h3>Thanking for Apply from HRM</h3> <br> <br>  Hi ". $name ." , <br> Thank You for your application  <br> <br> <br> <br> Best, <br> The HRM Development team. <br> <br> <br> <br> ";
+         
+         $body = $this->load->view('sadmin/compose.php',$info,TRUE);
+         
+         $this->email->message($body); 
+
+        //Send mail 
+         if($this->email->send()) 
+            return TRUE; 
+         else 
+             return FALSE; 
+      }
+      
+    public function CandidateScheduled_mail($candidate_name,$to_email,$interview_date,$interview_time,$requisition_id) {  
+        
+        $config['useragent']    = 'CodeIgniter';
+        $config['protocol']     = 'smtp';
+        $config['smtp_host']    = 'ssl://smtp.googlemail.com';
+        $config['smtp_user']    = 'sohelbijay@gmail.com'; // Your gmail id
+        $config['smtp_pass']    = '622655#123456'; // Your gmail Password
+        $config['smtp_port']    = 465;
+        $config['wordwrap']     = TRUE;    
+        $config['wrapchars']    = 76;
+        $config['mailtype']     = 'html';
+        $config['charset']      = 'iso-8859-1';
+        $config['validate']     = FALSE;
+        $config['priority']     = 3;
+        $config['newline']      = "\r\n";
+        $config['crlf']         = "\r\n";
+        
+        //Load email library 
+         $this->load->library('email'); 
+         $this->email->initialize($config);
+         
+        $from_email = "sohelbijay@gmail.com"; 
+        $to_email = $to_email; 
+   
+         $this->email->from($from_email, 'Sohel'); 
+         $this->email->to($to_email);
+         $this->email->subject('Interview Scheduled Mail.'); 
+         
+         $info['logo']= "http://103.78.53.73:750/hrm/assets/img/hrc_logo.png";
+         $info['msg'] = " <br> <h3>Thanking for Apply from HRM</h3> <br> <br>  Hi ". $candidate_name ." , <br> Thank You for your application. Your interview Date ". $interview_date ." And Time ". $interview_time ." <br> <br> <br> <br> Best, <br> The HRM Development team. <br> <br> <br> <br> ";
+         
+         $body = $this->load->view('sadmin/compose.php',$info,TRUE);
+         
+         $this->email->message($body); 
+
+        //Send mail 
+         if($this->email->send()) 
+            return TRUE; 
+         else 
+             return FALSE; 
+      }
+      
+    public function employeeScheduled_mail($employee_name,$to_email,$interview_date,$interview_time,$requisition_id) {  
+        
+        $config['useragent']    = 'CodeIgniter';
+        $config['protocol']     = 'smtp';
+        $config['smtp_host']    = 'ssl://smtp.googlemail.com';
+        $config['smtp_user']    = 'sohelbijay@gmail.com'; // Your gmail id
+        $config['smtp_pass']    = '622655#123456'; // Your gmail Password
+        $config['smtp_port']    = 465;
+        $config['wordwrap']     = TRUE;    
+        $config['wrapchars']    = 76;
+        $config['mailtype']     = 'html';
+        $config['charset']      = 'iso-8859-1';
+        $config['validate']     = FALSE;
+        $config['priority']     = 3;
+        $config['newline']      = "\r\n";
+        $config['crlf']         = "\r\n";
+        
+        //Load email library 
+         $this->load->library('email'); 
+         $this->email->initialize($config);
+         
+        $from_email = "sohelbijay@gmail.com"; 
+        $to_email = $to_email; 
+   
+         $this->email->from($from_email, 'Sohel'); 
+         $this->email->to($to_email);
+         $this->email->subject('Interview Scheduled Mail.'); 
+         
+         $info['logo']= "http://103.78.53.73:750/hrm/assets/img/hrc_logo.png";
+         $info['msg'] = " <br> <h3>Thanking from HRM</h3> <br> <br>  Hi ". $employee_name ." , <br>  Your interview Date ". $interview_date ." And Time ". $interview_time ." <br> <br> <br> <br> Best, <br> The HRM Development team. <br> <br> <br> <br> ";
          
          $body = $this->load->view('sadmin/compose.php',$info,TRUE);
          

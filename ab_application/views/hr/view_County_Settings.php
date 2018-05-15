@@ -70,6 +70,8 @@
         $('#county_table').DataTable({
             "processing": true,
             "serverSide": true,
+            "bLengthChange": false,
+            "bInfo" : false,
             "pageLength": 10,
             "ajax": base_url + "Con_County_Settings/county_paginate",
             "columnDefs": [{"targets": 3, "data": 0, "render": function (data, type, full, meta)
