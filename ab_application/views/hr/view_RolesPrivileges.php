@@ -76,6 +76,7 @@
                                         <input type="checkbox" class="form-check-input" value="<?php echo $key->id ?>" id="<?php echo "menu" . $key->id ?>" name="menuid[]"/> <?php echo $key->menu_name ?></br>
                                         <?php
                                         $root_menu_query = $this->db->get_where('main_menu', array('root_menu =' => $key->id, 'sub_root_menu =' => 0,'isactive' => 1))->result();
+                                        //echo $this->db->last_query();
                                         foreach ($root_menu_query as $root) {
                                             ?>
                                             <li style=" margin-left: 20px; ">

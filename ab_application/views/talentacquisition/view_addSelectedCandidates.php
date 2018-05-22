@@ -10,16 +10,11 @@
 
         <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;">
 
-            <!--        <div class="row text-center">
-                            <div class="col-md-1 col-md-offset-5" id='lodingbox' style=" position: absolute; z-index: 9999 !important; box-shadow: 5px 5px 5px rgba(0,0,0,.15);"> </div>
-                        </div>-->
-
             <?php
             if ($type == 2) {//edit
                 ?>
-                <div class="col-md-11 col-md-offset-0" style="margin-top: 10px">
-                    <form id="sky-form11" name="sky-form11" class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_SelectedCandidates/update_SelectedCandidates" enctype="multipart/form-data" role="form" >
-
+                <div class="col-md-12" style="margin-top: 10px">
+                    <form id="sky-form11" name="sky-form11" class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Short_List_Candidate/update_SelectedCandidates" enctype="multipart/form-data" role="form" >
 
                         <div class="panel panel-u margin-bottom-40">
                             <div class="panel-heading">
@@ -39,26 +34,34 @@
                                         <tr>
                                             <th>Requisition ID : </th>
                                             <td><?php echo $this->Common_model->get_name($this, $roww->requisition_id, 'main_opening_position', 'requisition_code'); ?></td>
+                                        </tr>
+                                        <tr>
                                             <th>Position : </th>
                                             <td><?php echo $this->Common_model->get_name($this, $position_id, 'main_jobtitles', 'job_title'); ?></td>
                                         </tr>
                                         <tr>
                                             <th>Candidate Name : </th>
                                             <td><?php echo $roww->candidate_first_name ?></td>
-                                            <th>Candidate Details : </th>
-                                            <td><a href="<?php echo base_url() . "Con_SelectedCandidates/view_resume/" . $roww->upload_resume_path ?>" >View Details <?php // echo $roww->upload_resume_path;  ?> </a></td>
                                         </tr>
                                         <tr>
                                             <th>Candidate Email : </th>
                                             <td><?php echo $roww->candidate_email ?></td>
+                                        </tr>
+                                        <tr>    
                                             <th>Qualification : </th>
                                             <td><?php echo $roww->qualification ?></td>
                                         </tr>
                                         <tr>
                                             <th>Work Experience  : </th>
                                             <td><?php echo $roww->work_experience ?></td>
+                                        </tr>
+                                        <tr>    
                                             <th>Skill Set : </th>
                                             <td><?php echo $roww->skill_set ?></td>
+                                        </tr>
+                                        <tr>    
+                                            <th>Candidate Details : </th>
+                                            <td><a href="<?php echo base_url() . "Con_SelectedCandidates/view_resume/" . $roww->upload_resume_path ?>" >View Details <?php // echo $roww->upload_resume_path;   ?> </a></td>
                                         </tr>
                                         <?php
                                     }
@@ -80,20 +83,24 @@
                                         <?php
                                         $interview_type = $this->Common_model->get_array('interview_type');
                                         $interview_status = $this->Common_model->get_array('interview_status');
+                                        $candidate_status = $this->Common_model->get_array('candidate_status');
+                                        $rating_array = $this->Common_model->get_array('rating_array');
                                         foreach ($interviewquery->result() as $rowi) {
                                             $position_id = $this->Common_model->get_name($this, $rowi->requisition_id, 'main_opening_position', 'position_id');
                                             ?>
                                             <tr>
                                                 <th>Requisition ID : </th>
                                                 <td><?php echo $this->Common_model->get_name($this, $rowi->requisition_id, 'main_opening_position', 'requisition_code'); ?></td>
+                                            </tr>
+                                            <tr>     
                                                 <th>Position : </th>
                                                 <td><?php echo $this->Common_model->get_name($this, $position_id, 'main_jobtitles', 'job_title'); ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Interviewer : </th>
                                                 <td><?php
-                                                    //get_selected_value($the, $id_field, $value_field, $table, $select_field)
-                                                    $interr = explode(",", $rowi->interviewer);
+                                                    $interviewer = $this->Common_model->get_name($this, $rowi->schedule_id, 'main_schedule', 'interviewer');
+                                                    $interr = explode(",", $interviewer);
                                                     $interviewer = '';
                                                     foreach ($interr as $intr) {
                                                         if ($interviewer == '') {
@@ -104,24 +111,31 @@
                                                     }
 
                                                     echo $interviewer;
-                                                    //echo $rowi->interviewer 
                                                     ?>
                                                 </td>
-                                                <th>Time : </th>
-                                                <td><?php echo $rowi->interview_time ?></td>
                                             </tr>
                                             <tr>
-                                                <th>Date : </th>
-                                                <td><?php echo $rowi->interview_date ?></td>
-                                                <th>Mode : </th>
-                                                <td><?php echo $interview_type[$rowi->interview_type] ?></td>
+                                                <th>Interview Date : </th>
+                                                <td><?php echo $this->Common_model->show_date_formate($this->Common_model->get_name($this, $rowi->schedule_id, 'main_schedule', 'interview_date')); ?></td>
+                                            </tr>
+                                            <tr> 
+                                                <th>Interview Time : </th>
+                                                <td><?php echo $this->Common_model->get_name($this, $rowi->schedule_id, 'main_schedule', 'interview_time'); ?></td>
                                             </tr>
                                             <tr>
-                                                <th>Status  : </th>
+                                                <th>Interview Status  : </th>
                                                 <td><?php echo $interview_status[$rowi->interview_status] ?></td>
-                                                <th>Location : </th>
-                                                <td><?php echo $rowi->location ?></td>
                                             </tr>
+                                            <tr>
+                                                <th> Candidate Status  : </th>
+                                                <td><?php echo $candidate_status[$rowi->candidate_status] ?></td>
+
+                                            </tr>
+                                            <tr>    
+                                                <th>Rating : </th>
+                                                <td><?php echo $rating_array[$rowi->rating_id] ?></td>
+                                            </tr>
+
                                             <?php
                                         }
                                         ?>     
@@ -158,15 +172,15 @@
                         </div>
 
                         <div class="modal-footer">                        
-                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_SelectedCandidates" ?>">Close</a>
+                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_Short_List_Candidate" ?>">Close</a>
                             <button type="submit" id="submit" class="btn btn-u">Update</button>
                         </div>
                     </form>
                 </div>
 
-    <?php
-}
-?>
+                <?php
+            }
+            ?>
 
         </div>
 
@@ -189,7 +203,7 @@
                 type: $(this).attr('method')
             }).done(function (data) {
 
-                var url = '<?php echo base_url() ?>Con_SelectedCandidates';
+                var url = '<?php echo base_url() ?>Con_Short_List_Candidate';
                 view_message(data, url, '', 'sky-form11');
 
             });

@@ -8,12 +8,11 @@
             </ol>
         </div>
 
-        <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;">
-            
+        <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;"> 
             <!-- data table -->
             <div class="table-responsive col-md-12 col-centered">
                 
-                <form class="form-horizontal" action="<?php echo base_url(). 'Con_Interview_Candidate/search_for_Interview/'; ?>" method="post">
+                <form class="form-horizontal" action="<?php echo base_url(). 'Con_Interview_Result/search_Interview_Result/'; ?>" method="post">
                     <div class="row">
                         
                         <div class="col-sm-4">
@@ -35,7 +34,22 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">  Rating  </label>
+                                <div class="col-sm-8">
+                                    <select name="rating_id" id="rating_id" class="col-xs-12 myselect2 input-sm">
+                                        <option></option>
+                                        <?php
+                                        foreach ($rating_array as $key=>$val) {
+                                            $slct = ($search_criteria['rating_id'] == $key) ? 'selected' : '';
+                                            echo '<option value="' . $key . '" ' . $slct . '>' . $val . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <div class="col-sm-6">
@@ -45,7 +59,6 @@
                         </div>
                     </div>
                 </form>
-                
                 
                 <table id="dataTables-example" class="table table-striped table-bordered table-hover" >
                     <thead>
@@ -57,13 +70,17 @@
                             <th>Candidate Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Interview Status</th>
+                            <th>Candidate Status</th>
+                            <th>Rating</th>
+                            <!--<th>Action</th>-->
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $interview_status = $this->Common_model->get_array('interview_status');
+                        $candidate_status = $this->Common_model->get_array('candidate_status');
+                        $rating_array = $this->Common_model->get_array('rating_array');
                         if ($query) {
                             $sl=0;
                             foreach ($query->result() as $row) {
@@ -71,14 +88,16 @@
                                 $sl++; $pdt = $row->id;
                                 print"<tr>";
                                 print"<td id='catA" . $pdt . "'>" . $sl . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $resume_type[$this->Common_model->get_name($this,$row->candidate_name,'main_cv_management','resume_type')] ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $resume_type[$this->Common_model->get_name($this,$row->candidate_id,'main_cv_management','resume_type')] ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$position_id,'main_jobtitles','job_title') ."</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_name,'main_cv_management','candidate_first_name') ."</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_name,'main_cv_management','candidate_email') ."</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_name,'main_cv_management','contact_number') ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_id,'main_cv_management','candidate_first_name') ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_id,'main_cv_management','candidate_email') ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_id,'main_cv_management','contact_number') ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $interview_status[$row->interview_status]."</td>";
-                                print"<td><div class='action-buttons '><a title='Interview' href='" . base_url() . "Con_Interview_Candidate/set_Interview_panel/" . $row->id . "/" . "' ><i class='glyphicon glyphicon-check'>&nbsp;</i></a><a title='Preview' href='" . base_url() . "Con_Interview_Candidate/view_Candidate/" . $row->id . "/' ><i class='fa fa-lg fa-eye'></i></a>&nbsp;&nbsp;<a title='Delete' href='javascript:void(0)' onclick='delete_data(" . $row->id . ")'><i class='fa fa-trash-o'></i></a></div> </td>";
+                                print"<td id='catA" . $pdt . "'>" . $candidate_status[$row->candidate_status]."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $rating_array[$row->rating_id]."</td>";
+//                                print"<td><div class='action-buttons '><a title='Interview' href='" . base_url() . "Con_Interview_Candidate/set_Interview_panel/" . $row->id . "/" . "' ><i class='glyphicon glyphicon-check'>&nbsp;</i></a><a title='Preview' href='" . base_url() . "Con_Interview_Candidate/view_Candidate/" . $row->id . "/' ><i class='fa fa-lg fa-eye'></i></a>&nbsp;&nbsp;<a title='Delete' href='javascript:void(0)' onclick='delete_data(" . $row->id . ")'><i class='fa fa-trash-o'></i></a></div> </td>";
                                 print"</tr>";
                             }
                         }
@@ -101,15 +120,13 @@
         placeholder: "Select requisition",
         allowClear: true
     });
+    
+    $("#rating_id").select2({
+        placeholder: "Select rating",
+        allowClear: true
+    });
 
-    function delete_data(id) {
-        var r = confirm("Do you want to delete this?")
-        if (r == true)
-            window.location = base_url + "Con_Interview_Candidate/delete_Scheduled/" + id;
-        else
-            return false;
-    }
-
+   
 </script>
 <!--=== End Content ===-->
 

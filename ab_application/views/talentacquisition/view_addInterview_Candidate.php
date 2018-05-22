@@ -30,8 +30,10 @@
                                             foreach ($query->result() as $roww) {
                                                 $position_id = $this->Common_model->get_name($this, $roww->requisition_id, 'main_opening_position', 'position_id');
                                                 ?>
+                                            <input type="hidden" value="<?php echo $roww->requisition_id; ?>" name="requisition_id" id="requisition_id">
                                             <input type="hidden" value="<?php echo $roww->id; ?>" name="interview_schedule_id" id="interview_schedule_id">
                                             <input type="hidden" value="<?php echo $roww->candidate_name; ?>" name="candidate_id" id="candidate_id">
+                                            <input type="hidden" value="<?php echo $roww->schedule_id; ?>" name="schedule_id" id="schedule_id">
                                             <tr>
                                                 <th>Requisition ID : </th>
                                                 <td><?php echo $this->Common_model->get_name($this, $roww->requisition_id, 'main_opening_position', 'requisition_code'); ?></td>
@@ -77,16 +79,42 @@
                                     <label class="col-sm-2 control-label">Candidate Status </label>
                                     <div class="col-sm-10">                            
                                         <select name="up_candidate_status" id="up_candidate_status" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                           
+
                                         </select> 
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Performance </label>
+                                    <div class="col-sm-10">                            
+                                        <table id="PersonalInformation" class="table table-responsive table-striped table-bordered table-hover">
+                                            <?php
+                                            $star_array = $this->Common_model->get_array('star_array');
+                                            $rating_array = $this->Common_model->get_array('rating_array');
+                                            $serial = 1;
+                                            foreach ($rating_array as $key => $val):
+                                                ?>
+                                                <tr>
+                                                    <td><input type="radio" name="rating_id" value="<?php echo $key ?>" <?php if ($key == 1) echo "checked"; ?> class="with-gap radio-col-light-blue" id="radio_<?php echo $serial; ?>"/><label for="radio_<?php echo $serial; ?>"></label></td>
+                                                    <th><?php echo $val; ?> </th>
+        <!--                                                    <th><?php // echo $star_array[$key];  ?> </th>-->
+                                                </tr>
+                                                <?php
+                                                $serial++;
+                                            endforeach;
+                                            ?>
+                                        </table>                                    
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Comments</label>
                                     <div class="col-sm-10">                            
                                         <textarea name="description" id="description" class="form-control" rows="2" placeholder="Description"  title="Description"></textarea>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                         <div class="modal-footer">                        
@@ -96,8 +124,6 @@
 
                     </form>
                 </div>
-
-
 
                 <script>
 
@@ -114,8 +140,111 @@
                 </script>
                 <?php
             }
-            ?>
+            else if ($type == 4) {
+                ?>
+                <div class="col-md-12" style="margin-top: 10px">
+                        <div id="employee_review_div">   
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-u">
+                                        <div class="panel-heading">
+                                            Scheduled Interview Information
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
 
+                                                <table id="PersonalInformation" class="table table-responsive table-striped table-bordered table-hover">
+                                                    <tbody>
+                                                        <?php
+                                                        foreach ($query->result() as $row) {
+                                                            ?>
+                                                            <tr>
+                                                                <th>Requisition Id : </th>
+                                                                <td><?php echo $this->Common_model->get_name($this, $row->requisition_id, 'main_opening_position', 'requisition_code') ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Position : </th>
+                                                                <td>
+                                                                    <?php
+                                                                    $position_id = $this->Common_model->get_name($this, $row->requisition_id, 'main_opening_position', 'position_id');
+                                                                    echo $this->Common_model->get_name($this, $position_id, 'main_jobtitles', 'job_title');
+                                                                    ?> 
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Candidate Name : </th>
+                                                                <td><?php echo $this->Common_model->get_name($this, $row->candidate_name, 'main_cv_management', 'candidate_first_name') ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Contact Number : </th>
+                                                                <td><?php echo $this->Common_model->get_name($this, $row->candidate_name, 'main_cv_management', 'contact_number') ?></td>
+                                                            </tr>
+                                                            <tr>    
+                                                                <th>Email : </th>
+                                                                <td><?php echo $this->Common_model->get_name($this, $row->candidate_name, 'main_cv_management', 'candidate_email') ?></td>
+                                                            </tr>
+                                                            <tr>    
+                                                                <th>Interviewer : </th>
+                                                                <td>
+                                                                    <?php
+                                                                    $interview_array = explode(",", $row->interviewer);
+                                                                    //pr($interview_array,1);
+                                                                    $int_name = '';
+                                                                    foreach ($interview_array as $key) {
+                                                                        if ($int_name == '') {
+                                                                            $int_name = $this->Common_model->get_selected_value($this, 'employee_id', $key, 'main_employees', 'first_name');
+                                                                        } else {
+                                                                            $int_name = $int_name . " , " . $this->Common_model->get_selected_value($this, 'employee_id', $key, 'main_employees', 'first_name');
+                                                                        }
+                                                                    }
+                                                                    echo $int_name;
+                                                                    ?>
+                                                                </td>
+                                                            </tr>             
+                                                            <tr>    
+                                                                <th>Interview Location : </th>
+                                                                <td><?php echo $row->location ?></td>
+                                                            </tr>
+                                                            <tr>                                                        
+                                                                <th>Interview Date : </th>
+                                                                <td><?php echo $this->Common_model->show_date_formate($row->interview_date) ?> </td>
+                                                            </tr>
+                                                            <tr>    
+                                                                <th>Interview Time : </th>
+                                                                <td><?php echo $row->interview_time ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Description : </th>
+                                                                <td><?php echo $row->description ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Status : </th>
+                                                                <td>
+                                                                    <?php
+                                                                    $interview_status = $this->Common_model->get_array('interview_status');
+                                                                    echo $interview_status[$row->interview_status];
+                                                                    ?>
+                                                                </td>
+                                                            </tr>                                                    
+                                                            <?php
+                                                        }
+                                                        ?>     
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>        
+                            </div>
+                        </div> 
+                        <div class="modal-footer">
+                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_Interview_Candidate" ?>">Close</a>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
         </div>
 
     </div>
@@ -148,7 +277,7 @@
                 type: $(this).attr('method')
             }).done(function (data) {
 
-                var url = '<?php echo base_url() ?>Con_ScheduledInterviews';
+                var url = '<?php echo base_url() ?>Con_Interview_Candidate';
                 view_message(data, url, '', 'sky-form11');
                 $("#interview_status").attr('disabled', true);
 

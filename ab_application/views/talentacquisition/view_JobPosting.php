@@ -18,17 +18,7 @@
                         <h3 class="panel-title"><i class="fa fa-tasks"></i> Job Positing </h3>
                     </div>
                     <div class="panel-body">
-                        <div class="" style="text-align: right">
-                            <ul class="social-icons social-icons-color">
-                                <li><a class="social_facebook" data-original-title="Facebook" href="#"></a></li>
-                                <li><a class="social_googleplus" data-original-title="Google Plus" href="#"></a></li>
-                                <li><a class="social_tumblr" data-original-title="Tumblr" href="#"></a></li>
-                                <li><a class="social_twitter" data-original-title="Twitter" href="#"></a></li>
-                            </ul>
-
-                            <!--<div class="sharethis-inline-share-buttons"></div>-->
-                            <!--<a href="#"><i class="fa fa-print"></i></a>-->
-                        </div>
+                        
                         <table id="PersonalInformation" class="table table-responsive table-striped table-bordered table-hover">
                             <tbody>
                                 <?php
@@ -152,9 +142,16 @@
                             </tbody>
                         </table>
                     </div>
+                    <ul class="social-icons social-icons-color pull-right">
+                        <li><a class="social_facebook" data-original-title="Facebook" href="#"></a></li>
+                        <li><a class="social_googleplus" data-original-title="Google Plus" href="#"></a></li>
+                        <li><a class="social_tumblr" data-original-title="Tumblr" href="#"></a></li>
+                        <li><a class="social_twitter" data-original-title="Twitter" href="#"></a></li>
+                    </ul>
                 </div>
-                <div class="modal-footer">                        
-                    <a class="btn btn-danger" href="<?php echo base_url() . "Con_OpeningsPositions" ?>">Close</a>
+                
+                <div class="modal-footer"> 
+                        <a class="btn btn-danger" href="<?php echo base_url() . "Con_OpeningsPositions" ?>">Close</a>
                 </div>
 
             </div>

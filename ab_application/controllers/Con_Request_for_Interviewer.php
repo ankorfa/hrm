@@ -47,7 +47,7 @@ class Con_Request_for_Interviewer extends CI_Controller {
         $param['page_header'] = "Request for Interviewer";
         $param['module_id'] = $this->module_id;
         
-        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1)); //Approved
+        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
 
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_Request_for_Interviewer.php';

@@ -34,23 +34,65 @@ class Con_Create_Schedule extends CI_Controller {
         $this->load->model('Sendmail_model');
     }
 
-    public function index() {
+    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_idd' => '')) {
         $this->menu_id = $this->uri->segment(3);
         $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
+        
+        $param['show_result'] = $show_result;
+        $param['search_ids'] = $search_ids;
+        $param['search_criteria'] = $search_criteria;
 
         $param['menu_id'] = $this->menu_id;
         $param['page_header'] = "Schedule Interview";
         $param['module_id'] = $this->module_id;
 
+        if (!empty($search_ids)) {
+            $this->db->where_in('id', $search_ids);
+        }
+        
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 4) {
             $param['query'] = $this->db->get_where('main_schedule', array('company_id' => $this->company_id, 'isactive' => 1));
         } else {
             $param['query'] = $this->db->get_where('main_schedule', array('isactive' => 1));
         }
+        
+        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
 
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_Create_Schedule.php';
         $this->load->view('admin/home', $param);
+    }
+    
+    public function search_Candidate_Schedule() {
+        
+        $ids = $search_criteria = array();
+
+        $search_criteria['requisition_id'] = $requisition_id = $this->input->post('requisition_idd');
+
+        if (($requisition_id != '')) {
+     
+            $this->db->select('id');
+            $this->db->from('main_schedule');
+            
+            if ($this->user_group == 11 || $this->user_group == 12) {
+                $this->db->where('company_id', $this->company_id);
+            } else {
+                $this->db->where('createdby', $this->user_id);
+            }
+
+            /* ----Conditions---- */
+            if ($requisition_id != '') {
+                $this->db->where('requisition_id', $requisition_id);
+            }
+           
+            $ids = $this->db->get()->result_array();
+            
+        }
+
+        $ids = array_column($ids, 'id');
+
+        $this->index($this->uri->segment(3), TRUE, $ids, $search_criteria);
+        
     }
 
     public function add_Create_Schedule() {
@@ -62,10 +104,10 @@ class Con_Create_Schedule extends CI_Controller {
         $param['module_id'] = $this->module_id;
 
         if ($this->user_group == 11 || $this->user_group == 12) {
-            $param['opening_position_query'] = $this->db->get_where('main_opening_position', array('req_status' => 1, 'company_id' => $this->company_id)); //Approved
+            $param['opening_position_query'] = $this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0,'company_id' => $this->company_id)); //Approved
             $param['employees_query'] = $this->db->get_where('main_employees', array('company_id' => $this->company_id));
         } else {
-            $param['opening_position_query'] = $this->db->get_where('main_opening_position', array('req_status' => 1)); //Approved
+            $param['opening_position_query'] = $this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
             $param['employees_query'] = $this->Common_model->listItem('main_employees');
         }
 
@@ -155,10 +197,10 @@ class Con_Create_Schedule extends CI_Controller {
         $param['module_id'] = $this->module_id;
 
         if ($this->user_group == 11 || $this->user_group == 12) {
-            $param['opening_position_query'] = $this->db->get_where('main_opening_position', array('req_status' => 1, 'company_id' => $this->company_id)); //Approved
+            $param['opening_position_query'] = $this->db->get_where('main_opening_position', array('req_status' => 1, 'is_close' => 0,'company_id' => $this->company_id)); //Approved
             $param['employees_query'] = $this->db->get_where('main_employees', array('company_id' => $this->company_id));
         } else {
-            $param['opening_position_query'] = $this->db->get_where('main_opening_position', array('req_status' => 1)); //Approved
+            $param['opening_position_query'] = $this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
             $param['employees_query'] = $this->Common_model->listItem('main_employees');
         }
 
@@ -180,6 +222,8 @@ class Con_Create_Schedule extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             echo $this->Common_model->show_validation_massege(validation_errors(), 2);
         } else {
+            
+            $this->db->trans_begin();
             
             $interviewer = '';
             foreach ($this->input->post('interviewer') as $intr) {
@@ -204,7 +248,15 @@ class Con_Create_Schedule extends CI_Controller {
 
             $res = $this->Common_model->update_data('main_schedule', $data, array('id' => $this->input->post('int_id')));
 
-            if ($res) {
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(2, 1);
             } else {
                 echo $this->Common_model->show_massege(3, 2);

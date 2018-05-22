@@ -34,7 +34,7 @@ class Con_Request_for_Candidate extends CI_Controller {
         $this->load->model('Sendmail_model');
     }
 
-    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_idd' => '')) {
+    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_idd' => '','qualification' => '','skill_set' => '','experience' => '')) {
         $this->menu_id = $this->uri->segment(3);
         $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
         
@@ -49,26 +49,47 @@ class Con_Request_for_Candidate extends CI_Controller {
         if (!empty($search_ids)) {
             $this->db->where_in('id', $search_ids);
         }
+        $this->db->where('status', 0);
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 4) {
             $param['query'] = $this->db->get_where('main_cv_management', array('company_id' => $this->company_id, 'isactive' => 1));
         } else {
             $param['query'] = $this->db->get_where('main_cv_management', array('isactive' => 1));
         }
         
-        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1)); //Approved
+        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
+        $param['resume_type'] = $this->Common_model->get_array('resume_type');
+        
+        $this->db->select('skill_set');
+        $this->db->order_by('skill_set', 'desc');
+        $this->db->group_by('skill_set');
+        $param['skill_query'] = $this->db->get('main_cv_management');
+        
+        $this->db->select('qualification');
+        $this->db->order_by('qualification', 'desc');
+        $this->db->group_by('qualification');
+        $param['qualification_query'] = $this->db->get('main_cv_management');
+        
+        $this->db->select('work_experience');
+        $this->db->order_by('work_experience', 'desc');
+        $this->db->group_by('work_experience');
+        $param['experience_query'] = $this->db->get('main_cv_management');
 
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_Request_for_Candidate.php';
         $this->load->view('admin/home', $param);
     }
     
+  
     public function search_Candidate() {
         
         $ids = $search_criteria = array();
 
         $search_criteria['requisition_id'] = $requisition_id = $this->input->post('requisition_idd');
+        $search_criteria['qualification'] = $qualification = $this->input->post('qualification');
+        $search_criteria['experience'] = $experience = $this->input->post('experience');
+        $search_criteria['skill_set'] = $skill_set = $this->input->post('skill_set');
 
-        if (($requisition_id != '')) {
+        if (($requisition_id != '') || ($qualification != '') || ($experience != '') || ($skill_set != '')) {
      
             $this->db->select('id');
             $this->db->from('main_cv_management');
@@ -84,6 +105,15 @@ class Con_Request_for_Candidate extends CI_Controller {
             if ($requisition_id != '') {
                 $this->db->where('requisition_id', $requisition_id);
             }
+            if ($qualification != '') {
+                $this->db->like('qualification', $qualification);
+            }
+            if ($experience != '') {
+                $this->db->like('work_experience', $experience);
+            }
+            if ($skill_set != '') {
+                $this->db->like('skill_set', $skill_set);
+            }
            
             $ids = $this->db->get()->result_array();
             
@@ -97,8 +127,8 @@ class Con_Request_for_Candidate extends CI_Controller {
     
     public function save_Request_for_Candidate() {
         
-        $this->form_validation->set_rules('candidate_id[]', 'Candidate','required',array('required'=> "Please the enter required field, for more Info : %s."));
-        $this->form_validation->set_rules('requisition_id', 'Requisition ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        $this->form_validation->set_rules('candidate_ids', 'Candidate','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        $this->form_validation->set_rules('requisition_ids', 'Requisition ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
         
         if ($this->form_validation->run() == FALSE) {
             echo $this->Common_model->show_validation_massege(validation_errors(),2);
@@ -108,20 +138,20 @@ class Con_Request_for_Candidate extends CI_Controller {
             
             $this->db->trans_begin();
             
-            $schedule_chk_query = $this->db->get_where('main_schedule', array('requisition_id' => $this->input->post('requisition_id'),'isactive' => 1));
+            $schedule_chk_query = $this->db->get_where('main_schedule', array('requisition_id' => $this->input->post('requisition_ids'),'isactive' => 1));
             //echo $this->db->last_query();
             if ($schedule_chk_query->num_rows()== 0) {
                 echo $this->Common_model->show_validation_massege('Schedule Not Created.', 2);
                 exit();
             }
             
-            $schedule_query = $this->db->get_where('main_schedule', array('requisition_id' => $this->input->post('requisition_id'),'isactive' => 1))->row();
+            $schedule_query = $this->db->get_where('main_schedule', array('requisition_id' => $this->input->post('requisition_ids'),'isactive' => 1))->row();
            
-            $candidate_id = $this->input->post("candidate_id");
+            $candidate_id = explode(",", $this->input->post("candidate_ids"));
             
             for ($i = 0; $i < count($candidate_id); $i++) {
                 $data[] = array('company_id' => $this->company_id,
-                    'requisition_id' => $this->input->post('requisition_id'),
+                    'requisition_id' => $this->input->post('requisition_ids'),
                     'schedule_id' => $schedule_query->id,
                     'candidate_name' => $candidate_id[$i],
                     //'interview_status' => $this->input->post('interview_status'),

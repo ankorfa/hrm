@@ -26,7 +26,22 @@
                             <div class="panel-body">
                                 <input type="hidden" value="" name="id"/>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Requisition ID<span class="req"/> </label>
+                                    <label class="col-sm-2 control-label"> Resume Type <span class="req"/> </label>
+                                    <div class="col-sm-10">                            
+                                        <select name="resume_type" id="resume_type" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                            <option></option>
+                                            <?php
+                                            foreach ($resume_type as $key => $val):
+                                                ?>
+                                                <option value="<?php echo $key ?>"><?php echo $val ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Requisition ID </label>
                                     <div class="col-sm-10">                            
                                         <select name="requisition_id" id="requisition_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                             <option></option>
@@ -164,7 +179,22 @@
                                 <div class="panel-body">
                                     <input type="hidden" value="<?php echo $row->id ?>" name="id" id="id"/>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Requisition ID<span class="req"/> </label>
+                                        <label class="col-sm-2 control-label">Resume Type <span class="req"/> </label>
+                                        <div class="col-sm-10">                            
+                                            <select name="resume_type" id="resume_type" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                                <option></option>
+                                                <?php
+                                                foreach ($resume_type as $key => $val):
+                                                    ?>
+                                                    <option value="<?php echo $key ?>"<?php if ($row->resume_type == $key) echo "selected"; ?>><?php echo $val ?></option>
+                                                    <?php
+                                                endforeach;
+                                                ?>
+                                            </select> 
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Requisition ID </label>
                                         <div class="col-sm-10">                            
                                             <select name="requisition_id" id="requisition_id" onchange="load_status_dropdown(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                                 <option></option>
@@ -377,6 +407,11 @@
         });
     });
 
+    $("#resume_type").select2({
+        placeholder: "Select Resume Type",
+        allowClear: true,
+    });
+    
     $("#requisition_id").select2({
         placeholder: "Select Requisition ID",
         allowClear: true,

@@ -9,11 +9,11 @@
         </div>
 
         <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;">
-            <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Rejected_Candidates/update_Rejected_Candidates" enctype="multipart/form-data" role="form" >
+            <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Recall_Rejected_Candidates/update_Rejected_Candidates" enctype="multipart/form-data" role="form" >
             <!-- data table -->
             <div class="table-responsive col-md-12 col-centered">
                 <div class="col-md-12 ">
-                    <div class="form-group pull-right">
+                    <div class="form-group ">
                         <div class="col-sm-2 no-padding-left">
                             <button type="submit" id="submit" class="btn btn-u"> Process </button>                            
                         </div>
@@ -23,7 +23,8 @@
                 <table id="dataTables-example" class="table table-striped table-bordered table-hover" >
                     <thead>
                         <tr>
-                            <th> </th>
+                            <th> <input name='all_check' id='all_check' type='checkbox' > </th>
+                            <th>Resume Type</th>
                             <th>Requisition Id</th>
                             <th>Position</th>
                             <th>Candidate Name</th>
@@ -50,6 +51,7 @@
                                 $pdt = $row->id;
                                 print"<tr>";
                                 print"<td id='catA" . $pdt . "'>" . "<input name='rejected_id[]' id='rejected_id' type='checkbox' value='$row->id'>" . "</td>";
+                                print"<td id='catA" . $pdt . "'>" . $resume_type[$row->resume_type] ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this, $row->requisition_id, 'main_opening_position', 'requisition_code') . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this, $position_id, 'main_jobtitles', 'job_title') . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->candidate_first_name . "</td>";
@@ -80,7 +82,7 @@
     function Recall_Rejected_Candidates(id) {
         var r = confirm("Do you want to Re-Call this?")
         if (r == true)
-            window.location = base_url + "Con_Rejected_Candidates/Recall_Rejected_Candidates/" + id;
+            window.location = base_url + "Con_Recall_Rejected_Candidates/Recall_Rejected_Candidates/" + id;
         else
             return false;
     }
@@ -95,11 +97,19 @@
                 type: $(this).attr('method')
             }).done(function (data) {
 
-                var url = '<?php echo base_url() ?>Con_Rejected_Candidates';
+                var url = '<?php echo base_url() ?>Con_Recall_Rejected_Candidates';
                 view_message(data, url,'','sky-form11');
             });
             event.preventDefault();
         });
+    });
+    
+    $("#all_check").change(function() {
+        if($(this).prop('checked') == true) {
+            $('input:checkbox').attr('checked','checked');
+        } else {
+            $('input:checkbox').removeAttr('checked');
+        }
     });
 
 </script>

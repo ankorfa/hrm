@@ -93,6 +93,8 @@ class Con_Job_Requisition extends CI_Controller {
             echo $this->Common_model->show_validation_massege(validation_errors(), 2);
         } else {
             
+            $this->db->trans_begin();
+            
             $position_name=$this->Common_model->get_name($this,$this->input->post('position_id'),'main_jobtitles', 'job_title');
             $requisition_code = $this->Common_model->return_requisition_code('id','main_opening_position',$position_name);
             
@@ -133,7 +135,15 @@ class Con_Job_Requisition extends CI_Controller {
 
             $res = $this->Common_model->insert_data('main_opening_position', $data);
 
-            if ($res) {
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(0, 1);
             } else {
                 echo $this->Common_model->show_massege(1, 2);
@@ -186,6 +196,8 @@ class Con_Job_Requisition extends CI_Controller {
             echo $this->Common_model->show_validation_massege(validation_errors(), 2);
         } else {
             
+            $this->db->trans_begin();
+            
             if ($this->input->post('wages') == 2) {
                 $hourly_rate = $this->input->post('hourly_rate');
             } else {
@@ -223,7 +235,15 @@ class Con_Job_Requisition extends CI_Controller {
 
             $res = $this->Common_model->update_data('main_opening_position', $data, array('id' => $this->input->post('id')));
 
-            if ($res) {
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(2, 1);
             } else {
                 echo $this->Common_model->show_massege(3, 2);

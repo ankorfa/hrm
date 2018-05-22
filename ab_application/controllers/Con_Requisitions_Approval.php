@@ -45,10 +45,12 @@ class Con_Requisitions_Approval extends CI_Controller {
 //            $reqst_arr = array_map('intval', $reqs);
 //            $this->db->where_in('req_status',$reqst_arr);
             $this->db->where("req_status !=",1);
+            $this->db->where("is_close",0);
             $param['query'] = $this->db->get_where('main_opening_position', array('company_id' => $this->company_id));
             //echo $this->db->last_query();
         } else {
             $this->db->where("req_status !=",1);
+            $this->db->where("is_close",0);
             $param['query'] = $this->db->get_where('main_opening_position', array());
             
             //$param['query'] =  $this->db->query("SELECT * FROM main_opening_position  WHERE req_status IN ('0') ");           
@@ -72,6 +74,8 @@ class Con_Requisitions_Approval extends CI_Controller {
         } 
         else 
         {
+            $this->db->trans_begin();
+            
             $approver_id = $this->input->post("approver_id");
             for ($i = 0; $i < count($approver_id); $i++) {
 
@@ -83,7 +87,16 @@ class Con_Requisitions_Approval extends CI_Controller {
                 );                
                 $res = $this->db->update_batch('main_opening_position', $data, 'id');
             } 
-            if ($res) {
+            
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(2, 1);
             } else {
                 echo $this->Common_model->show_massege(3, 2);
@@ -120,6 +133,8 @@ class Con_Requisitions_Approval extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             echo $this->Common_model->show_validation_massege(validation_errors(), 2);
         } else {
+            
+            $this->db->trans_begin();
         
             $data = array('req_status' => $this->input->post('sing_req_status'),
                 'modifiedby' => $this->user_id,
@@ -129,7 +144,15 @@ class Con_Requisitions_Approval extends CI_Controller {
 
             $res = $this->Common_model->update_data('main_opening_position', $data, array('id' => $this->input->post('requisition_id')));
 
-            if ($res) {
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(2, 1);
             } else {
                 echo $this->Common_model->show_massege(3, 2);

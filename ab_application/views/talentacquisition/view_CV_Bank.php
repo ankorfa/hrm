@@ -13,7 +13,23 @@
             <div class="table-responsive col-md-12 col-centered">
                 <form class="form-horizontal" action="<?php echo base_url(). 'Con_CV_Bank/search_CV_Bank/'; ?>" method="post">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label"> Resume Type </label>
+                                    <div class="col-sm-8">
+                                        <select name="resume_type" id="resume_type" class="col-xs-12 myselect2 input-sm">
+                                            <option></option>
+                                            <?php
+                                            foreach ($resume_type as $key => $val){
+                                                $slct = ($search_criteria['resume_type'] != "" && $search_criteria['resume_type'] == $key) ? 'selected' : '';
+                                                echo '<option value="' . $key . '" ' . $slct . '>' . $val . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">  Requisition  </label>
                                     <div class="col-sm-8">
@@ -32,30 +48,80 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label"> Status </label>
+                                    <label class="col-sm-4 control-label"> Qualification </label>
                                     <div class="col-sm-8">
-                                        <select name="status" id="status" class="col-xs-12 myselect2 input-sm">
+                                        <select name="qualification" id="qualification" class="col-xs-12 myselect2 input-sm">
                                             <option></option>
                                             <?php
-                                            foreach ($candidate_status as $key=>$val) {
-                                                $slct = ($search_criteria['status'] !="" && $search_criteria['status'] == $key) ? 'selected' : '';
-                                                echo '<option value="' . $key . '" ' . $slct . '>' . $val . '</option>';
+                                            foreach ($qualification_query->result() as $key) {
+                                                $slct = ($search_criteria['qualification'] != "" && $search_criteria['qualification'] == $key->id) ? 'selected' : '';
+                                                echo '<option value="' . $key->qualification . '" ' . $slct . '>' . $key->qualification . '</option>';
                                             }
                                             ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="form-group">
-                                    <div class="col-sm-6">
-                                        <button type="submit" class="btn-u center-align"><i class="fa fa-search"></i> Search </button> 
+                                    <label class="col-sm-4 control-label"> Skill Set </label>
+                                    <div class="col-sm-8">
+                                       <select name="skill_set" id="skill_set" class="col-xs-12 myselect2 input-sm">
+                                            <option></option>
+                                            <?php
+                                            foreach ($skill_query->result() as $key) {
+                                                $slct = ($search_criteria['skill_set'] != "" && $search_criteria['skill_set'] == $key->skill_set) ? 'selected' : '';
+                                                echo '<option value="' . $key->skill_set . '" ' . $slct . '>' . $key->skill_set . '</option>';
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"> Experience </label>
+                                <div class="col-sm-8">
+                                   <select name="experience" id="experience" class="col-xs-12 myselect2 input-sm">
+                                        <option></option>
+                                        <?php
+                                        foreach ($experience_query->result() as $key) {
+                                            $slct = ($search_criteria['experience'] != "" && $search_criteria['experience'] == $key->work_experience) ? 'selected' : '';
+                                            echo '<option value="' . $key->work_experience . '" ' . $slct . '>' . $key->work_experience . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"> Status </label>
+                                <div class="col-sm-8">
+                                    <select name="status" id="status" class="col-xs-12 myselect2 input-sm">
+                                        <option></option>
+                                        <?php
+                                        foreach ($candidate_status as $key=>$val) {
+                                            $slct = ($search_criteria['status'] !="" && $search_criteria['status'] == $key) ? 'selected' : '';
+                                            echo '<option value="' . $key . '" ' . $slct . '>' . $val . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <button type="submit" class="btn-u center-align"><i class="fa fa-search"></i> Search </button> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </form>
                 
                 <div class="overflow-x">
@@ -63,11 +129,14 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Resume Type</th>
                             <th>Requisition Id</th>
                             <th>Position</th>
                             <th>First Name</th>
                             <th>Email</th>
                             <th>Mobile</th> 
+                            <th>Qualification</th>
+                            <th>Work Experience</th>
                             <th>Skill Set</th>
                             <th>Status</th>
                             <th>Resume</th>
@@ -91,11 +160,14 @@
                                 $sl++; $pdt = $row->id;
                                 print"<tr>";
                                 print"<td id='catA" . $pdt . "'>" . $sl . "</td>";
+                                print"<td id='catA" . $pdt . "'>" . $resume_type[$row->resume_type] . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$position_id,'main_jobtitles','job_title') ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->candidate_first_name ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->candidate_email."</td>";
                                 print"<td id='catD" . $pdt . "'>" . $row->contact_number . "</td>";
+                                print"<td id='catA" . $pdt . "'>" . $row->qualification ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $row->work_experience ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->skill_set ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $candidate_status[$row->status] ."</td>";
                                 print"<td id='catA" . $pdt . "'><a href='" . base_url() . "Con_CV_Bank/download_resume/" . $row->upload_resume_path . "/" . "' > ". $row->upload_resume_path ." </a></td>";
@@ -119,8 +191,24 @@
 
 <script type="text/javascript">
 
+    $("#resume_type").select2({
+        placeholder: "Select requisition",
+        allowClear: true
+    });
     $("#requisition_id").select2({
         placeholder: "Select requisition",
+        allowClear: true
+    });
+    $("#qualification").select2({
+        placeholder: "Select qualification",
+        allowClear: true
+    });
+    $("#skill_set").select2({
+        placeholder: "Select skill set",
+        allowClear: true
+    });
+    $("#experience").select2({
+        placeholder: "Select experience",
         allowClear: true
     });
     $("#status").select2({

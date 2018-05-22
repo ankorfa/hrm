@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Con_SelectedCandidates extends CI_Controller {
+class Con_Short_List_Candidate extends CI_Controller {
 
     public $user_data = array();
     public $user_id = null;
@@ -40,17 +40,17 @@ class Con_SelectedCandidates extends CI_Controller {
         $this->Common_model->is_user_valid($this->user_id,$this->menu_id,$this->user_menu);
         
         $param['menu_id']=$this->menu_id;
-        $param['page_header'] = "Shortlisted and Selected Candidates";
+        $param['page_header'] = "Shortlisted Candidates";
         $param['module_id']=$this->module_id;
         
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 4) {
-            $status='3';
+            $status='2';
             $status = explode(",", $status);
             $status_id = array_map('intval', $status);
             $this->db->where_in('status', $status_id);
             $param['query'] = $this->db->get_where('main_cv_management', array('company_id' => $this->company_id,'isactive' => 1,'is_close' => 0));
         } else {
-            $status='3';
+            $status='2';
             $status = explode(",", $status);
             $status_id = array_map('intval', $status);
             $this->db->where_in('status', $status_id);
@@ -58,8 +58,10 @@ class Con_SelectedCandidates extends CI_Controller {
         }
         //echo $this->db->last_query();
         
+        $param['resume_type'] = $this->Common_model->get_array('resume_type');
+        
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
-        $param['content'] = 'talentacquisition/view_SelectedCandidates.php';
+        $param['content'] = 'talentacquisition/view_Short_List_Candidate.php';
         $this->load->view('admin/home', $param);
     }
     
@@ -69,11 +71,11 @@ class Con_SelectedCandidates extends CI_Controller {
         $requisition_id = $this->uri->segment(4);
         
         $param['type']="2";
-        $param['page_header']="Shortlisted and Selected Candidates";	
+        $param['page_header']="Shortlisted Candidates";	
         $param['module_id']=$this->module_id;
 
         $param['query'] = $this->db->get_where('main_cv_management', array('id' => $id,'requisition_id' => $requisition_id));
-        $param['interviewquery'] = $this->db->get_where('main_interview_schedule', array('requisition_id' => $requisition_id,'candidate_name' => $id,));
+        $param['interviewquery'] = $this->db->get_where('main_candidate_interview', array('requisition_id' => $requisition_id,'candidate_id' => $id,));
         //echo $this->db->last_query();
 	$param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_addSelectedCandidates.php';
@@ -83,7 +85,6 @@ class Con_SelectedCandidates extends CI_Controller {
     public function update_SelectedCandidates(){
         
         $this->form_validation->set_rules('candidate_status', 'Candidate Status','required',array('required'=> "Please the enter required field, for more Info : %s."));
-        $this->form_validation->set_rules('candidate_email', 'Candidate Email', 'trim|required|valid_email|is_unique[main_users.email]',array('required'=> "Please the enter required field, for more Info : %s.",'is_unique' => 'This User already exists, For more Info : %s.'));
 
         if ($this->form_validation->run() == FALSE) {
             echo $this->Common_model->show_validation_massege(validation_errors(),2);
@@ -91,6 +92,8 @@ class Con_SelectedCandidates extends CI_Controller {
         else 
         {
           
+            $this->db->trans_begin();
+            
             $cdata = array('status' => $this->input->post('candidate_status'),
                 'modifiedby' => $this->user_id,
                 'modifieddate' => $this->date_time,
@@ -98,6 +101,17 @@ class Con_SelectedCandidates extends CI_Controller {
             );
             
             $cres=$this->Common_model->update_data('main_cv_management',$cdata,array('id' => $this->input->post('candidate_id'),'requisition_id' => $this->input->post('requisition_id')));
+            
+            $idata = array('candidate_status' => $this->input->post('candidate_status'),
+                'modifiedby' => $this->user_id,
+                'modifieddate' => $this->date_time,
+                'isactive' => '1',
+            );
+            
+            $cres=$this->Common_model->update_data('main_candidate_interview',$idata,array('candidate_id' => $this->input->post('candidate_id'),'requisition_id' => $this->input->post('requisition_id')));
+            
+            $query = $this->db->get_where('main_cv_management', array('id' => $this->input->post('candidate_id'),'requisition_id' => $this->input->post('requisition_id'),'status' => 3))->row(); 
+            $res2=$this->Sendmail_model->selected_candidate_send_mail($query->candidate_first_name,$query->candidate_email,'123456');
             
 //            if($this->input->post('candidate_status')==3)//candidate_status 3 = selected//status
 //            {
@@ -126,7 +140,15 @@ class Con_SelectedCandidates extends CI_Controller {
 //                }
 //            }
             
-            if ($cres) {
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(2,1);
             } else {
                 echo $this->Common_model->show_massege(3,2);
@@ -135,65 +157,56 @@ class Con_SelectedCandidates extends CI_Controller {
          
     }
     
-    public function ajax_edit_candidate() {
-        $id = $this->uri->segment(3);
-        $data = $this->Common_model->get_by_id_row('main_cv_management', $id);
-        echo json_encode($data);
-    }
     
-    
-    public function save_selfuser_signup() {
-
-        $this->form_validation->set_rules('email', 'User email', 'trim|required|valid_email|is_unique[main_users.email]', array('required' => "Please the enter required field, for more Info : %s.", 'is_unique' => 'This User already exists, For more Info : %s.'));
-        $this->form_validation->set_rules('firstname', 'First Name', 'required', array('required' => "Please the enter required field, for more Info : %s."));
-        $this->form_validation->set_rules('passwd', 'Password', 'required', array('required' => "Please the enter required field, for more Info : %s."));
-        $this->form_validation->set_rules('phone_no', 'Phone No', 'required', array('required' => "Please the enter required field, for more Info : %s."));
+    public function update_Candidate_Status(){
+        
+        $this->form_validation->set_rules('candidate_status', 'Candidate Status','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        $this->form_validation->set_rules('candidate_id[]', 'candidate', 'required',array('required'=> "Please the enter required field, for more Info : %s."));
 
         if ($this->form_validation->run() == FALSE) {
-            echo $this->Common_model->show_validation_massege(validation_errors(), 2);
-        } else {
-
-            $data = array('company_id' => $this->company_id,
-                'email' => $this->input->post('email'),
-                'name' => $this->input->post('firstname'),
-                'password' => $this->Common_model->encrypt($this->input->post('passwd')),
-                'phone_no' => $this->input->post('phone_no'),
-                'user_group' => '9',
-                'user_type' => '1',
-                'candidate_id' => $this->input->post('candidate_id'),
-                'createdby' => $this->user_id,
-                'createddate' => $this->date_time,
-                'isactive' => 1,
-            );
-
-            $res = $this->Common_model->insert_data('main_users', $data);
-
-            $cdata = array('candidate_user_id' => $this->db->insert_id(),
-                'modifiedby' => $this->user_id,
-                'modifieddate' => $this->date_time,
-                'isactive' => '1',
-            );
-
-            $cres = $this->Common_model->update_data('main_cv_management', $cdata, array('id' => $this->input->post('candidate_id'), 'requisition_id' => $this->input->post('requisition_id')));
-
-            $eres = $this->Sendmail_model->selfuser_send_mail($this->input->post('firstname'), $this->input->post('email'), $this->input->post('passwd'));
-
-            if ($res) {
-                echo $this->Common_model->show_massege(0, 1);
+            echo $this->Common_model->show_validation_massege(validation_errors(),2);
+        } 
+        else 
+        {
+            
+            $this->db->trans_begin();
+            
+            $candidate_id = $this->input->post("candidate_id");
+            for ($i = 0; $i < count($candidate_id); $i++) {
+          
+                $cdata[] = array('id' => $candidate_id[$i],
+                    'status' => $this->input->post('candidate_status'),
+                    'modifiedby' => $this->user_id,
+                    'modifieddate' => $this->date_time,
+                    'isactive' => '1',
+                );
+                
+                $idata[] = array('candidate_id' => $candidate_id[$i],
+                    'candidate_status' => $this->input->post('candidate_status'),
+                    'modifiedby' => $this->user_id,
+                    'modifieddate' => $this->date_time,
+                    'isactive' => '1',
+                );
+            }
+            
+            $res = $this->db->update_batch('main_cv_management', $cdata, 'id');
+            $res = $this->db->update_batch('main_candidate_interview', $idata, 'candidate_id');
+            
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
             } else {
-                echo $this->Common_model->show_massege(1, 2);
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
+                echo $this->Common_model->show_massege(2,1);
+            } else {
+                echo $this->Common_model->show_massege(3,2);
             }
         }
-    }
-
-    public function view_resume() {
-        $resume_path = $this->uri->segment(3);
-        if($resume_path!="")
-        {
-            $this->load->helper('download');
-            $data = file_get_contents(base_url('/uploads/candidate_resume/' . $resume_path));
-            force_download($resume_path, $data);
-        }
+         
     }
     
     

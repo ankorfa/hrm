@@ -35,7 +35,7 @@ class Con_CV_Bank extends CI_Controller {
         
     }
 
-    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_id' => '','status' => '')) {
+    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_id' => '','resume_type' => '','qualification' => '','skill_set' => '','experience' => '','status' => '')) {
         $this->menu_id = $this->uri->segment(3);
         $this->Common_model->is_user_valid($this->user_id,$this->menu_id,$this->user_menu);
         
@@ -58,8 +58,25 @@ class Con_CV_Bank extends CI_Controller {
         
         //echo $this->db->last_query();
         
-        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1)); //Approved
+        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
         $param['candidate_status'] = $this->Common_model->get_array('candidate_status');
+        $param['resume_type'] = $this->Common_model->get_array('resume_type');
+        
+        $this->db->select('skill_set');
+        $this->db->order_by('skill_set', 'desc');
+        $this->db->group_by('skill_set');
+        $param['skill_query'] = $this->db->get('main_cv_management');
+        
+        $this->db->select('qualification');
+        $this->db->order_by('qualification', 'desc');
+        $this->db->group_by('qualification');
+        $param['qualification_query'] = $this->db->get('main_cv_management');
+        
+        $this->db->select('work_experience');
+        $this->db->order_by('work_experience', 'desc');
+        $this->db->group_by('work_experience');
+        $param['experience_query'] = $this->db->get('main_cv_management');
+
         
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_CV_Bank.php';
@@ -71,9 +88,13 @@ class Con_CV_Bank extends CI_Controller {
         $ids = $search_criteria = array();
 
         $search_criteria['requisition_id'] = $requisition_id = $this->input->post('requisition_id');
+        $search_criteria['resume_type'] = $resume_type = $this->input->post('resume_type');
+        $search_criteria['qualification'] = $qualification = $this->input->post('qualification');
+        $search_criteria['experience'] = $experience = $this->input->post('experience');
+        $search_criteria['skill_set'] = $skill_set = $this->input->post('skill_set');
         $search_criteria['status'] = $status = $this->input->post('status');
 
-        if (($requisition_id != '') || ($status != '')) {
+        if (($requisition_id != '') || ($resume_type != '') || ($status != '') || ($qualification != '') || ($experience != '') || ($skill_set != '')) {
      
             $this->db->select('id');
             $this->db->from('main_cv_management');
@@ -86,8 +107,20 @@ class Con_CV_Bank extends CI_Controller {
             if ($requisition_id != '') {
                 $this->db->where('requisition_id', $requisition_id);
             }
-            if ($requisition_id != '') {
+            if ($resume_type != '') {
+                $this->db->where('resume_type', $resume_type);
+            }
+            if ($status != '') {
                 $this->db->where('status', $status);
+            }
+            if ($qualification != '') {
+                $this->db->like('qualification', $qualification);
+            }
+            if ($experience != '') {
+                $this->db->like('work_experience', $experience);
+            }
+            if ($skill_set != '') {
+                $this->db->like('skill_set', $skill_set);
             }
            
             $ids = $this->db->get()->result_array();

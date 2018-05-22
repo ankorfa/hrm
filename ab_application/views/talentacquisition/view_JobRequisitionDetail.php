@@ -135,16 +135,28 @@
                                                         <th>Required Skills</th>
                                                         <td><?php echo $row->required_skills; ?></td>
                                                     </tr>
-                                                    <tr>
-                                                        <th>Position Description : </th>
-                                                        <td><?php echo $row->position_description; ?></td>                                        
-                                                    </tr>
+                                                    
                                                     <?php
                                                 }
                                                 ?>     
                                                 </tbody>
                                             </table>
                                         </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="panel panel-u margin-bottom-40">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><i class="fa fa-tasks"></i> Job Description </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <?php
+                                        foreach ($query->result() as $row) {
+                                            ?>
+                                            <?php echo $row->job_posting_text; ?>
+                                            <?php
+                                        }
+                                        ?>     
                                     </div>
                                 </div>
                             </div>        

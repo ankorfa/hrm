@@ -11,7 +11,7 @@
         <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;">
 
             <div class="col-md-12" style="margin-top: 10px">
-                <form id="sing_req_form" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Requisitions_Approval/update_sing_req_Status" enctype="multipart/form-data" role="form" >
+                <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Close_Requisition/update_Close_Requisition" enctype="multipart/form-data" role="form" >
 
                     <div id="employee_review_div">   
                         <div class="panel panel-u margin-bottom-40">
@@ -56,11 +56,7 @@
                                         <tr>
                                             <th>Reporting Manager : </th>
                                             <td>
-                                                <?php
-//                                                            $manager_id = $this->Common_model->get_name($this, $row->reporting_manager_id, 'main_employees', 'employee_id');
-//                                                            echo $this->Common_model->employee_name($manager_id);
-                                                echo $this->Common_model->get_selected_value($this, 'employee_id', $row->reporting_manager_id, 'main_employees', 'first_name');
-                                                ?>
+                                                <?php echo $this->Common_model->get_selected_value($this, 'employee_id', $row->reporting_manager_id, 'main_employees', 'first_name'); ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -94,43 +90,47 @@
                                                 ?>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <th>Hire Reason : </th>
-                                            <td>
-                                                <?php
-                                                $hire_reason_array = array(1 => 'New', 2 => 'Replacing');
-                                                echo ($row->hire_reason == 0 ? 'Not Define' : $hire_reason_array[$row->hire_reason]);
-                                                ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Employment Status : </th>
-                                            <td><?php echo $this->Common_model->get_name($this, $row->employment_status_id, 'main_employmentstatus', 'description') ?></td>
-                                        </tr>
-                                        <tr>    
-                                            <th>Priority: </th>
-                                            <td>
-                                                <?php
-                                                if ($row->priority != 0) {
-                                                    echo $priority_array[$row->priority];
-                                                } else {
-                                                    echo '';
-                                                }
-                                                ?>
-                                            </td>
-                                        </tr>
                                         
-                                        <tr>
-                                            <th>Qualification : </th>
-                                            <td><?php echo $row->required_qualification ?></td>
+                                        <tr>    
+                                            <th>No Of Application : </th>
+                                            <td>
+                                                <?php
+                                                $this->db->select('id');
+                                                $this->db->from('main_cv_management');
+                                                $this->db->where('requisition_id',$row->id);
+                                                $this->db->where('isactive',1);
+                                                $this->db->where('is_close',0);
+                                                echo $num_results = $this->db->count_all_results();
+                                                ?>
+                                            </td>
                                         </tr>
                                         <tr>    
-                                            <th>Experience Range : </th>
-                                            <td><?php echo $row->experience_range ?></td>
+                                            <th>Selected Candidates : </th>
+                                            <td>
+                                                <?php
+                                                $this->db->select('id');
+                                                $this->db->from('main_cv_management');
+                                                $this->db->where('requisition_id',$row->id);
+                                                $this->db->where('status',3);
+                                                $this->db->where('isactive',1);
+                                                $this->db->where('is_close',0);
+                                                echo $num_results = $this->db->count_all_results();
+                                                ?>
+                                            </td>
                                         </tr>
                                         <tr>    
-                                            <th>Required Skills</th>
-                                            <td><?php echo $row->required_skills; ?></td>
+                                            <th>Rejected Candidates : </th>
+                                            <td>
+                                                <?php
+                                                $this->db->select('id');
+                                                $this->db->from('main_cv_management');
+                                                $this->db->where('requisition_id',$row->id);
+                                                $this->db->where('status',4);
+                                                $this->db->where('isactive',1);
+                                                $this->db->where('is_close',0);
+                                                echo $num_results = $this->db->count_all_results();
+                                                ?>
+                                            </td>
                                         </tr>
                                         <?php
                                     }
@@ -139,46 +139,17 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="panel panel-u margin-bottom-40">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-tasks"></i> Job Description </h3>
-                            </div>
-                            <div class="panel-body">
-                                <?php
-                                foreach ($query->result() as $row) {
-                                    ?>
-                                        <?php echo $row->job_posting_text; ?>
-                                    <?php
-                                }
-                                ?>     
-                            </div>
-                        </div>
                     </div> 
+                  
+                    <div class="modal-footer">                        
+                        <a class="btn btn-danger" href="<?php echo base_url() . "Con_Close_Requisition" ?>"> Close </a>
+                        <button type="submit" id="submit" name="submit" class="btn btn-u"> <i class="fa fa-ban" aria-hidden="true"></i> Close Requisition </button>
+                    </div>
                     
-                    <?php
-                    foreach ($query->result() as $roww) {
-                        ?>
-                        <div class="modal-footer">                        
-                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_Job_Requisition" ?>"> Close </a>
-                            <?php
-                            if ($roww->req_status != 1) {
-                                ?>
-                                <button type="submit" id="RejectForm" name="RejectForm" onclick="reject_form_submit(4)" value="4" class="btn btn-u"> <i class="fa fa-ban" aria-hidden="true"></i> Reject </button>
-                                <button type="submit" id="ApproveForm" name="ApproveForm" onclick="approved_form_submit(1)" value="1" class="btn btn-u"> <i class="fa fa-check" aria-hidden="true"></i> Approve </button>
-                                <?php
-                            }
-                            ?>
-                                <input type="hidden" name="sing_req_status" id="sing_req_status">
-                        </div>
-                    <?php } ?>
-
                 </form>
-
-
+                
             </div>
-
         </div>
-
     </div>
 </div>
 
@@ -188,61 +159,25 @@
 <!--Add item script-->       
 <script>
 
-   // $(function () {
-        
-       function approved_form_submit(id)
-       {
-           $("#sing_req_status").val('');
-           $("#sing_req_status").val(id);
-           
-            $("#sing_req_form").submit(function (event) {
-                loading_box(base_url);
-                var url = $(this).attr('action');
-                $.ajax({
-                    url: url,
-                    data: $("#sing_req_form").serialize(),
-                    type: $(this).attr('method')
-                }).done(function (data) {
+    $(function () {
+        $("#sky-form11").submit(function (event) {
+            loading_box(base_url);
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                data: $("#sky-form11").serialize(),
+                type: $(this).attr('method')
+            }).done(function (data) {
 
-                    var url = '<?php echo base_url() ?>Con_Job_Requisition';
-                    view_message(data, url, '', 'sing_req_form');
+                var url = '<?php echo base_url() ?>Con_Close_Requisition';
+                view_message(data, url, '', 'sky-form11');
 
-                });
-                event.preventDefault();
             });
-        
-        }
-       function reject_form_submit(id)
-       {
-           $("#sing_req_status").val('');
-           $("#sing_req_status").val(id);
-           
-            $("#sing_req_form").submit(function (event) {
-                loading_box(base_url);
-                var url = $(this).attr('action');
-                $.ajax({
-                    url: url,
-                    data: $("#sing_req_form").serialize(),
-                    type: $(this).attr('method')
-                }).done(function (data) {
-
-                    var url = '<?php echo base_url() ?>Con_Job_Requisition';
-                    view_message(data, url, '', 'sing_req_form');
-
-                });
-                event.preventDefault();
-            });
-        
-        }
-        
-    //});
-
-    $("#sing_req_status").select2({
-        placeholder: "Select Status",
-        allowClear: true,
+            event.preventDefault();
+        });
     });
 
-
+ 
 </script>
 <!--=== End Script ===-->
 

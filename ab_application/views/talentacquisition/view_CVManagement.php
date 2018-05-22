@@ -23,7 +23,23 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">  &nbsp;  </label>
+                                    <label class="col-sm-4 control-label"> Resume Type </label>
+                                    <div class="col-sm-8">
+                                        <select name="resume_type" id="resume_type" class="col-xs-12 myselect2 input-sm">
+                                            <option></option>
+                                            <?php
+                                            foreach ($resume_type as $key => $val){
+                                                $slct = ($search_criteria['resume_type'] != "" && $search_criteria['resume_type'] == $key) ? 'selected' : '';
+                                                echo '<option value="' . $key . '" ' . $slct . '>' . $val . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label"> Requisition </label>
                                     <div class="col-sm-8">
                                         <select name="requisition_id" id="requisition_id" class="col-xs-12 myselect2 input-sm">
                                             <option></option>
@@ -55,6 +71,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Resume Type</th>
                             <th>Requisition Id</th>
                             <th>Position</th>
                             <th>First Name</th>
@@ -83,6 +100,7 @@
                                 $sl++; $pdt = $row->id;
                                 print"<tr>";
                                 print"<td id='catA" . $pdt . "'>" . $sl . "</td>";
+                                print"<td id='catA" . $pdt . "'>" . $resume_type[$row->resume_type] . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$position_id,'main_jobtitles','job_title') ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->candidate_first_name ."</td>";
@@ -111,6 +129,10 @@
 
 <script type="text/javascript">
 
+    $("#resume_type").select2({
+        placeholder: "Select resume type",
+        allowClear: true
+    });
     $("#requisition_id").select2({
         placeholder: "Select requisition",
         allowClear: true

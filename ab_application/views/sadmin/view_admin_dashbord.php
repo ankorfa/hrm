@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label"> Company </label>
                                     <div class="col-sm-8">

@@ -35,7 +35,7 @@ class Con_CVManagement extends CI_Controller {
         
     }
 
-    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_id' => '')) {
+    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_id' => '','resume_type' => '')) {
         $this->menu_id = $this->uri->segment(3);
         $this->Common_model->is_user_valid($this->user_id,$this->menu_id,$this->user_menu);
         
@@ -58,7 +58,8 @@ class Con_CVManagement extends CI_Controller {
         
         //echo $this->db->last_query();
         
-        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1)); //Approved
+        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
+        $param['resume_type'] = $this->Common_model->get_array('resume_type');
         
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_CVManagement.php';
@@ -70,8 +71,9 @@ class Con_CVManagement extends CI_Controller {
         $ids = $search_criteria = array();
 
         $search_criteria['requisition_id'] = $requisition_id = $this->input->post('requisition_id');
+        $search_criteria['resume_type'] = $resume_type = $this->input->post('resume_type');
 
-        if (($requisition_id != '')) {
+        if (($requisition_id != '') || ($resume_type != '')) {
      
             $this->db->select('id');
             $this->db->from('main_cv_management');
@@ -85,6 +87,9 @@ class Con_CVManagement extends CI_Controller {
             /* ----Conditions---- */
             if ($requisition_id != '') {
                 $this->db->where('requisition_id', $requisition_id);
+            }
+            if ($resume_type != '') {
+                $this->db->where('resume_type', $resume_type);
             }
            
             $ids = $this->db->get()->result_array();
@@ -105,14 +110,15 @@ class Con_CVManagement extends CI_Controller {
         $param['module_id']=$this->module_id;
         
          if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 8 || $this->user_group == 4) {//Hr Manager //Company User //Admin //HR
-            $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'company_id' => $this->company_id)); //Approved
+             $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0,'company_id' => $this->company_id)); //Approved
         } else {
-           $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1)); //Approved
+           $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
         }
         
         //echo $this->db->last_query();
         
         $param['approver_status'] = $this->Common_model->get_array('approver_status');
+        $param['resume_type'] = $this->Common_model->get_array('resume_type');
 
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_addCVManagement.php';
@@ -166,7 +172,13 @@ class Con_CVManagement extends CI_Controller {
     
     public function save_CVManagement() {
         
-        $this->form_validation->set_rules('requisition_id', 'Requisition ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        $this->form_validation->set_rules('resume_type', 'resume type','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        
+        if($this->input->post('resume_type')==0)
+        {
+            $this->form_validation->set_rules('requisition_id', 'Requisition ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        }
+        
         $this->form_validation->set_rules('candidate_first_name', 'Candidate First Name','required',array('required'=> "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('candidate_last_name', 'Candidate Last Name','required',array('required'=> "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('candidate_email', 'Email','required',array('required'=> "Please the enter required field, for more Info : %s."));
@@ -180,7 +192,10 @@ class Con_CVManagement extends CI_Controller {
         } 
         else 
         {
+            $this->db->trans_begin();
+            
             $data = array('company_id' => $this->company_id,
+                'resume_type' => $this->input->post('resume_type'),
                 'requisition_id' => $this->input->post('requisition_id'),
                 'status' => $this->input->post('candidate_status'),
                 'candidate_first_name' => $this->input->post('candidate_first_name'),
@@ -203,7 +218,15 @@ class Con_CVManagement extends CI_Controller {
             
             $res = $this->Sendmail_model->candidate_mail($this->input->post('candidate_first_name'),$this->input->post('candidate_email'));
             
-            if ($res) {
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(0,1);
             } else {
                 echo $this->Common_model->show_massege(1,2);
@@ -221,13 +244,14 @@ class Con_CVManagement extends CI_Controller {
         $param['module_id']=$this->module_id;
         
         if ($this->user_group == 11 || $this->user_group == 12) {
-            $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'company_id' => $this->company_id)); //Approved
+            $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0,'company_id' => $this->company_id)); //Approved
         } else {
-           $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1)); //Approved
+           $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
         }
         
         $param['approver_status'] = $this->Common_model->get_array('approver_status');
         $param['query'] = $this->db->get_where('main_cv_management', array('id' => $id));
+        $param['resume_type'] = $this->Common_model->get_array('resume_type');
         
 	$param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_addCVManagement.php';
@@ -236,7 +260,12 @@ class Con_CVManagement extends CI_Controller {
     
     public function update_CVManagement(){
         
-        $this->form_validation->set_rules('requisition_id', 'Requisition ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        $this->form_validation->set_rules('resume_type', 'resume type','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        
+        if($this->input->post('resume_type')==0)
+        {
+            $this->form_validation->set_rules('requisition_id', 'Requisition ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        }
         $this->form_validation->set_rules('candidate_first_name', 'Candidate First Name','required',array('required'=> "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('candidate_last_name', 'Candidate Last Name','required',array('required'=> "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('candidate_email', 'Email','required',array('required'=> "Please the enter required field, for more Info : %s."));
@@ -250,7 +279,10 @@ class Con_CVManagement extends CI_Controller {
         } 
         else 
         {
+            $this->db->trans_begin();
+            
             $data = array('company_id' => $this->company_id,
+                'resume_type' => $this->input->post('resume_type'),
                 'requisition_id' => $this->input->post('requisition_id'),
                 'status' => $this->input->post('candidate_status'),
                 'candidate_first_name' => $this->input->post('candidate_first_name'),
@@ -271,7 +303,15 @@ class Con_CVManagement extends CI_Controller {
             
             $res=$this->Common_model->update_data('main_cv_management',$data,array('id' => $this->input->post('id')));
             
-             if ($res) {
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(2,1);
             } else {
                 echo $this->Common_model->show_massege(3,2);
@@ -306,6 +346,8 @@ class Con_CVManagement extends CI_Controller {
 
         $param['page_header'] = "CV Management";
         $param['module_id'] = $this->module_id;
+        
+        $param['resume_type'] = $this->Common_model->get_array('resume_type');
         
         if ($this->user_group == 11 || $this->user_group == 12) {
             $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'company_id' => $this->company_id)); //Approved

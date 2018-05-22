@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Con_Rejected_Candidates extends CI_Controller {
+class Con_Recall_Rejected_Candidates extends CI_Controller {
 
     public $user_data = array();
     public $user_id = null;
@@ -48,18 +48,20 @@ class Con_Rejected_Candidates extends CI_Controller {
             $status = explode(",", $status);
             $status_id = array_map('intval', $status);
             $this->db->where_in('status', $status_id);
-            $param['query'] = $this->db->get_where('main_cv_management', array('company_id' => $this->company_id,'isactive' => 1));
+            $param['query'] = $this->db->get_where('main_cv_management', array('company_id' => $this->company_id,'isactive' => 1,'is_close' => 0));
         } else {
             $status='4';
             $status = explode(",", $status);
             $status_id = array_map('intval', $status);
             $this->db->where_in('status', $status_id);
-            $param['query'] = $this->db->get_where('main_cv_management', array('isactive' => 1));
+            $param['query'] = $this->db->get_where('main_cv_management', array('isactive' => 1,'is_close' => 0));
         }
         //echo $this->db->last_query();
         
+        $param['resume_type'] = $this->Common_model->get_array('resume_type');
+        
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
-        $param['content'] = 'talentacquisition/view_Rejected_Candidates.php';
+        $param['content'] = 'talentacquisition/view_Recall_Rejected_Candidates.php';
         $this->load->view('admin/home', $param);
     }
     
@@ -75,7 +77,7 @@ class Con_Rejected_Candidates extends CI_Controller {
         );
 
         $cres = $this->Common_model->update_data('main_cv_management', $cdata, array('id' => $this->uri->segment(3)));
-        redirect('Con_Rejected_Candidates/');
+        redirect('Con_Recall_Rejected_Candidates/');
         exit;
     }
     
@@ -87,6 +89,8 @@ class Con_Rejected_Candidates extends CI_Controller {
             echo $this->Common_model->show_validation_massege(validation_errors(), 2);
         } else {
 
+            $this->db->trans_begin();
+            
             $rejected_id = $this->input->post("rejected_id");
             for ($i = 0; $i < count($rejected_id); $i++) {
                 $cdata[] = array('status' => 0,
@@ -100,7 +104,15 @@ class Con_Rejected_Candidates extends CI_Controller {
 
             $res = $this->db->update_batch('main_cv_management', $cdata, 'id');
 
-            if ($res) {
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(12, 1);
             } else {
                 echo $this->Common_model->show_massege(13, 2);

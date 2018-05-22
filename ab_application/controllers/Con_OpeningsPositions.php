@@ -40,16 +40,8 @@ class Con_OpeningsPositions extends CI_Controller {
         $param['module_id'] = $this->module_id;
 
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 4) {
-//            $reqs=array('0','2','4');
-//            //$reqs_arr = explode(",", $reqs);
-//            $reqst_arr = array_map('intval', $reqs);
-//            $this->db->where_in('req_status',$reqst_arr);
-            
-            //date("Y-m-d")<due_date;
             $param['query'] = $this->db->get_where('main_opening_position', array('company_id' => $this->company_id,'req_status'=>1,'due_date > '=>date("Y-m-d")));
-            //echo $this->db->last_query();
         } else {
-            //$param['query'] =  $this->db->query("SELECT * FROM main_opening_position  WHERE req_status IN ('1') ");   
             $param['query'] = $this->db->get_where('main_opening_position', array('req_status'=>1,'due_date > '=>date("Y-m-d")));
         }
         //echo $this->db->last_query();

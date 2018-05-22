@@ -35,31 +35,73 @@ class Con_Interview_Candidate extends CI_Controller {
         
     }
 
-    public function index() {
+    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_idd' => '')) {
         $this->menu_id = $this->uri->segment(3);
         $this->Common_model->is_user_valid($this->user_id,$this->menu_id,$this->user_menu);
+        
+        $param['show_result'] = $show_result;
+        $param['search_ids'] = $search_ids;
+        $param['search_criteria'] = $search_criteria;
         
         $param['menu_id']=$this->menu_id;
         $param['page_header'] = "Interview Panel";
         $param['module_id']=$this->module_id;
         
+        if (!empty($search_ids)) {
+            $this->db->where_in('id', $search_ids);
+        }
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 4) {
             $status='0,4';
             $status = explode(",", $status);
             $status_id = array_map('intval', $status);
             $this->db->where_in('interview_status', $status_id);
-            $param['query'] = $this->db->get_where('main_interview_schedule', array('company_id' => $this->company_id,'isactive' => 1));
+            $param['query'] = $this->db->get_where('main_interview_schedule', array('company_id' => $this->company_id,'isactive' => 1,'is_close' => 0));
         } else {
             $status='0,4';
             $status = explode(",", $status);
             $status_id = array_map('intval', $status);
             $this->db->where_in('interview_status', $status_id);
-            $param['query'] = $this->db->get_where('main_interview_schedule', array('isactive' => 1));
+            $param['query'] = $this->db->get_where('main_interview_schedule', array('isactive' => 1,'is_close' => 0));
         }
+        
+        $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
+        
+        $param['resume_type'] = $this->Common_model->get_array('resume_type');
         
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_Interview_Candidate.php';
         $this->load->view('admin/home', $param);
+    }
+    
+    public function search_for_Interview() {
+        
+        $ids = $search_criteria = array();
+
+        $search_criteria['requisition_idd'] = $requisition_idd = $this->input->post('requisition_idd');
+
+        if (($requisition_idd != '') ) {
+     
+            $this->db->select('id');
+            $this->db->from('main_interview_schedule');
+            
+            if ($this->user_group == 11 || $this->user_group == 12) {
+                $this->db->where('company_id', $this->company_id);
+            } else {
+                $this->db->where('createdby', $this->user_id);
+            }
+
+            /* ----Conditions---- */
+            if ($requisition_idd != '') {
+                $this->db->where('requisition_id', $requisition_idd);
+            }
+           
+            $ids = $this->db->get()->result_array();
+        }
+
+        $ids = array_column($ids, 'id');
+
+        $this->index($this->uri->segment(3), TRUE, $ids, $search_criteria);
+        
     }
     
     
@@ -98,6 +140,9 @@ class Con_Interview_Candidate extends CI_Controller {
         } 
         else 
         {
+            
+            $this->db->trans_begin();
+            
             $data = array('interview_status' => $this->input->post('up_interview_status'),
                 'description' => $this->input->post('description'),
                 'modifiedby' => $this->user_id,
@@ -115,7 +160,30 @@ class Con_Interview_Candidate extends CI_Controller {
             
             $cres=$this->Common_model->update_data('main_cv_management',$cdata,array('id' => $this->input->post('candidate_id')));
             
-             if ($res) {
+            $idata = array('company_id' => $this->company_id,
+                'requisition_id' => $this->input->post('requisition_id'),
+                'schedule_id' => $this->input->post('schedule_id'),
+                'candidate_id' => $this->input->post('candidate_id'),
+                'interview_status' => $this->input->post('up_interview_status'),
+                'candidate_status' => $this->input->post('up_candidate_status'),
+                'rating_id' => $this->input->post('rating_id'),
+                'comments' => $this->input->post('description'),
+                'createdby' => $this->user_id,
+                'createddate' => $this->date_time,
+                'isactive' => '1',
+            );
+            
+            $res=$this->Common_model->insert_data('main_candidate_interview',$idata);
+            
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $flag = 0;
+            } else {
+                $this->db->trans_commit();
+                $flag = 1;
+            }
+            
+            if ($flag) {
                 echo $this->Common_model->show_massege(2,1);
             } else {
                 echo $this->Common_model->show_massege(3,2);
@@ -124,20 +192,21 @@ class Con_Interview_Candidate extends CI_Controller {
          
     }
     
-    public function delete_ScheduledInterviews() {
+    public function delete_Scheduled() {
         $id = $this->uri->segment(3);
         $this->Common_model->delete_by_id("main_interview_schedule", $id);
-        redirect('Con_ScheduledInterviews/');
+        redirect('Con_Interview_Candidate/');
         exit;
     }
     
-    public function view_ScheduledInterviews() {
+    public function view_Candidate() {
         
         $si_id=$this->uri->segment(3);
         $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
 
         $param['page_header'] = "Schedule Interview";
         $param['module_id'] = $this->module_id;
+        $param['type']="4";
 
         if ($this->user_group == 11 || $this->user_group == 12) {
             $param['query'] = $this->db->get_where('main_interview_schedule', array('company_id' => $this->company_id,'id' =>$si_id ));            
@@ -145,7 +214,7 @@ class Con_Interview_Candidate extends CI_Controller {
             $param['query'] = $this->db->get_where('main_interview_schedule', array('id' => $si_id ));            
         }        
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
-        $param['content'] = 'talentacquisition/view_ScheduleInterviewDetail.php';
+        $param['content'] = 'talentacquisition/view_addInterview_Candidate.php';
         $this->load->view('admin/home', $param);
     }
     
