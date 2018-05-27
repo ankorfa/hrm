@@ -239,7 +239,17 @@
                                 <div class="form-group ">                         
                                     <label class="col-sm-2 control-label"> Qualification</label>
                                     <div class="col-sm-10">                            
-                                        <input type="text" name="required_qualification" id="required_qualification" class="form-control input-sm" placeholder="Required Qualification" />
+                                        <!--<input type="text" name="required_qualification" id="required_qualification" class="form-control input-sm" placeholder="Required Qualification" />-->
+                                    <select name="required_qualification[]" id="required_qualification" class="col-sm-12 col-xs-12 myselect2 input-sm" title="Required Qualification (multiple select)" multiple>
+                                        <option></option>
+                                        <?php
+                                        foreach ($educationlevel_query->result() as $key):
+                                            ?>
+                                            <option value="<?php echo $key->id ?>"><?php echo $key->educationlevelcode ?></option>
+                                            <?php
+                                        endforeach;
+                                        ?>
+                                    </select>
                                     </div>
                                 </div>
                                 <div class="form-group "> 
@@ -254,10 +264,25 @@
                                                                 <textarea class="form-control" rows="1" id="job_description" name="job_description"></textarea>
                                                             </div> 
                                                         </div>-->
-                                <div class="form-group">
+<!--                                <div class="form-group">
                                     <label class="col-sm-2 control-label"> Required Skills</label>
                                     <div class="col-sm-10">                            
                                         <textarea class="form-control" rows="1" id="required_skills" name="required_skills"></textarea>
+                                    </div>
+                                </div>-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Required Skills</label>
+                                    <div class="col-sm-10">                            
+                                        <select name="required_skills[]" id="required_skills" class="col-sm-12 col-xs-12 myselect2 input-sm" title="Required Skills (multiple select)" multiple>
+                                            <option></option>
+                                            <?php
+                                            foreach ($skills_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->id ?>"><?php echo $key->skill_name ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -278,7 +303,7 @@
                         </div>
 
                         <div class="modal-footer">                        
-                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_Job_Requisition" ?>">Close</a>
+                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_Job_Requisition/add_job_Requisition_index" ?>">Close</a>
                             <button type="submit" id="submit" class="btn btn-u">Save</button>
                         </div>
 
@@ -288,7 +313,7 @@
             } else if ($type == 2) {//edit
                 ?>
                 <div class="col-md-12" style="margin-top: 10px">
-                    <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Job_Requisition/update_job_Requisition" enctype="multipart/form-data" role="form" >
+                    <form id="sky-form12" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Job_Requisition/update_job_Requisition" enctype="multipart/form-data" role="form" >
                         <?php foreach ($OpeningsPositions_query->result() as $row): ?> 
                             <input type="hidden" value="<?php echo $row->id ?>" name="id"/>
 <div class="panel panel-u margin-bottom-40">
@@ -521,7 +546,18 @@
                             <div class="form-group">                         
                                 <label class="col-sm-2 control-label">Qualification</label>
                                 <div class="col-sm-10">                            
-                                    <input type="text" name="required_qualification" id="required_qualification" value="<?php echo ucwords($row->required_qualification) ?>" class="form-control input-sm" placeholder="Required Qualification" />
+                                    <!--<input type="text" name="required_qualification" id="required_qualification" value="<?php // echo ucwords($row->required_qualification) ?>" class="form-control input-sm" placeholder="Required Qualification" />-->
+                                <select name="required_qualification[]" id="required_qualification" class="col-sm-12 col-xs-12 myselect2 input-sm" title="Required Qualification (multiple select)" multiple>
+                                    <option></option>
+                                    <?php
+                                    $required_qualification = explode(",", $row->required_qualification);
+                                    foreach ($educationlevel_query->result() as $key):
+                                        ?>
+                                        <option value="<?php echo $key->id ?>"<?php if (in_array($key->id, $required_qualification)) echo "selected"; ?>><?php echo $key->educationlevelcode ?></option>
+                                        <?php
+                                    endforeach;
+                                    ?>
+                                </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -536,10 +572,26 @@
                                     <textarea class="form-control" rows="1" id="job_description" name="job_description"><?php // echo ucwords($row->job_description) ?></textarea>
                                 </div>
                             </div>-->
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Required Skills</label>
                                 <div class="col-sm-10">                            
-                                    <textarea class="form-control" rows="1" id="required_skills" name="required_skills"><?php echo ucwords($row->required_skills) ?></textarea>
+                                    <textarea class="form-control" rows="1" id="required_skills" name="required_skills"><?php // echo ucwords($row->required_skills) ?></textarea>
+                                </div>
+                            </div>-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Required Skills</label>
+                                <div class="col-sm-10">                            
+                                    <select name="required_skills[]" id="required_skills" class="col-sm-12 col-xs-12 myselect2 input-sm" title="Required Skills (multiple select)" multiple>
+                                        <option></option>
+                                        <?php
+                                        $required_skills = explode(",", $row->required_skills);
+                                        foreach ($skills_query->result() as $key):
+                                            ?>
+                                            <option value="<?php echo $key->id ?>"<?php if (in_array($key->id, $required_skills)) echo "selected"; ?>><?php echo $key->skill_name ?></option>
+                                            <?php
+                                        endforeach;
+                                        ?>
+                                    </select> 
                                 </div>
                             </div>
                             <div class="form-group">
@@ -603,13 +655,6 @@
     });
 
     $(function () {
-//        $('.dt_pick_m').datepicker({
-//            format: 'MM-yyyy-dd',
-//            todayHighlight: true,
-//            autoclose: true,
-//            on
-//        });
-
 
         $("#sky-form11").submit(function (event) {
 
@@ -626,12 +671,36 @@
                 type: $(this).attr('method')
             }).done(function (data) {
 
-                var url = '<?php echo base_url() ?>Con_Job_Requisition';
+                var url = '<?php echo base_url() ?>Con_Job_Requisition/add_job_Requisition';
                 view_message(data, url, '', 'sky-form11');
 
             });
             event.preventDefault();
         });
+        
+        $("#sky-form12").submit(function (event) {
+
+            var ckdata = CKEDITOR.instances.posting_text.getData();
+            $('#job_posting_text').val(ckdata);
+
+            $("#replacing_emp").attr('disabled', false);
+            loading_box(base_url);
+
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                data: $("#sky-form12").serialize(),
+                type: $(this).attr('method')
+            }).done(function (data) {
+
+                var url = '<?php echo base_url() ?>Con_Job_Requisition';
+                view_message(data, url, '', 'sky-form12');
+
+            });
+            event.preventDefault();
+        });
+        
+        
     });
 
     $("#location_id").select2({
@@ -685,6 +754,14 @@
         placeholder: "Select Replacing Employee",
         allowClear: true,
     });
+    $("#required_skills").select2({
+        placeholder: "Select required skills",
+        allowClear: true,
+    });
+    $("#required_qualification").select2({
+        placeholder: "Select required qualification",
+        allowClear: true,
+    });
 
     function select_rep_emp(id)
     {
@@ -717,6 +794,7 @@
             $('#salary_range').attr('readonly', false);
         }
     }
+    
     //function check_due_date(due_date)
     //{
     //var now = new Date();

@@ -34,20 +34,26 @@ class Con_Request_for_Interviewer extends CI_Controller {
         $this->load->model('Sendmail_model');
     }
 
-    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $requisition_id=0,$search_criteria = array('requisition_idd' => '')) {
+    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $schedule_id=0,$search_criteria = array('requisition_idd' => '')) {
         $this->menu_id = $this->uri->segment(3);
         $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
         
         $param['show_result'] = $show_result;
         $param['search_ids'] = $search_ids;
         $param['search_criteria'] = $search_criteria;
-        $param['requisition_id'] = $requisition_id;
+        $param['schedule_id'] = $schedule_id;
 
         $param['menu_id'] = $this->menu_id;
         $param['page_header'] = "Request for Interviewer";
         $param['module_id'] = $this->module_id;
         
         $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
+        
+        if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 4) {
+            $param['schedule_query'] = $this->db->get_where('main_schedule', array('company_id' => $this->company_id, 'is_close' => 0, 'isactive' => 1));
+        } else {
+            $param['schedule_query'] = $this->db->get_where('main_schedule', array('isactive' => 1, 'is_close' => 0));
+        }
 
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_Request_for_Interviewer.php';
@@ -58,9 +64,9 @@ class Con_Request_for_Interviewer extends CI_Controller {
         
         $ids = $search_criteria = array();
 
-        $search_criteria['requisition_id'] = $requisition_id = $this->input->post('requisition_idd');
+        $search_criteria['schedule_id'] = $schedule_id = $this->input->post('schedule_id');
 
-        if (($requisition_id != '')) {
+        if (($schedule_id != '')) {
             
             //$schedule_query = $this->db->get_where('main_schedule', array('requisition_id' => $requisition_id,'isactive' => 1))->row();
      
@@ -74,8 +80,8 @@ class Con_Request_for_Interviewer extends CI_Controller {
             }
 
             /* ----Conditions---- */
-            if ($requisition_id != '') {
-                $this->db->where('requisition_id', $requisition_id);
+            if ($schedule_id != '') {
+                $this->db->where('id', $schedule_id);
             }
            
             $idss = $this->db->get()->row();
@@ -86,14 +92,14 @@ class Con_Request_for_Interviewer extends CI_Controller {
             }
         }
 
-        $this->index($this->uri->segment(3), TRUE, $ids,$requisition_id, $search_criteria);
+        $this->index($this->uri->segment(3), TRUE, $ids,$schedule_id, $search_criteria);
         
     }
     
     public function save_Request_for_Interviewer() {
         
         $this->form_validation->set_rules('employee_id[]', 'Employee','required',array('required'=> "Please the enter required field, for more Info : %s."));
-        $this->form_validation->set_rules('requisition_id', 'Requisition ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
+        $this->form_validation->set_rules('schedule_id', 'Schedule ID','required',array('required'=> "Please the enter required field, for more Info : %s."));
         
         if ($this->form_validation->run() == FALSE) {
             echo $this->Common_model->show_validation_massege(validation_errors(),2);
@@ -103,23 +109,21 @@ class Con_Request_for_Interviewer extends CI_Controller {
             
             $this->db->trans_begin();
             
-            $schedule_chk_query = $this->db->get_where('main_schedule', array('requisition_id' => $this->input->post('requisition_id'),'isactive' => 1));
+            $schedule_query = $this->db->get_where('main_schedule', array('id' => $this->input->post('schedule_id'),'isactive' => 1))->row();
+            
+            $schedule_chk_query = $this->db->get_where('main_schedule', array('id' => $this->input->post('schedule_id'),'isactive' => 1));
             //echo $this->db->last_query();
             if ($schedule_chk_query->num_rows()== 0) {
                 echo $this->Common_model->show_validation_massege('Schedule Not Created.', 2);
                 exit();
             }
-            
-            $schedule_query = $this->db->get_where('main_schedule', array('requisition_id' => $this->input->post('requisition_id'),'isactive' => 1))->row();
            
             $employee_id = $this->input->post("employee_id");
-            
-            
             foreach ($employee_id as $key => $val) {
                 $emp = $this->db->get_where('main_employees', array('employee_id' => $val))->row();
                 $interview_date=$this->Common_model->convert_to_mysql_date($schedule_query->interview_date);
                 if ($emp->email != "") {
-                    $eres = $this->Sendmail_model->employeeScheduled_mail($emp->first_name, $emp->email, $interview_date,$schedule_query->interview_time,$this->input->post('requisition_id'));
+                    $eres = $this->Sendmail_model->employeeScheduled_mail($emp->first_name, $emp->email, $interview_date,$schedule_query->interview_time,$schedule_query->requisition_id);
                 }
             }
 

@@ -14,14 +14,14 @@
                 
                 <form class="form-horizontal" action="<?php echo base_url(). 'Con_CVManagement/search_requisition/'; ?>" method="post">
                         <div class="row">
-                            <div class="col-sm-2">
+<!--                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <div class="col-sm-4">
-                                        <a class="btn btn-u btn-md" href="<?php echo base_url() . "Con_CVManagement/add_CVManagement" ?>"><span class="glyphicon glyphicon-plus-sign"></span> Add New Resume </a></br></br>
+                                        <a class="btn btn-u btn-md" href="<?php // echo base_url() . "Con_CVManagement/add_CVManagement" ?>"><span class="glyphicon glyphicon-plus-sign"></span> Add New Resume </a></br></br>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
+                            </div>-->
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label"> Resume Type </label>
                                     <div class="col-sm-8">
@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label"> Requisition </label>
                                     <div class="col-sm-8">
@@ -56,7 +56,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label"> Skill </label>
+                                    <div class="col-sm-8">
+                                       <select name="skill_set" id="skill_set" class="col-xs-12 myselect2 input-sm">
+                                            <option></option>
+                                            <?php
+                                            foreach ($skill_query->result() as $key) {
+                                                $slct = ($search_criteria['skill_set'] != "" && $search_criteria['skill_set'] == $key->id) ? 'selected' : '';
+                                                echo '<option value="' . $key->id . '" ' . $slct . '>' . $key->skill_name . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <div class="col-sm-6">
                                         <button type="submit" class="btn-u center-align"><i class="fa fa-search"></i> Search </button> 
@@ -72,14 +88,15 @@
                         <tr>
                             <th>ID</th>
                             <th>Resume Type</th>
-                            <th>Requisition Id</th>
-                            <th>Position</th>
+<!--                            <th>Requisition Id</th>
+                            <th>Position</th>-->
                             <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Mobile</th> 
-                            <th>Skill Set</th>
+                            <!--<th>Skill </th>-->
                             <th>Status</th>
-                            <th>Resume</th>
+                            <!--<th>Resume</th>-->
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -95,20 +112,31 @@
                                 } else {
                                     $action_button = "";
                                 }
+                                
+//                                $skill_set_arr = explode(",", $row->skill_set);
+//                                $skill_set = '';
+//                                foreach ($skill_set_arr as $intr) {
+//                                    if ($skill_set == '') {
+//                                        $skill_set = $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+//                                    } else {
+//                                        $skill_set = $skill_set . " , " . $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+//                                    }
+//                                }
 
                                 $position_id=$this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','position_id');
                                 $sl++; $pdt = $row->id;
                                 print"<tr>";
                                 print"<td id='catA" . $pdt . "'>" . $sl . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $resume_type[$row->resume_type] . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$position_id,'main_jobtitles','job_title') ."</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$position_id,'main_jobtitles','job_title') ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->candidate_first_name ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $row->candidate_last_name ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->candidate_email."</td>";
                                 print"<td id='catD" . $pdt . "'>" . $row->contact_number . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $row->skill_set ."</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $skill_set ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $candidate_status[$row->status] ."</td>";
-                                print"<td id='catA" . $pdt . "'><a href='" . base_url() . "Con_CVManagement/download_resume/" . $row->upload_resume_path . "/" . "' > ". $row->upload_resume_path ." </a></td>";
+                                //print"<td id='catA" . $pdt . "'><a href='" . base_url() . "Con_CVManagement/download_resume/" . $row->upload_resume_path . "/" . "' > ". $row->upload_resume_path ." </a></td>";
                                 print"<td><div class='action-buttons '>". $action_button ." &nbsp;&nbsp; <a title='Preview' href='" . base_url() . "Con_CVManagement/view_CVManagement/" . $row->id . "/' ><i class='fa fa-lg fa-eye'></i></a>&nbsp;&nbsp;</div> </td>";
                                 print"</tr>";
                             }
@@ -135,6 +163,10 @@
     });
     $("#requisition_id").select2({
         placeholder: "Select requisition",
+        allowClear: true
+    });
+    $("#skill_set").select2({
+        placeholder: "Select skill set",
         allowClear: true
     });
         

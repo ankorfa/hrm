@@ -49,6 +49,7 @@
                                 <th>Position</th> 
                                 <th>No. of Positions</th> 
                                 <th>Status</th>
+                                <th>Action </th>
                             </tr>
                         </thead>
                         <tbody id="req_tbody">
@@ -73,7 +74,7 @@
     $(document).ready(function () {
         var selDpto = null; 
         $.ajax({
-            url: "<?php echo site_url('con_RequisitionsStatus/data_load_rwq/') ?>/" + selDpto,
+            url: "<?php echo site_url('Con_RequisitionsStatus/data_load_rwq/') ?>/" + selDpto,
             async: false,
             type: "POST",
             success: function(data) {
@@ -84,14 +85,7 @@
         })
     });
     
-//    $(document).ready(function () {
-//        var table = $('#dataTables-example-requisition').dataTable({
-//            "order": [ 0, "desc" ],
-//            "pageLength": 5,
-//            "paging": false,
-//        });
-//    });
-    
+
     $(document).ready(function () {
         $('#req_status').change(function () {
 
@@ -99,7 +93,7 @@
             //alert (selDpto);
 
             $.ajax({
-                url: "<?php echo site_url('con_RequisitionsStatus/data_load_rwq/') ?>/" + selDpto,
+                url: "<?php echo site_url('Con_RequisitionsStatus/data_load_rwq/') ?>/" + selDpto,
                 async: false,
                 type: "POST",
                 success: function(data) {

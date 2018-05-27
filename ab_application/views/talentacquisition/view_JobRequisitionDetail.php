@@ -125,7 +125,21 @@
 
                                                     <tr>
                                                         <th>Qualification : </th>
-                                                        <td><?php echo $row->required_qualification ?></td>
+                                                        <td><?php
+                                                            $required_qualification_arr = explode(",", $row->required_qualification);
+
+                                                            $required_qualification = '';
+                                                            foreach ($required_qualification_arr as $intr) {
+                                                                if ($required_qualification == '') {
+                                                                    $required_qualification = $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+                                                                } else {
+                                                                    $required_qualification = $required_qualification . " , " . $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+                                                                }
+                                                            }
+
+                                                            echo $required_qualification;
+                                                            //echo $row->required_qualification
+                                                            ?></td>
                                                     </tr>
                                                     <tr>    
                                                         <th>Experience Range : </th>
@@ -133,9 +147,22 @@
                                                     </tr>
                                                     <tr>    
                                                         <th>Required Skills</th>
-                                                        <td><?php echo $row->required_skills; ?></td>
+                                                        <td><?php
+                                                            $required_skills_arr = explode(",", $row->required_skills);
+
+                                                            $required_skills = '';
+                                                            foreach ($required_skills_arr as $intr) {
+                                                                if ($required_skills == '') {
+                                                                    $required_skills = $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                                                } else {
+                                                                    $required_skills = $required_skills . " , " . $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                                                }
+                                                            }
+
+                                                            echo $required_skills;
+                                                            ?></td>
                                                     </tr>
-                                                    
+
                                                     <?php
                                                 }
                                                 ?>     
@@ -144,7 +171,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="panel panel-u margin-bottom-40">
                                     <div class="panel-heading">
                                         <h3 class="panel-title"><i class="fa fa-tasks"></i> Job Description </h3>
@@ -162,7 +189,7 @@
                             </div>        
                         </div>
                     </div> 
-                    
+
                     <div class="modal-footer">                        
                         <a class="btn btn-danger" href="<?php echo base_url() . "Con_Job_Requisition" ?>"> Close </a>
                         <button type="submit" id="RejectForm" name="RejectForm" onclick="reject_form_submit(4)" value="4" class="btn btn-u"> <i class="fa fa-ban" aria-hidden="true"></i> Reject </button>

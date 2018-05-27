@@ -32,13 +32,18 @@ class Con_Job_Requisition extends CI_Controller {
     }
 
     public function index() {
+        
         $this->menu_id = $this->uri->segment(3);
         $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
 
         $param['menu_id'] = $this->menu_id;
-        $param['page_header'] = "Job Requisition";
+        $param['page_header'] = "Job Requisition List";
         $param['module_id'] = $this->module_id;
 
+        //$this->db->where_not_in('req_status', $search_ids);
+        
+        $this->db->where('req_status', 0);
+        $this->db->where('is_close', 0);
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 8 || $this->user_group == 4) {//Hr Manager //Company User //Admin //HR
             $param['query'] = $this->db->get_where('main_opening_position', array('company_id' => $this->company_id,'isactive' => 1));
         } else {
@@ -47,6 +52,20 @@ class Con_Job_Requisition extends CI_Controller {
 
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_Job_Requisition.php';
+        $this->load->view('admin/home', $param);
+        
+    }
+    
+    
+    public function add_job_Requisition_index() {
+        $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
+
+        $param['type'] = "1";
+        $param['page_header'] = "Job Requisition";
+        $param['module_id'] = $this->module_id;
+
+        $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
+        $param['content'] = 'talentacquisition/view_Job_Requisition_index.php';
         $this->load->view('admin/home', $param);
     }
 
@@ -64,6 +83,7 @@ class Con_Job_Requisition extends CI_Controller {
             $param['reporting_manager_query'] = $this->db->get_where('main_employees', array('company_id' => $this->company_id,'isactive' => 1));
             $param['employees_query'] = $this->db->get_where('main_employees', array('company_id' => $this->company_id));
             $param['employmentstatus_query'] = $this->db->get_where('main_employmentstatus', array('company_id' => $this->company_id));
+            $param['skills_query'] = $this->db->get_where('main_skill_setup', array('company_id' => $this->company_id));
         } else {
             $param['location_query'] = $this->Common_model->listItem('main_location');
             $param['department_query'] = $this->Common_model->listItem('main_department');
@@ -71,14 +91,22 @@ class Con_Job_Requisition extends CI_Controller {
             $param['reporting_manager_query'] = $this->db->get_where('main_employees', array('isactive' => 1));
             $param['employees_query'] = $this->Common_model->listItem('main_employees');
             $param['employmentstatus_query'] = $this->Common_model->listItem('main_employmentstatus');
+            $param['skills_query'] = $this->db->get_where('main_skill_setup', array('isactive' => 1));
         }
         $param['priority_array'] = $this->Common_model->get_array('priority');
         $param['priority_array'] = $this->Common_model->get_array('priority');
+        
+        if ($this->user_group == 4 || $this->user_group == 8 || $this->user_group == 10 || $this->user_group == 11 || $this->user_group == 12) {
+            $param['educationlevel_query'] = $this->db->get_where('main_educationlevelcode', array('company_id' => $this->company_id,'isactive' => 1));
+        } else {
+            $param['educationlevel_query'] = $this->db->get_where('main_educationlevelcode', array('isactive' => 1));
+        }
 
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_addJobRequisition.php';
         $this->load->view('admin/home', $param);
     }
+    
 
     public function save_job_Requisition() {
         
@@ -103,6 +131,24 @@ class Con_Job_Requisition extends CI_Controller {
             } else {
                 $hourly_rate = "";
             }
+            
+            $required_skills = '';
+            foreach ($this->input->post('required_skills') as $intr) {
+                if ($required_skills == '') {
+                    $required_skills = $intr;
+                } else {
+                    $required_skills = $required_skills . "," . $intr;
+                }
+            }
+            
+            $required_qualification = '';
+            foreach ($this->input->post('required_qualification') as $intr) {
+                if ($required_qualification == '') {
+                    $required_qualification = $intr;
+                } else {
+                    $required_qualification = $required_qualification . "," . $intr;
+                }
+            }
 
             $data = array('company_id' => $this->company_id,
                 'requisition_code' => $requisition_code,
@@ -122,10 +168,10 @@ class Con_Job_Requisition extends CI_Controller {
                 'replacing_emp' => $this->input->post('replacing_emp'),
                 'employment_status_id' => $this->input->post('employment_status_id'),
                 'priority' => $this->input->post('priority'),
-                'required_qualification' => $this->input->post('required_qualification'),
+                'required_qualification' => $required_qualification,
                 'experience_range' => $this->input->post('experience_range'),
 //                'job_description' => $this->input->post('job_description'),
-                'required_skills' => $this->input->post('required_skills'),
+                'required_skills' => $required_skills,
                 'position_description' => $this->input->post('position_description'),
                 'job_posting_text' => $this->input->post('job_posting_text'),
                 'createdby' => $this->user_id,
@@ -166,6 +212,7 @@ class Con_Job_Requisition extends CI_Controller {
             $param['reporting_manager_query'] = $this->db->get_where('main_employees', array('company_id' => $this->company_id,'isactive' => 1));
             $param['employees_query'] = $this->db->get_where('main_employees', array('company_id' => $this->company_id));
             $param['employmentstatus_query'] = $this->db->get_where('main_employmentstatus', array('company_id' => $this->company_id));
+            $param['skills_query'] = $this->db->get_where('main_skill_setup', array('company_id' => $this->company_id));
         } else {
             $param['location_query'] = $this->Common_model->listItem('main_location');
             $param['department_query'] = $this->Common_model->listItem('main_department');
@@ -173,10 +220,17 @@ class Con_Job_Requisition extends CI_Controller {
             $param['reporting_manager_query'] = $this->db->get_where('main_employees', array('isactive' => 1));
             $param['employees_query'] = $this->Common_model->listItem('main_employees');
             $param['employmentstatus_query'] = $this->Common_model->listItem('main_employmentstatus');
+            $param['skills_query'] = $this->db->get_where('main_skill_setup', array('isactive' => 1));
         }
 
         $param['priority_array'] = $this->Common_model->get_array('priority');
         $param['OpeningsPositions_query'] = $this->db->get_where('main_opening_position', array('id' => $id));
+        
+        if ($this->user_group == 4 || $this->user_group == 8 || $this->user_group == 10 || $this->user_group == 11 || $this->user_group == 12) {
+            $param['educationlevel_query'] = $this->db->get_where('main_educationlevelcode', array('company_id' => $this->company_id,'isactive' => 1));
+        } else {
+            $param['educationlevel_query'] = $this->db->get_where('main_educationlevelcode', array('isactive' => 1));
+        }
 
         $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
         $param['content'] = 'talentacquisition/view_addJobRequisition.php';
@@ -203,6 +257,24 @@ class Con_Job_Requisition extends CI_Controller {
             } else {
                 $hourly_rate = "";
             }
+            
+            $required_skills = '';
+            foreach ($this->input->post('required_skills') as $intr) {
+                if ($required_skills == '') {
+                    $required_skills = $intr;
+                } else {
+                    $required_skills = $required_skills . "," . $intr;
+                }
+            }
+            
+            $required_qualification = '';
+            foreach ($this->input->post('required_qualification') as $intr) {
+                if ($required_qualification == '') {
+                    $required_qualification = $intr;
+                } else {
+                    $required_qualification = $required_qualification . "," . $intr;
+                }
+            }
 
             $data = array('company_id' => $this->company_id,
                 //'requisition_code' => $this->input->post('requisition_code'),
@@ -222,10 +294,10 @@ class Con_Job_Requisition extends CI_Controller {
                 'replacing_emp' => $this->input->post('replacing_emp'),
                 'employment_status_id' => $this->input->post('employment_status_id'),
                 'priority' => $this->input->post('priority'),
-                'required_qualification' => $this->input->post('required_qualification'),
+                'required_qualification' => $required_qualification,
                 'experience_range' => $this->input->post('experience_range'),
 //                'job_description' => $this->input->post('job_description'),
-                'required_skills' => $this->input->post('required_skills'),
+                'required_skills' => $required_skills,
                 'position_description' => $this->input->post('position_description'),
                 'job_posting_text' => $this->input->post('job_posting_text'),
                 'modifiedby' => $this->user_id,

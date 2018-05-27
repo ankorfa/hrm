@@ -15,7 +15,22 @@
                 
                 <form class="form-horizontal" action="<?php echo base_url(). 'Con_Interview_Candidate/search_for_Interview/'; ?>" method="post">
                     <div class="row">
-                        
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"> Resume Type </label>
+                                <div class="col-sm-8">
+                                    <select name="resume_type" id="resume_type" class="col-xs-12 myselect2 input-sm">
+                                        <option></option>
+                                        <?php
+                                        foreach ($resume_type as $key => $val){
+                                            $slct = ($search_criteria['resume_type'] != "" && $search_criteria['resume_type'] == $key) ? 'selected' : '';
+                                            echo '<option value="' . $key . '" ' . $slct . '>' . $val . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">  Requisition  </label>
@@ -35,7 +50,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <div class="col-sm-6">
@@ -52,9 +66,10 @@
                         <tr>
                             <th>ID</th>
                             <th>Resume Type</th>
-                            <th>Requisition Id</th>
-                            <th>Position</th>
-                            <th>Candidate Name</th>
+<!--                            <th>Requisition Id</th>
+                            <th>Position</th>-->
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
                             <th>Status</th>
@@ -72,9 +87,10 @@
                                 print"<tr>";
                                 print"<td id='catA" . $pdt . "'>" . $sl . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $resume_type[$this->Common_model->get_name($this,$row->candidate_name,'main_cv_management','resume_type')] ."</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$position_id,'main_jobtitles','job_title') ."</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$position_id,'main_jobtitles','job_title') ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_name,'main_cv_management','candidate_first_name') ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_name,'main_cv_management','candidate_last_name') ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_name,'main_cv_management','candidate_email') ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->candidate_name,'main_cv_management','contact_number') ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $interview_status[$row->interview_status]."</td>";
@@ -99,6 +115,10 @@
     
     $("#requisition_idd").select2({
         placeholder: "Select requisition",
+        allowClear: true
+    });
+    $("#resume_type").select2({
+        placeholder: "Select resume type",
         allowClear: true
     });
 

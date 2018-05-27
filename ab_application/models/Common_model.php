@@ -87,7 +87,7 @@ class Common_model extends CI_Model {
         $data['training_status'] = array(0 => 'In process', 1 => 'Pending', 2 => 'Closed', 3 => 'Complete', 4 => 'On Hold');
         $data['wage_type'] = array(0 => 'Salary', 1 => 'Hourly');
         $data['employee_status'] = array(0 => 'Part-Time', 1 => 'Full-time', 2 => 'All');
-        $data['resume_type'] = array(0 => 'Requsiiton', 1 => 'Employee Referral');
+        $data['resume_type'] = array(0 => 'Requsiiton', 1 => 'Employee Referral', 2 => 'Other Referral');
         
         $data['rating_array'] = array(1 => 'Rating 1', 2 => 'Rating 2', 3 => 'Rating 3',4 => 'Rating 4',5 => 'Rating 5');
         $data['star_array'] = array(1 => '1 star', 2 => '2 star', 3 => '3 star',4 => '4 star',5 => '5 star');

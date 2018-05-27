@@ -41,7 +41,6 @@ class Con_Close_Requisition extends CI_Controller {
 
         $this->db->where('req_status !=', 0);
         $this->db->where('is_close', 0);
-        
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 8 || $this->user_group == 4) {//Hr Manager //Company User //Admin //HR
             $param['query'] = $this->db->get_where('main_opening_position', array('company_id' => $this->company_id,'isactive' => 1));
         } else {

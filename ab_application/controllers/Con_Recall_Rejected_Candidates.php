@@ -40,7 +40,7 @@ class Con_Recall_Rejected_Candidates extends CI_Controller {
         $this->Common_model->is_user_valid($this->user_id,$this->menu_id,$this->user_menu);
         
         $param['menu_id']=$this->menu_id;
-        $param['page_header'] = "Rejected Candidates List";
+        $param['page_header'] = "Re-Call Rejected Candidates";
         $param['module_id']=$this->module_id;
         
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 4) {
@@ -48,13 +48,13 @@ class Con_Recall_Rejected_Candidates extends CI_Controller {
             $status = explode(",", $status);
             $status_id = array_map('intval', $status);
             $this->db->where_in('status', $status_id);
-            $param['query'] = $this->db->get_where('main_cv_management', array('company_id' => $this->company_id,'isactive' => 1,'is_close' => 0));
+            $param['query'] = $this->db->get_where('main_cv_management', array('company_id' => $this->company_id,'isactive' => 1));
         } else {
             $status='4';
             $status = explode(",", $status);
             $status_id = array_map('intval', $status);
             $this->db->where_in('status', $status_id);
-            $param['query'] = $this->db->get_where('main_cv_management', array('isactive' => 1,'is_close' => 0));
+            $param['query'] = $this->db->get_where('main_cv_management', array('isactive' => 1));
         }
         //echo $this->db->last_query();
         

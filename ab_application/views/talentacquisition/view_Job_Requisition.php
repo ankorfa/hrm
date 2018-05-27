@@ -1,4 +1,3 @@
-
 <div class="col-md-10 main-content-div">
     <div class="main-content">
 
@@ -12,7 +11,7 @@
         <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;"> <!-- container well div -->
             <!-- data table -->
             <div class="table-responsive col-md-12 col-centered">
-                <a class="btn btn-u btn-md" href="<?php echo base_url() . "Con_Job_Requisition/add_job_Requisition" ?>"><span class="glyphicon glyphicon-plus-sign"></span> Add New Requisition </a></br></br>
+                <!--<a class="btn btn-u btn-md" href="<?php // echo base_url() . "Con_Job_Requisition/add_job_Requisition" ?>"><span class="glyphicon glyphicon-plus-sign"></span> Add New Requisition </a></br></br>-->
                 <table id="dataTables-example" class="table table-striped table-bordered table-hover" >
                     <thead>
                         <tr>

@@ -43,8 +43,8 @@
                                             <tr>
                                                 <th>Candidate Name : </th>
                                                 <td><?php echo $this->Common_model->get_name($this, $roww->candidate_name, 'main_cv_management', 'candidate_first_name'); ?></td>
-                                                <th>Candidate Details : </th>
-                                                <td><a href="<?php echo base_url() . "Con_ScheduledInterviews/view_resume/" . $this->Common_model->get_name($this, $roww->candidate_name, 'main_cv_management', 'upload_resume_path') ?>" >View Details </a></td>
+                                                <th>Candidate Resume : </th>
+                                                <td><a href="<?php echo base_url() . "Con_ScheduledInterviews/view_resume/" . $this->Common_model->get_name($this, $roww->candidate_name, 'main_cv_management', 'upload_resume_path') ?>" >Download Resume </a></td>
                                             </tr>
                                             <?php
                                         }
@@ -296,7 +296,7 @@
                 type: $(this).attr('method')
             }).done(function (data) {
 
-                var url = '<?php echo base_url() ?>Con_ScheduledInterviews';
+                var url = '<?php echo base_url() ?>Con_Interview_Candidate';
                 view_message(data, url, '', 'interview_status');
 
             });

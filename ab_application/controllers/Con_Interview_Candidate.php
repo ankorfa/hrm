@@ -35,7 +35,7 @@ class Con_Interview_Candidate extends CI_Controller {
         
     }
 
-    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_idd' => '')) {
+    public function index($menu_id=0, $show_result = FALSE, $search_ids = array(), $search_criteria = array('requisition_idd' => '','resume_type' => '')) {
         $this->menu_id = $this->uri->segment(3);
         $this->Common_model->is_user_valid($this->user_id,$this->menu_id,$this->user_menu);
         
@@ -64,6 +64,8 @@ class Con_Interview_Candidate extends CI_Controller {
             $param['query'] = $this->db->get_where('main_interview_schedule', array('isactive' => 1,'is_close' => 0));
         }
         
+        //echo $this->db->last_query();
+        
         $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
         
         $param['resume_type'] = $this->Common_model->get_array('resume_type');
@@ -78,27 +80,32 @@ class Con_Interview_Candidate extends CI_Controller {
         $ids = $search_criteria = array();
 
         $search_criteria['requisition_idd'] = $requisition_idd = $this->input->post('requisition_idd');
+        $search_criteria['resume_type'] = $resume_type = $this->input->post('resume_type');
 
-        if (($requisition_idd != '') ) {
+        if (($requisition_idd != '') || ($resume_type != '')) {
      
-            $this->db->select('id');
+            $this->db->select('main_interview_schedule.id as sid');
             $this->db->from('main_interview_schedule');
+            $this->db->join('main_cv_management','main_cv_management.id=main_interview_schedule.candidate_name');
             
             if ($this->user_group == 11 || $this->user_group == 12) {
-                $this->db->where('company_id', $this->company_id);
+                $this->db->where('main_interview_schedule.company_id', $this->company_id);
             } else {
-                $this->db->where('createdby', $this->user_id);
+                $this->db->where('main_interview_schedule.createdby', $this->user_id);
             }
 
             /* ----Conditions---- */
             if ($requisition_idd != '') {
-                $this->db->where('requisition_id', $requisition_idd);
+                $this->db->where('main_interview_schedule.requisition_id', $requisition_idd);
+            }
+            if ($resume_type != '') {
+                $this->db->where('main_cv_management.resume_type', $resume_type);
             }
            
             $ids = $this->db->get()->result_array();
         }
 
-        $ids = array_column($ids, 'id');
+        $ids = array_column($ids, 'sid');
 
         $this->index($this->uri->segment(3), TRUE, $ids, $search_criteria);
         

@@ -18,7 +18,7 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <div class="col-sm-4">
-                                    <a class="btn btn-u btn-md" href="<?php echo base_url() . "Con_Create_Schedule/add_Create_Schedule" ?>"><span class="glyphicon glyphicon-plus-sign"></span> Add Scheduled </a></br></br>
+                                    <!--<a class="btn btn-u btn-md" href="<?php // echo base_url() . "Con_Create_Schedule/add_Create_Schedule" ?>"><span class="glyphicon glyphicon-plus-sign"></span> Add Scheduled </a></br></br>-->
                                 </div>
                             </div>
                         </div>
@@ -32,8 +32,7 @@
                                         foreach ($opening_position_query->result() as $key) {
                                             $position_id = $this->Common_model->get_name($this, $key->id, 'main_opening_position', 'position_id');
                                             $position_name = $this->Common_model->get_name($this, $position_id, 'main_jobtitles', 'job_title');
-
-                                            $slct = ($search_criteria['requisition_idd'] == $key->id) ? 'selected' : '';
+                                            $slct = ($search_criteria['requisition_idd'] != "" && $search_criteria['requisition_idd'] == $key->id) ? 'selected' : '';
                                             echo '<option value="' . $key->id . '" ' . $slct . '>' . $key->requisition_code . "  ( " . $position_name . " ) " . '</option>';
                                         }
                                         ?>
@@ -56,6 +55,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Requisition Id</th>
+                            <th>Schedule Group</th>
                             <th>Interview Type</th>
                             <th>Interview Date</th>
                             <th>Interview Time</th>
@@ -74,6 +74,7 @@
                                 print"<tr>";
                                 print"<td id='catA" . $pdt . "'>" . $sl . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
+                                print"<td id='catA" . $pdt . "'>" . $row->schedule_group ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $interview_type[$row->interview_type] ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $this->Common_model->show_date_formate($row->interview_date) ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->interview_time ."</td>";

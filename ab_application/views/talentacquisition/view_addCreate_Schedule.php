@@ -13,13 +13,19 @@
             if ($type == 1) {//entry
                 ?>
                 <div class="col-md-12" style="margin-top: 10px">
-                    <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Create_Schedule/save_Create_Schedule" enctype="multipart/form-data" role="form" >
+                    <form id="sky-form12" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_Create_Schedule/save_Create_Schedule" enctype="multipart/form-data" role="form" >
                         <div class="panel panel-u margin-bottom-40">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-tasks"></i> Schedule Interview </h3>
                             </div>
                             <div class="panel-body">
                                 <input type="hidden" value="" name="id"/>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Schedule Group <span class="req"/> </label>
+                                    <div class="col-sm-10">  
+                                        <input type="text" name="schedule_group" id="schedule_group" class="form-control input-sm" placeholder="Schedule Group" autocomplete="off" />
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"> Requisition ID <span class="req"/> </label>
                                     <div class="col-sm-10">                            
@@ -90,7 +96,7 @@
                         </div>
 
                         <div class="modal-footer">                        
-                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_Create_Schedule" ?>">Close</a>
+                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_Create_Schedule/add_Create_Schedule_index" ?>">Close</a>
                             <button type="submit" id="submit" class="btn btn-u">Save</button>
                         </div>
 
@@ -130,6 +136,12 @@
                                 </div>
                                 <div class="panel-body">
                                     <input type="hidden" value="<?php echo $i_row->id; ?>" name="int_id"/>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"> Schedule Group <span class="req"/> </label>
+                                        <div class="col-sm-10">  
+                                            <input type="text" name="schedule_group" id="schedule_group" value="<?php echo $i_row->schedule_group; ?>" class="form-control input-sm" placeholder="Schedule Group" autocomplete="off" />
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label"> Requisition ID <span class="req"/> </label>
                                         <div class="col-sm-10">                            
@@ -242,6 +254,24 @@
 <!--Add item script-->       
 <script>
 
+    $(function () {
+        $("#sky-form12").submit(function (event) {
+            $("#requisition_id").attr('disabled', false);
+            loading_box(base_url);
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                data: $("#sky-form12").serialize(),
+                type: $(this).attr('method')
+            }).done(function (data) {
+
+                var url = '<?php echo base_url() ?>Con_Create_Schedule/add_Create_Schedule';
+                view_message(data, url, '', 'sky-form12');
+
+            });
+            event.preventDefault();
+        });
+    });
     $(function () {
         $("#sky-form11").submit(function (event) {
             $("#requisition_id").attr('disabled', false);

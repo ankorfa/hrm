@@ -88,12 +88,33 @@ class Con_RequisitionsStatus extends CI_Controller {
                 }                
                 
                 $sr = $sr + 1;   
-                echo"<tr><td>" . $sr . "</td><td>" . $row->requisition_code . "</td><td>" . $this->Common_model->show_date_formate($row->due_date) . "</td><td>" . $this->Common_model->get_name($this, $row->department_id, 'main_department', 'department_name'). "</td><td>" . $this->Common_model->show_date_formate($row->requisitions_date) . "</td><td>" . $this->Common_model->get_name($this, $row->position_id, 'main_jobtitles', 'job_title') . "</td><td>" . $row->no_of_positions . "</td><td>" . $req_status . "</td></tr>";
+                echo"<tr><td>" . $sr . "</td><td>" . $row->requisition_code . "</td><td>" . $this->Common_model->show_date_formate($row->due_date) . "</td><td>" . $this->Common_model->get_name($this, $row->department_id, 'main_department', 'department_name'). "</td><td>" . $this->Common_model->show_date_formate($row->requisitions_date) . "</td><td>" . $this->Common_model->get_name($this, $row->position_id, 'main_jobtitles', 'job_title') . "</td><td>" . $row->no_of_positions . "</td><td>" . $req_status . "</td><td><div class='action-buttons '> &nbsp; <a title='Preview' href='" . base_url() . "Con_RequisitionsStatus/view_requisition/" . $row->id . "/' target='_blank' ><i class='fa fa-lg fa-eye'></i></a>&nbsp; </div></td></tr>";
             }
         } else {
             echo'<tr><td colspan = 8 class="text-info">No data available in table.</td></tr>';
         }
         //echo $id;
+    }
+    
+    
+    public function view_requisition() {
+        
+        $req_id=$this->uri->segment(3);
+        $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
+
+        $param['page_header'] = "Job Requisition Detail";
+        $param['module_id'] = $this->module_id;
+
+        if ($this->user_group == 11 || $this->user_group == 12) {
+            $param['query'] = $this->db->get_where('main_opening_position', array('company_id' => $this->company_id,'id' =>$req_id ));            
+        } else {
+            $param['query'] = $this->db->get_where('main_opening_position', array('id' => $req_id ));            
+        }
+        $param['priority_array'] = $this->Common_model->get_array('priority');
+        $param['approver_status'] = $this->Common_model->get_array('approver_status');
+        $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
+        $param['content'] = 'talentacquisition/view_JobRequisitionDetail_view.php';
+        $this->load->view('admin/home', $param);
     }
     
 

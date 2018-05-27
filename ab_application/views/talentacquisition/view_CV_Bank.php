@@ -55,9 +55,9 @@
                                         <select name="qualification" id="qualification" class="col-xs-12 myselect2 input-sm">
                                             <option></option>
                                             <?php
-                                            foreach ($qualification_query->result() as $key) {
+                                            foreach ($educationlevel_query->result() as $key) {
                                                 $slct = ($search_criteria['qualification'] != "" && $search_criteria['qualification'] == $key->id) ? 'selected' : '';
-                                                echo '<option value="' . $key->qualification . '" ' . $slct . '>' . $key->qualification . '</option>';
+                                                echo '<option value="' . $key->id . '" ' . $slct . '>' . $key->educationlevelcode . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -72,8 +72,8 @@
                                             <option></option>
                                             <?php
                                             foreach ($skill_query->result() as $key) {
-                                                $slct = ($search_criteria['skill_set'] != "" && $search_criteria['skill_set'] == $key->skill_set) ? 'selected' : '';
-                                                echo '<option value="' . $key->skill_set . '" ' . $slct . '>' . $key->skill_set . '</option>';
+                                                $slct = ($search_criteria['skill_set'] != "" && $search_criteria['skill_set'] == $key->id) ? 'selected' : '';
+                                                echo '<option value="' . $key->id . '" ' . $slct . '>' . $key->skill_name . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -129,15 +129,16 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Resume Type</th>
+<!--                            <th>Resume Type</th>
                             <th>Requisition Id</th>
-                            <th>Position</th>
+                            <th>Position</th>-->
                             <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Mobile</th> 
-                            <th>Qualification</th>
+<!--                            <th>Qualification</th>
                             <th>Work Experience</th>
-                            <th>Skill Set</th>
+                            <th>Skill Set</th>-->
                             <th>Status</th>
                             <th>Resume</th>
                             <th>Action</th>
@@ -150,25 +151,40 @@
                             $sl=0;
                             foreach ($query->result() as $row) {
                                 
-//                                if ($row->status != 3) {
-//                                    $action_button = "<a title='Edit' href='" . base_url() . "Con_CVManagement/edit_CVManagement/" . $row->id . "/" . "' ><i class='fa fa-pencil-square-o'>&nbsp;&nbsp;</i></a>&nbsp;<a title='Delete' href='#' onclick='delete_data(" . $row->id . ")'><i class='fa fa-trash-o'></i></a>";
-//                                } else {
-//                                    $action_button = "";
+                                $skill_set_arr = explode(",", $row->skill_set);
+                                $skill_set = '';
+                                foreach ($skill_set_arr as $intr) {
+                                    if ($skill_set == '') {
+                                        $skill_set = $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                    } else {
+                                        $skill_set = $skill_set . " , " . $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                    }
+                                }
+                                
+//                                $qualification_arr = explode(",", $row->qualification);
+//                                $qualification = '';
+//                                foreach ($qualification_arr as $intr) {
+//                                    if ($qualification == '') {
+//                                        $qualification = $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+//                                    } else {
+//                                        $qualification = $qualification . " , " . $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+//                                    }
 //                                }
 
                                 $position_id=$this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','position_id');
                                 $sl++; $pdt = $row->id;
                                 print"<tr>";
                                 print"<td id='catA" . $pdt . "'>" . $sl . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $resume_type[$row->resume_type] . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$position_id,'main_jobtitles','job_title') ."</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $resume_type[$row->resume_type] . "</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$row->requisition_id,'main_opening_position','requisition_code') . "</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this,$position_id,'main_jobtitles','job_title') ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->candidate_first_name ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $row->candidate_last_name ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $row->candidate_email."</td>";
                                 print"<td id='catD" . $pdt . "'>" . $row->contact_number . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $row->qualification ."</td>";
-                                print"<td id='catA" . $pdt . "'>" . $row->work_experience ."</td>";
-                                print"<td id='catA" . $pdt . "'>" . $row->skill_set ."</td>";
+//                                print"<td id='catA" . $pdt . "'>" . $qualification ."</td>";
+//                                print"<td id='catA" . $pdt . "'>" . $row->work_experience ."</td>";
+//                                print"<td id='catA" . $pdt . "'>" . $skill_set ."</td>";
                                 print"<td id='catA" . $pdt . "'>" . $candidate_status[$row->status] ."</td>";
                                 print"<td id='catA" . $pdt . "'><a href='" . base_url() . "Con_CV_Bank/download_resume/" . $row->upload_resume_path . "/" . "' > ". $row->upload_resume_path ." </a></td>";
                                 print"<td><div class='action-buttons '> &nbsp; <a title='Preview' href='" . base_url() . "Con_CV_Bank/view_CVManagement/" . $row->id . "/' ><i class='fa fa-lg fa-eye'></i></a>&nbsp;&nbsp;</div> </td>";

@@ -122,7 +122,22 @@
                                         
                                         <tr>
                                             <th>Qualification : </th>
-                                            <td><?php echo $row->required_qualification ?></td>
+                                            <td><?php 
+                                            $required_qualification_arr = explode(",", $row->required_qualification);
+                                            
+                                            $required_qualification = '';
+                                            foreach ($required_qualification_arr as $intr) {
+                                                if ($required_qualification == '') {
+                                                    $required_qualification = $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+                                                } else {
+                                                    $required_qualification = $required_qualification . " , " . $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+                                                }
+                                            }
+                                            
+                                            echo $required_qualification;
+                                            //echo $row->required_qualification 
+                                                    
+                                            ?></td>
                                         </tr>
                                         <tr>    
                                             <th>Experience Range : </th>
@@ -130,7 +145,19 @@
                                         </tr>
                                         <tr>    
                                             <th>Required Skills</th>
-                                            <td><?php echo $row->required_skills; ?></td>
+                                            <td><?php 
+                                            $required_skills_arr = explode(",", $row->required_skills);
+                                            
+                                            $required_skills = '';
+                                            foreach ($required_skills_arr as $intr) {
+                                                if ($required_skills == '') {
+                                                    $required_skills = $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                                } else {
+                                                    $required_skills = $required_skills . " , " . $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                                }
+                                            }
+            
+                                            echo $required_skills; ?></td>
                                         </tr>
                                         <?php
                                     }

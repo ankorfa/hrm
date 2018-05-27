@@ -16,11 +16,13 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Requisition Id</th>
-                            <th>Position</th>
-                            <th>Candidate Name</th>
+<!--                            <th>Requisition Id</th>
+                            <th>Position</th>-->
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
+                            <th>Skill</th>
                             <th>Status</th>
                             <th>Is User</th>
                             <th>Action</th>
@@ -38,15 +40,27 @@
                                 } else {
                                     $is_user = "Yes";
                                 }
+                                
+                                $skill_set_arr = explode(",", $row->skill_set);
+                                $skill_set = '';
+                                foreach ($skill_set_arr as $intr) {
+                                    if ($skill_set == '') {
+                                        $skill_set = $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                    } else {
+                                        $skill_set = $skill_set . " , " . $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                    }
+                                }
                                 $sl++;
                                 $pdt = $row->id;
                                 print"<tr>";
                                 print"<td id='catA" . $pdt . "'>" . $sl . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this, $row->requisition_id, 'main_opening_position', 'requisition_code') . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this, $position_id, 'main_jobtitles', 'job_title') . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $row->candidate_first_name . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $row->candidate_email . "</td>";
-                                print"<td id='catA" . $pdt . "'>" . $row->contact_number . "</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this, $row->requisition_id, 'main_opening_position', 'requisition_code') . "</td>";
+                                //print"<td id='catA" . $pdt . "'>" . $this->Common_model->get_name($this, $position_id, 'main_jobtitles', 'job_title') . "</td>";
+                                print"<td id='catA" . $pdt . "'>" . $row->candidate_first_name ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $row->candidate_last_name ."</td>";
+                                print"<td id='catA" . $pdt . "'>" . $row->candidate_email."</td>";
+                                print"<td id='catD" . $pdt . "'>" . $row->contact_number . "</td>";
+                                print"<td id='catD" . $pdt . "'>" . $skill_set . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $candidate_status[$row->status] . "</td>";
                                 print"<td id='catA" . $pdt . "'>" . $is_user . "</td>";
                                 if ($row->status == 2) {

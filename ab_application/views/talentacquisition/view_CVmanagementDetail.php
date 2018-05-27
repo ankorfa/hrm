@@ -22,11 +22,16 @@
                                     <form id="sky-form11" name="sky-form11"  class="form-horizontal" method="post" action="<?php echo base_url(); ?>Con_ScheduledInterviews/save_ScheduledInterviews" enctype="multipart/form-data" role="form" >
                                         <?php
                                         $candidate_status = $this->Common_model->get_array('candidate_status');
+                                        $resume_type = $this->Common_model->get_array('resume_type');
                                         foreach ($query->result() as $row) {
                                             ?>
                                             <div class="table-responsive">
                                                 <table id="PersonalInformation" class="table table-responsive table-striped table-bordered table-hover">
                                                     <tbody>
+                                                        <tr>
+                                                            <th>Resume Type : </th>
+                                                            <td><?php echo $resume_type[$row->resume_type] ?></td>
+                                                        </tr>
                                                         <tr>
                                                             <th>Requisition Id : </th>
                                                             <td><?php echo $this->Common_model->get_name($this, $row->requisition_id, 'main_opening_position', 'requisition_code') ?></td>
@@ -39,6 +44,10 @@
                                                                 echo $this->Common_model->get_name($this, $position_id, 'main_jobtitles', 'job_title');
                                                                 ?> 
                                                             </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Referrer Name : </th>
+                                                            <td><?php echo $this->Common_model->get_name($this, $row->employee_id, 'main_employees', 'first_name') . " " . $this->Common_model->get_name($this, $row->employee_id, 'main_employees', 'middle_name') . " " . $this->Common_model->get_name($this, $row->employee_id, 'main_employees', 'last_name'); ?></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Fast Name : </th>
@@ -58,7 +67,20 @@
                                                         </tr>
                                                         <tr>
                                                             <th>Qualification : </th>
-                                                            <td><?php echo $row->qualification ?></td>
+                                                            <td><?php
+                                                                $qualification_arr = explode(",", $row->qualification);
+                                                                $qualification = '';
+                                                                foreach ($qualification_arr as $intr) {
+                                                                    if ($qualification == '') {
+                                                                        $qualification = $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+                                                                    } else {
+                                                                        $qualification = $qualification . " , " . $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+                                                                    }
+                                                                }
+
+                                                                echo $qualification;
+                                                                //echo $row->qualification 
+                                                                ?></td>
                                                         </tr>
                                                         <tr>    
                                                             <th>Experience : </th>
@@ -66,7 +88,18 @@
                                                         </tr>
                                                         <tr>
                                                             <th>Skill : </th>
-                                                            <td><?php echo $row->skill_set ?></td>
+                                                            <td><?php
+                                                                $skill_set_arr = explode(",", $row->skill_set);
+                                                                $skill_set = '';
+                                                                foreach ($skill_set_arr as $intr) {
+                                                                    if ($skill_set == '') {
+                                                                        $skill_set = $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                                                    } else {
+                                                                        $skill_set = $skill_set . " , " . $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                                                    }
+                                                                }
+                                                                echo $skill_set
+                                                                ?></td>
                                                         </tr>
                                                         <tr>    
                                                             <th>Education : </th>
@@ -88,92 +121,13 @@
                                                 </table>
                                             </div>
                                             <br>
-                                            <?php /* if ($row->status == 0) { ?>
-                                                <div class="container tag-box tag-box-v3" style="margin-top: 0px; width: 96%; padding-bottom: 15px;">
-                                                    <div class="col-md-11 col-md-offset-0" style="margin-top: 10px">
-                                                        <input type="hidden" id="requisition_id" name="requisition_id" value="<?php echo $row->requisition_id ?>">
-                                                        <input type="hidden" id="candidate_name" name="candidate_name" value="<?php echo $row->id ?>">
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Interview Status </label>
-                                                            <div class="col-sm-4">                            
-                                                                <select name="interview_status" id="interview_status" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                                                    <?php
-                                                                    $interview_status = $this->Common_model->get_array('interview_status');
-                                                                    foreach ($interview_status as $key => $val):
-                                                                        ?>
-                                                                        <option value="<?php echo $key ?>"><?php echo $val ?></option>
-                                                                        <?php
-                                                                    endforeach;
-                                                                    ?>
-                                                                </select> 
-                                                            </div>
-                                                            <label class="col-sm-2 control-label">Interviewer<span class="req"/></label>
-                                                            <div class="col-sm-4">                            
-                                                                <select name="interviewer[]" id="interviewer" class="col-sm-12 col-xs-12 myselect2 input-sm" title="Interviewer (multiple select)" multiple>
-                                                                    <option></option>
-                                                                    <?php
-                                                                    foreach ($employees_query->result() as $key):
-                                                                        ?>
-                                                                        <option value="<?php echo $key->employee_id ?>"><?php echo $key->first_name ?></option>
-                                                                        <?php
-                                                                    endforeach;
-                                                                    ?>
-                                                                </select> 
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="candidate_email" class="col-sm-2 control-label">Location<span class="req"/> </label>
-                                                            <div class="col-sm-4">                            
-                                                                <input type="text" name="location" id="location" class="form-control input-sm" placeholder="Location" />
-                                                            </div>
-                                                            <label class="col-sm-2 control-label">Interview Type<span class="req"/> </label>
-                                                            <div class="col-sm-4"> 
-                                                                <select name="interview_type" id="interview_type" class="col-sm-12 col-xs-12 myselect2 input-sm" >
-                                                                    <option></option>
-                                                                    <?php
-                                                                    $interview_type = $this->Common_model->get_array('interview_type');
-                                                                    foreach ($interview_type as $key => $val):
-                                                                        ?>
-                                                                        <option value="<?php echo $key ?>"><?php echo $val ?></option>
-                                                                        <?php
-                                                                    endforeach;
-                                                                    ?>
-                                                                </select> 
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Interview Date<span class="req"/> </label>
-                                                            <div class="col-sm-4">                            
-                                                                <input type="text" name="interview_date" id="interview_date" class="form-control dt_pick input-sm" placeholder="Interview Date" autocomplete="off" />
-                                                            </div>
-                                                            <label class="col-sm-2 control-label">Interview Time </label>
-                                                            <div class="col-sm-4">  
-                                                                <input type="text" name="interview_time" id="interview_time" class="form-control time_pick input-sm" placeholder="Interview Time" autocomplete="off" />
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <?php
-                                            }
-                                            ?> 
-                                            <div class="modal-footer">
-                                                <?php if ($row->status == 0) { ?>
-                                                    <button type="submit" id="submit" class="btn btn-u"> Schedule </button>
-                                                <?php } ?>
-                                                <a class="btn btn-danger" href="<?php echo base_url() . "Con_CVManagement" ?>">Close</a>
-                                            </div>
-                                            
-                                            <?php */ ?>
 
                                         <?php } ?>
-                                            
-                                        
 
                                     </form>
                                 </div>
                             </div>
-                            
+
                             <div class="modal-footer">
                                 <a class="btn btn-danger" href="<?php echo base_url() . "Con_CVManagement" ?>">Close</a>
                             </div>

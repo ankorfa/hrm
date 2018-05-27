@@ -43,7 +43,7 @@ class Con_Create_Schedule extends CI_Controller {
         $param['search_criteria'] = $search_criteria;
 
         $param['menu_id'] = $this->menu_id;
-        $param['page_header'] = "Schedule Interview";
+        $param['page_header'] = "Create Schedule";
         $param['module_id'] = $this->module_id;
 
         if (!empty($search_ids)) {
@@ -51,9 +51,9 @@ class Con_Create_Schedule extends CI_Controller {
         }
         
         if ($this->user_group == 11 || $this->user_group == 12 || $this->user_group == 4) {
-            $param['query'] = $this->db->get_where('main_schedule', array('company_id' => $this->company_id, 'isactive' => 1));
+            $param['query'] = $this->db->get_where('main_schedule', array('company_id' => $this->company_id, 'is_close' => 0, 'isactive' => 1));
         } else {
-            $param['query'] = $this->db->get_where('main_schedule', array('isactive' => 1));
+            $param['query'] = $this->db->get_where('main_schedule', array('isactive' => 1, 'is_close' => 0));
         }
         
         $param['opening_position_query']=$this->db->get_where('main_opening_position', array('req_status' => 1,'is_close' => 0)); //Approved
@@ -67,9 +67,9 @@ class Con_Create_Schedule extends CI_Controller {
         
         $ids = $search_criteria = array();
 
-        $search_criteria['requisition_id'] = $requisition_id = $this->input->post('requisition_idd');
+        $search_criteria['requisition_idd'] = $requisition_idd = $this->input->post('requisition_idd');
 
-        if (($requisition_id != '')) {
+        if (($requisition_idd != '')) {
      
             $this->db->select('id');
             $this->db->from('main_schedule');
@@ -81,8 +81,8 @@ class Con_Create_Schedule extends CI_Controller {
             }
 
             /* ----Conditions---- */
-            if ($requisition_id != '') {
-                $this->db->where('requisition_id', $requisition_id);
+            if ($requisition_idd != '') {
+                $this->db->where('requisition_id', $requisition_idd);
             }
            
             $ids = $this->db->get()->result_array();
@@ -95,12 +95,24 @@ class Con_Create_Schedule extends CI_Controller {
         
     }
 
+    public function add_Create_Schedule_index() {
+        $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
+
+        $param['type'] = "1";
+        $param['page_header'] = "Create Schedule";
+        $param['module_id'] = $this->module_id;
+
+        $param['left_menu'] = 'sadmin/hrm_leftmenu.php';
+        $param['content'] = 'talentacquisition/view_Create_Schedule_index.php';
+        $this->load->view('admin/home', $param);
+    }
+    
     public function add_Create_Schedule() {
 
         $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
 
         $param['type'] = "1";
-        $param['page_header'] = "Schedule Interview";
+        $param['page_header'] = "Create Schedule";
         $param['module_id'] = $this->module_id;
 
         if ($this->user_group == 11 || $this->user_group == 12) {
@@ -120,6 +132,7 @@ class Con_Create_Schedule extends CI_Controller {
 
     public function save_Create_Schedule() {
 
+        $this->form_validation->set_rules('schedule_group', 'Schedule Group', 'required', array('required' => "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('requisition_id', 'Requisition ID', 'required', array('required' => "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('location', 'Location', 'required', array('required' => "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('interview_type', 'Interview Type', 'required', array('required' => "Please the enter required field, for more Info : %s."));
@@ -149,13 +162,14 @@ class Con_Create_Schedule extends CI_Controller {
             $schedule_chk_query = $this->db->get_where('main_schedule', array('interview_date' => $interview_date,'isactive' => 1));
             //echo $this->db->last_query();
             if ($schedule_chk_query->num_rows()>0) {
-                echo $this->Common_model->show_validation_massege('You have a schedule in This Date.', 2);
+                echo $this->Common_model->show_validation_massege('This interviewer have a schedule in This Date.', 2);
                 exit();
             }
             
             //====================================================================
 
             $data = array('company_id' => $this->company_id,
+                'schedule_group' => $this->input->post('schedule_group'),
                 'requisition_id' => $this->input->post('requisition_id'),
                 'interviewer' => $interviewer,
                 'location' => $this->input->post('location'),
@@ -193,7 +207,7 @@ class Con_Create_Schedule extends CI_Controller {
         $param['type'] = "2";
         $this->Common_model->is_user_valid($this->user_id, $this->menu_id, $this->user_menu);
 
-        $param['page_header'] = "Schedule Interview";
+        $param['page_header'] = "Create Schedule";
         $param['module_id'] = $this->module_id;
 
         if ($this->user_group == 11 || $this->user_group == 12) {
@@ -214,6 +228,7 @@ class Con_Create_Schedule extends CI_Controller {
 
     public function update_Create_Schedule() {
 
+        $this->form_validation->set_rules('schedule_group', 'Schedule Group', 'required', array('required' => "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('requisition_id', 'Requisition ID', 'required', array('required' => "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('location', 'Location', 'required', array('required' => "Please the enter required field, for more Info : %s."));
         $this->form_validation->set_rules('interview_type', 'Interview Type', 'required', array('required' => "Please the enter required field, for more Info : %s."));
@@ -235,6 +250,7 @@ class Con_Create_Schedule extends CI_Controller {
             }
 
             $data = array('company_id' => $this->company_id,
+                'schedule_group' => $this->input->post('schedule_group'),
                 'requisition_id' => $this->input->post('requisition_id'),
                 'interviewer' => $interviewer,
                 'location' => $this->input->post('location'),

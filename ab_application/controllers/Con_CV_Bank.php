@@ -62,15 +62,25 @@ class Con_CV_Bank extends CI_Controller {
         $param['candidate_status'] = $this->Common_model->get_array('candidate_status');
         $param['resume_type'] = $this->Common_model->get_array('resume_type');
         
-        $this->db->select('skill_set');
-        $this->db->order_by('skill_set', 'desc');
-        $this->db->group_by('skill_set');
-        $param['skill_query'] = $this->db->get('main_cv_management');
+//        $this->db->select('skill_set');
+//        $this->db->order_by('skill_set', 'desc');
+//        $this->db->group_by('skill_set');
+//        $param['skill_query'] = $this->db->get('main_cv_management');
         
-        $this->db->select('qualification');
-        $this->db->order_by('qualification', 'desc');
-        $this->db->group_by('qualification');
-        $param['qualification_query'] = $this->db->get('main_cv_management');
+        
+        
+        if ($this->user_group == 4 || $this->user_group == 8 || $this->user_group == 10 || $this->user_group == 11 || $this->user_group == 12) {
+            $param['educationlevel_query'] = $this->db->get_where('main_educationlevelcode', array('company_id' => $this->company_id,'isactive' => 1));
+            $param['skill_query']=$this->db->get_where('main_skill_setup', array('company_id' => $this->company_id,'isactive' => 1)); 
+        } else {
+            $param['skill_query']=$this->db->get_where('main_skill_setup', array('isactive' => 1)); 
+            $param['educationlevel_query'] = $this->db->get_where('main_educationlevelcode', array('isactive' => 1));
+        }
+        
+//        $this->db->select('qualification');
+//        $this->db->order_by('qualification', 'desc');
+//        $this->db->group_by('qualification');
+//        $param['qualification_query'] = $this->db->get('main_cv_management');
         
         $this->db->select('work_experience');
         $this->db->order_by('work_experience', 'desc');
@@ -114,13 +124,19 @@ class Con_CV_Bank extends CI_Controller {
                 $this->db->where('status', $status);
             }
             if ($qualification != '') {
-                $this->db->like('qualification', $qualification);
+                //$this->db->like('qualification', $qualification);
+                $qualification = explode(",", $qualification);
+                $qualification = array_map('intval', $qualification);
+                $this->db->where_in('qualification', $qualification);
             }
             if ($experience != '') {
                 $this->db->like('work_experience', $experience);
             }
             if ($skill_set != '') {
-                $this->db->like('skill_set', $skill_set);
+                //$this->db->like('skill_set', $skill_set);
+                $skill_set = explode(",", $skill_set);
+                $skill_set = array_map('intval', $skill_set);
+                $this->db->where_in('skill_set', $skill_set);
             }
            
             $ids = $this->db->get()->result_array();

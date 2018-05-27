@@ -122,7 +122,21 @@
 
                                 <tr>
                                     <th>Qualification : </th>
-                                    <td><?php echo $row->required_qualification ?></td>
+                                    <td><?php 
+                                    $required_qualification_arr = explode(",", $row->required_qualification);
+                                            
+                                    $required_qualification = '';
+                                    foreach ($required_qualification_arr as $intr) {
+                                        if ($required_qualification == '') {
+                                            $required_qualification = $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+                                        } else {
+                                            $required_qualification = $required_qualification . " , " . $this->Common_model->get_name($this, $intr, 'main_educationlevelcode', 'educationlevelcode');
+                                        }
+                                    }
+
+                                    echo $required_qualification;
+                                    //echo $row->required_qualification 
+                                    ?></td>
                                 </tr>
                                 <tr>    
                                     <th>Experience Range : </th>
@@ -130,7 +144,19 @@
                                 </tr>
                                 <tr>    
                                     <th>Required Skills</th>
-                                    <td><?php echo $row->required_skills; ?></td>
+                                    <td><?php 
+                                    $required_skills_arr = explode(",", $row->required_skills);
+
+                                    $required_skills = '';
+                                    foreach ($required_skills_arr as $intr) {
+                                        if ($required_skills == '') {
+                                            $required_skills = $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                        } else {
+                                            $required_skills = $required_skills . " , " . $this->Common_model->get_name($this, $intr, 'main_skill_setup', 'skill_name');
+                                        }
+                                    }
+
+                                    echo $required_skills; ?></td>
                                 </tr>
                                 <tr>
                                     <th>Position Description : </th>
@@ -142,7 +168,27 @@
                             </tbody>
                         </table>
                     </div>
-                    <ul class="social-icons social-icons-color pull-right">
+<!--                    <ul class="social-icons social-icons-color pull-right">
+                        <li><a class="social_facebook" data-original-title="Facebook" href="#"></a></li>
+                        <li><a class="social_googleplus" data-original-title="Google Plus" href="#"></a></li>
+                        <li><a class="social_tumblr" data-original-title="Tumblr" href="#"></a></li>
+                        <li><a class="social_twitter" data-original-title="Twitter" href="#"></a></li>
+                    </ul>-->
+                </div>
+                <div class="panel panel-u margin-bottom-40">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-tasks"></i> Job Description </h3>
+                    </div>
+                    <div class="panel-body">
+                        <?php
+                        foreach ($query->result() as $row) {
+                            ?>
+                           <?php echo $row->job_posting_text; ?>                                       
+                            <?php
+                        }
+                        ?>     
+                    </div>
+                    <ul class="social-icons social-icons-color pull-right padding-15">
                         <li><a class="social_facebook" data-original-title="Facebook" href="#"></a></li>
                         <li><a class="social_googleplus" data-original-title="Google Plus" href="#"></a></li>
                         <li><a class="social_tumblr" data-original-title="Tumblr" href="#"></a></li>
@@ -150,9 +196,9 @@
                     </ul>
                 </div>
                 
-                <div class="modal-footer"> 
+<!--                <div class="modal-footer"> 
                         <a class="btn btn-danger" href="<?php echo base_url() . "Con_OpeningsPositions" ?>">Close</a>
-                </div>
+                </div>-->
 
             </div>
         </div>

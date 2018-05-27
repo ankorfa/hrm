@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"> Resume Type <span class="req"/> </label>
                                     <div class="col-sm-10">                            
-                                        <select name="resume_type" id="resume_type" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                        <select name="resume_type" id="resume_type" onchange="change_type(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                             <option></option>
                                             <?php
                                             foreach ($resume_type as $key => $val):
@@ -40,8 +40,23 @@
                                         </select> 
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Requisition ID </label>
+                                <div class="form-group employee_idclass hidden">
+                                    <label class="col-sm-2 control-label"> Employee Name <span class="req"/> </label>
+                                    <div class="col-sm-10">                            
+                                        <select name="employee_id" id="employee_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                            <option></option>
+                                            <?php
+                                            foreach ( $employee_query->result() as $row ):
+                                                ?>
+                                                <option value="<?php echo $row->employee_id ?>"><?php echo $row->first_name." ".$row->middle_name." ".$row->last_name ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group requisition_idclass hidden">
+                                    <label class="col-sm-2 control-label">Requisition ID <span class="req"/> </label>
                                     <div class="col-sm-10">                            
                                         <select name="requisition_id" id="requisition_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                             <option></option>
@@ -55,6 +70,12 @@
                                             endforeach;
                                             ?>
                                         </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group other_referralclass hidden">
+                                    <label class="col-sm-2 control-label">Other Referral <span class="req"/> </label>
+                                    <div class="col-sm-10">                            
+                                        <input type="text" name="other_referral" id="other_referral" class="form-control input-sm" placeholder="Other Referral" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -73,13 +94,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Candidate First Name<span class="req"/> </label>
+                                    <label class="col-sm-2 control-label"> First Name<span class="req"/> </label>
                                     <div class="col-sm-10">                            
                                         <input type="text" name="candidate_first_name" id="candidate_first_name" class="form-control input-sm" placeholder="Candidate First Name" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Candidate Last Name<span class="req"/></label>
+                                    <label class="col-sm-2 control-label"> Last Name<span class="req"/></label>
                                     <div class="col-sm-10">                            
                                         <input type="text" name="candidate_last_name" id="candidate_last_name" class="form-control input-sm" placeholder="Candidate Last Name" />
                                     </div>
@@ -107,7 +128,17 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Qualification<span class="req"/> </label>
                                     <div class="col-sm-10">                            
-                                        <input type="text" name="qualification" id="qualification" class="form-control input-sm" placeholder="Qualification" />
+                                        <!--<input type="text" name="qualification" id="qualification" class="form-control input-sm" placeholder="Qualification" />-->
+                                        <select name="qualification[]" id="qualification" class="col-sm-12 col-xs-12 myselect2 input-sm" title="Required Qualification (multiple select)" multiple>
+                                            <option></option>
+                                            <?php
+                                            foreach ($educationlevel_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->id ?>"><?php echo $key->educationlevelcode ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -117,9 +148,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Skill Set<span class="req"/> </label>
+                                    <label class="col-sm-2 control-label">Skill <span class="req"/> </label>
                                     <div class="col-sm-10">  
-                                        <textarea class="form-control" rows="2" id="skill_set" name="skill_set" placeholder="Skill Set"></textarea>
+                                        <select name="skill_set[]" id="skill_set" class="col-sm-12 col-xs-12 myselect2 input-sm" title=" Skill Set (multiple select)" multiple>
+                                            <option></option>
+                                            <?php
+                                            foreach ($skills_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->id ?>"><?php echo $key->skill_name ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select> 
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -160,7 +200,7 @@
                         </div>
 
                         <div class="modal-footer">                        
-                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_CVManagement" ?>">Close</a>
+                            <a class="btn btn-danger" href="<?php echo base_url() . "Con_CVManagement/add_CVManagement_index" ?>">Close</a>
                             <button type="submit" id="submit" class="btn btn-u">Save</button>
                         </div>
                     </form>
@@ -181,7 +221,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Resume Type <span class="req"/> </label>
                                         <div class="col-sm-10">                            
-                                            <select name="resume_type" id="resume_type" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                            <select name="resume_type" id="resume_type" onchange="change_type(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                                 <option></option>
                                                 <?php
                                                 foreach ($resume_type as $key => $val):
@@ -192,9 +232,29 @@
                                                 ?>
                                             </select> 
                                         </div>
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                change_type('<?php echo $row->resume_type; ?>');
+                                            });
+                                        </script>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Requisition ID </label>
+                                    <div class="form-group employee_idclass hidden">
+                                        <label class="col-sm-2 control-label"> Employee Name <span class="req"/> </label>
+                                        <div class="col-sm-10">                            
+                                            <select name="employee_id" id="employee_id" class="col-sm-12 col-xs-12 myselect2 input-sm" >
+                                                <option></option>
+                                                <?php
+                                                foreach ( $employee_query->result() as $key ):
+                                                    ?>
+                                                    <option value="<?php echo $key->employee_id ?>"<?php if ($key->employee_id == $row->employee_id) echo "selected"; ?>><?php echo $key->first_name." ".$key->middle_name ." ".$key->last_name ?></option>
+                                                    <?php
+                                                endforeach;
+                                                ?>
+                                            </select> 
+                                        </div>
+                                    </div>
+                                    <div class="form-group requisition_idclass hidden">
+                                        <label class="col-sm-2 control-label"> Requisition ID <span class="req"/></label>
                                         <div class="col-sm-10">                            
                                             <select name="requisition_id" id="requisition_id" onchange="load_status_dropdown(this.value);" class="col-sm-12 col-xs-12 myselect2 input-sm" >
                                                 <option></option>
@@ -208,6 +268,12 @@
                                                 endforeach;
                                                 ?>
                                             </select> 
+                                        </div>
+                                    </div>
+                                    <div class="form-group other_referralclass hidden">
+                                        <label class="col-sm-2 control-label">Other Referral <span class="req"/> </label>
+                                        <div class="col-sm-10">                            
+                                            <input type="text" name="other_referral" id="other_referral" value="<?php echo $row->other_referral ?>" class="form-control input-sm" placeholder="Other Referral" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -227,13 +293,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Candidate First Name<span class="req"/> </label>
+                                        <label class="col-sm-2 control-label"> First Name<span class="req"/> </label>
                                         <div class="col-sm-10">                            
                                             <input type="text" name="candidate_first_name" id="candidate_first_name" value="<?php echo $row->candidate_first_name ?>" class="form-control input-sm" placeholder="Candidate First Name" />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Candidate Last Name<span class="req"/></label>
+                                        <label class="col-sm-2 control-label"> Last Name<span class="req"/></label>
                                         <div class="col-sm-10">                            
                                             <input type="text" name="candidate_last_name" id="candidate_last_name" value="<?php echo $row->candidate_last_name ?>" class="form-control input-sm" placeholder="Candidate Last Name" />
                                         </div>
@@ -261,7 +327,18 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Qualification<span class="req"/> </label>
                                         <div class="col-sm-10">                            
-                                            <input type="text" name="qualification" id="qualification" value="<?php echo $row->qualification ?>" class="form-control input-sm" placeholder="Qualification" />
+                                            <!--<input type="text" name="qualification" id="qualification" value="<?php // echo $row->qualification ?>" class="form-control input-sm" placeholder="Qualification" />-->
+                                        <select name="qualification[]" id="qualification" class="col-sm-12 col-xs-12 myselect2 input-sm" title="Required Qualification (multiple select)" multiple>
+                                            <option></option>
+                                            <?php
+                                            $qualification = explode(",", $row->qualification);
+                                            foreach ($educationlevel_query->result() as $key):
+                                                ?>
+                                                <option value="<?php echo $key->id ?>"<?php if (in_array($key->id, $qualification)) echo "selected"; ?>><?php echo $key->educationlevelcode ?></option>
+                                                <?php
+                                            endforeach;
+                                            ?>
+                                        </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -271,9 +348,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Skill Set<span class="req"/> </label>
+                                        <label class="col-sm-2 control-label">Skill  <span class="req"/> </label>
                                         <div class="col-sm-10">  
-                                            <textarea class="form-control" rows="2" id="skill_set" name="skill_set" placeholder="Skill Set"><?php echo $row->skill_set ?></textarea>
+                                            <select name="skill_set[]" id="skill_set" class="col-sm-12 col-xs-12 myselect2 input-sm" title="Skill Set (multiple select)" multiple>
+                                                <option></option>
+                                                <?php
+                                                $skill_set = explode(",", $row->skill_set);
+                                                foreach ($skills_query->result() as $key):
+                                                    ?>
+                                                    <option value="<?php echo $key->id ?>"<?php if (in_array($key->id, $skill_set)) echo "selected"; ?>><?php echo $key->skill_name ?></option>
+                                                    <?php
+                                                endforeach;
+                                                ?>
+                                            </select> 
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -376,7 +463,7 @@
                 type: $(this).attr('method')
             }).done(function (data) {
 
-                var url = '<?php echo base_url() ?>Con_CVManagement/add_CVManagement';
+                var url = '<?php echo base_url() ?>Con_CVManagement/add_CVManagement_index';
                 view_message(data, url, '', 'sky-form11');
 
                 $("#candidate_status").attr('disabled', true);
@@ -412,6 +499,11 @@
         allowClear: true,
     });
     
+    $("#employee_id").select2({
+        placeholder: "Select employee ID",
+        allowClear: true,
+    });
+    
     $("#requisition_id").select2({
         placeholder: "Select Requisition ID",
         allowClear: true,
@@ -426,8 +518,18 @@
 //        placeholder: "Select County",
 //        allowClear: true,
 //    });
+
     $("#state").select2({
         placeholder: "Select State",
+        allowClear: true,
+    });
+    
+    $("#skill_set").select2({
+        placeholder: "Select skill set",
+        allowClear: true,
+    });
+    $("#qualification").select2({
+        placeholder: "Select qualification",
         allowClear: true,
     });
 
@@ -497,6 +599,59 @@
             }
         });
     }
+    
+    function change_type(val) {
+        if(val==0)
+        {
+            $("#employee_id").select2({
+                placeholder: "Select employee ID",
+                allowClear: true,
+            });
+            $("#requisition_id").select2({
+                placeholder: "Select Requisition ID",
+                allowClear: true,
+            });
+            $('#other_referral').val("");
+    
+            $('.requisition_idclass').removeClass("hidden");
+            $('.employee_idclass').addClass("hidden");
+            $('.other_referralclass').addClass("hidden");
+        }
+        else if(val==1)
+        {
+            $("#employee_id").select2({
+                placeholder: "Select employee ID",
+                allowClear: true,
+            });
+            $("#requisition_id").select2({
+                placeholder: "Select Requisition ID",
+                allowClear: true,
+            });
+            $('#other_referral').val("");
+    
+            $('.employee_idclass').removeClass("hidden");
+            $('.requisition_idclass').addClass("hidden");
+            $('.other_referralclass').addClass("hidden");
+        }
+        else
+        {
+            $("#employee_id").select2({
+                placeholder: "Select employee ID",
+                allowClear: true,
+            });
+            $("#requisition_id").select2({
+                placeholder: "Select Requisition ID",
+                allowClear: true,
+            });
+            $('#other_referral').val("");
+    
+            $('.requisition_idclass').addClass("hidden");
+            $('.employee_idclass').addClass("hidden");
+            $('.other_referralclass').removeClass("hidden");
+        }
+    }
+    
+    
 
 </script>
 <!--=== End Script ===-->
